@@ -1,0 +1,178 @@
+// path パスいい感じに読み込むライブラリ
+const path = require("path");
+// glob ファイル探索ライブラリ
+const glob = require("glob");
+// css出力プラグイン
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// webpack5との互換性ないらしいのでやめる
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+// jsファイル出力無効ライブラリ
+const RemoveEmptyScripts = require("webpack-remove-empty-scripts");
+// コンパイルディレクトリをクリーン
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+// -----------------------------------------------------------
+const jsEntry = {}; // jsエントリー
+const entries = {};
+
+const src = "./src/";
+const dist = "./dist/";
+
+// javascript
+const srcJs = src + "jsx";
+const distJs = dist + "jsx";
+
+// jsファイルentry化
+glob
+  .sync("*.jsx", {
+    cwd: srcJs,
+  })
+  .map((key) => {
+    const entryName = key.substring(0, key.lastIndexOf("."));
+    jsEntry[entryName] = path.resolve(srcJs, key);
+  });
+
+Object.assign(entries, jsEntry);
+
+console.log(jsEntry);
+console.log(entries);
+// -----------------------------------------------------------
+
+module.exports = {
+  // モード設定
+  mode: "development",
+  // エントリポイント
+  entry: entries,
+  // jsファイルの出力先
+  output: {
+    filename: path.join("js", "[name].js"), // ファイル名
+    path: path.resolve(__dirname, "dist"), // 絶対パス
+  },
+  // チャンク（共通ファイル）のまとめ先。
+  optimization: {
+    splitChunks: {
+      name: "bundle",
+      chunks: "initial",
+    },
+  },
+  // webpack-dev-server(ローカルデバッグサーバ)起動設定
+  devServer: {
+    // ポート
+    port: "8080",
+    // オートリフレッシュを有効化
+    liveReload: true,
+    // Hot Module Replacement(非同期ファイル置き換え)を（明示）
+    hot: false,
+    // ブラウザ開かす
+    open: true,
+  },
+  module: {
+    rules: [
+      {
+        // それぞれのローダーに対して一度だけ行使
+        oneOf: [
+          // react設定
+          {
+            //対象ファイルはjsとjsx
+            test: /\.(js|jsx)$/,
+            use: [
+              {
+                loader: "babel-loader",
+                options: {
+                  presets: [
+                    "minify",
+                    "@babel/preset-env",
+                    "@babel/preset-react",
+                    // "minify-dead-code-elimination",
+                  ],
+                },
+              },
+            ],
+            exclude: /node_modules/,
+          },
+          // css設定
+          {
+            test: /\.(|sass|scss|css)$/,
+            use: [
+              // MiniCssExtractPluginのローダー
+              {
+                loader: MiniCssExtractPlugin.loader,
+              },
+              // css-loaderの設定（cssのバンドル）
+              {
+                loader: "css-loader",
+                options: {
+                  url: false,
+                  sourceMap: false,
+                },
+              },
+              // sass-loaderの設定（sass→css変換）
+              {
+                loader: "sass-loader",
+                options: {
+                  // コンパイラにdart-sass優先
+                  implementation: require("dart-sass"),
+                  sassOptions: {
+                    fiber: require("fibers"),
+                  },
+                  sourceMap: false,
+                },
+              },
+            ],
+            exclude: /node_modules/,
+          },
+          // svg読み込み(要検証)
+          {
+            test: /\.svg$/,
+            use: [
+              {
+                loader: "url-loader",
+                options: {
+                  encording: "utf8",
+                },
+              },
+            ],
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)$i/,
+            use: [
+              {
+                loader: "file-loader",
+                options: {
+                  name: "[path][name].[ext]",
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  //プラグイン設定
+  plugins: [
+    // htmlカスタムできる
+    new HtmlWebpackPlugin({
+      template: "./src/html/template.html",
+      filename: path.join("html", "[name].html"),
+      title: "[name]",
+    }),
+    // 不要なjsの排除
+    new RemoveEmptyScripts(),
+    // // cssのファイル出力設定
+    new MiniCssExtractPlugin({
+      // ハッシュ値付加
+      filename: path.join("css", "[name]-[chunkhash:8].css"),
+      chunkFilename: "[id].css",
+    }),
+    // ビルドのクリーン
+    new CleanWebpackPlugin(),
+  ],
+  // import名前解決のルール
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx", "css", "scss", "sass"],
+  },
+  stats: {
+    children: true,
+  },
+};

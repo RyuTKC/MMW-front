@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+.test-takashi {
+
+    &::before {
+        margin: auto;
+        content: "companyです！";
+        display: block;
+    }
+}
