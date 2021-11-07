@@ -43,102 +43,111 @@ const webpackConfig =
     // ブラウザ開かせる
     open: true,
     historyApiFallback: true,
-    static: path.resolve(__dirname, "dist")
+    static: {
+      directory: path.resolve(__dirname, "dist", "html"),
+      serveIndex: true
+    }
   },
   module: {
     rules: [
       // {
-        // それぞれのローダーに対して一度だけ行使
-        // oneOf: [
-          // react設定
+      // それぞれのローダーに対して一度だけ行使
+      // oneOf: [
+      // react設定
+      {
+        //対象ファイルはjsとjsx
+        test: /\.(js|jsx)$/,
+        use: [
           {
-            //対象ファイルはjsとjsx
-            test: /\.(js|jsx)$/,
-            use: [
-              {
-                loader: "babel-loader",
-                options: {
-                  presets: [
-                    "minify",
-                    "@babel/preset-env",
-                    "@babel/preset-react",
-                    // "minify-dead-code-elimination",
-                  ],
-                },
-              },
-            ],
-            exclude: /node_modules/,
+            loader: "babel-loader",
+            options: {
+              presets: [
+                "minify",
+                "@babel/preset-env",
+                "@babel/preset-react",
+                // "minify-dead-code-elimination",
+              ],
+            },
           },
-          // css設定
+        ],
+        exclude: /node_modules/,
+      },
+      // css設定
+      {
+        test: /\.(|sass|scss|css)$/,
+        use: [
+          // MiniCssExtractPluginのローダー
           {
-            test: /\.(|sass|scss|css)$/,
-            use: [
-              // MiniCssExtractPluginのローダー
-              {
-                loader: MiniCssExtractPlugin.loader,
-              },
-              // css-loaderの設定（cssのバンドル）
-              {
-                loader: "css-loader",
-                options: {
-                  url: false,
-                  sourceMap: false,
-                },
-              },
-              // sass-loaderの設定（sass→css変換）
-              {
-                loader: "sass-loader",
-                options: {
-                  // コンパイラにdart-sass優先
-                  implementation: require("dart-sass"),
-                  sassOptions: {
-                    fiber: require("fibers"),
-                  },
-                  sourceMap: false,
-                },
-              },
-            ],
-            exclude: /node_modules/,
+            loader: MiniCssExtractPlugin.loader,
           },
-          // svg読み込み(要検証)
+          // css-loaderの設定（cssのバンドル）
           {
-            test: /\.svg$/,
-            use: [
-              {
-                loader: "url-loader",
-                options: {
-                  encording: "utf8",
-                },
-              },
-            ],
+            loader: "css-loader",
+            options: {
+              url: false,
+              sourceMap: false,
+            },
           },
+          // sass-loaderの設定（sass→css変換）
           {
-            test: /\.(png|jpe?g|gif|svg)$i/,
-            use: [
-              {
-                loader: "file-loader",
-                options: {
-                  name: "[path][name].[ext]",
-                },
+            loader: "sass-loader",
+            options: {
+              // コンパイラにdart-sass優先
+              implementation: require("dart-sass"),
+              sassOptions: {
+                fiber: require("fibers"),
               },
-            ],
+              sourceMap: false,
+            },
           },
-        // ],
+        ],
+        exclude: /node_modules/,
+      },
+      // svg読み込み(要検証)
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              encording: "utf8",
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$i/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]",
+            },
+          },
+        ],
+      },
+      // ],
       // },
     ],
   },
   //プラグイン設定
   plugins: [
-      // 不要なjsの排除
-      new RemoveEmptyScripts(),
-      // // cssのファイル出力設定
-      new MiniCssExtractPlugin({
-        // ハッシュ値付加
-        filename: path.join("css", "[name]-[chunkhash:8].css"),
-        chunkFilename: "bundle.css",
-      }),
-      // ビルドのクリーン
-      new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      inject: "body",
+      template: "./src/html/index.html",
+      filename: path.join(`index.html`),
+      chunks: []
+    }),
+    // 不要なjsの排除
+    new RemoveEmptyScripts(),
+    // // cssのファイル出力設定
+    new MiniCssExtractPlugin({
+      // ハッシュ値付加
+      filename: path.join("css", "[name]-[chunkhash:8].css"),
+      chunkFilename: "bundle.css",
+    }),
+    // ビルドのクリーン
+    new CleanWebpackPlugin(),
   ],
   // import名前解決のルール
   resolve: {
@@ -169,13 +178,14 @@ glob
     console.log(entryName);
 
     // htmlカスタムできる
-    webpackConfig.plugins.push(new HtmlWebpackPlugin({
-      inject: "body",
-      template: "./src/html/template.html",
-      filename: path.join("html", `${entryName}.html`),
-      chunks: [entryName],
-    })
-    );
+    // webpackConfig.plugins.push(new HtmlWebpackPlugin());
+    // webpackConfig.plugins.push(new HtmlWebpackPlugin({
+    //   inject: "body",
+    //   template: "./src/html/template.html",
+    //   filename: path.join("html", `${entryName}.html`),
+    //   chunks: [entryName],
+    // })
+    // );
   });
 
 console.log(entries);
