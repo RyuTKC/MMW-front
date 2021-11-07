@@ -12,34 +12,10 @@ const RemoveEmptyScripts = require("webpack-remove-empty-scripts");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-// -----------------------------------------------------------
-const jsEntry = {}; // jsエントリー
 const entries = {};
 
-const src = "./src/";
-const dist = "./dist/";
-
-// javascript
-const srcJs = src + "jsx";
-const distJs = dist + "jsx";
-
-// jsファイルentry化
-glob
-  .sync("*.jsx", {
-    cwd: srcJs,
-  })
-  .map((key) => {
-    const entryName = key.substring(0, key.lastIndexOf("."));
-    jsEntry[entryName] = path.resolve(srcJs, key);
-  });
-
-Object.assign(entries, jsEntry);
-
-console.log(jsEntry);
-console.log(entries);
-// -----------------------------------------------------------
-
-module.exports = {
+const webpackConfig =
+{
   // モード設定
   mode: "development",
   // エントリポイント
@@ -64,14 +40,16 @@ module.exports = {
     liveReload: true,
     // Hot Module Replacement(非同期ファイル置き換え)を（明示）
     hot: false,
-    // ブラウザ開かす
+    // ブラウザ開かせる
     open: true,
+    historyApiFallback: true,
+    static: path.resolve(__dirname, "dist")
   },
   module: {
     rules: [
-      {
+      // {
         // それぞれのローダーに対して一度だけ行使
-        oneOf: [
+        // oneOf: [
           // react設定
           {
             //対象ファイルはjsとjsx
@@ -145,28 +123,22 @@ module.exports = {
               },
             ],
           },
-        ],
-      },
+        // ],
+      // },
     ],
   },
   //プラグイン設定
   plugins: [
-    // htmlカスタムできる
-    new HtmlWebpackPlugin({
-      template: "./src/html/template.html",
-      filename: path.join("html", "[name].html"),
-      title: "[name]",
-    }),
-    // 不要なjsの排除
-    new RemoveEmptyScripts(),
-    // // cssのファイル出力設定
-    new MiniCssExtractPlugin({
-      // ハッシュ値付加
-      filename: path.join("css", "[name]-[chunkhash:8].css"),
-      chunkFilename: "[id].css",
-    }),
-    // ビルドのクリーン
-    new CleanWebpackPlugin(),
+      // 不要なjsの排除
+      new RemoveEmptyScripts(),
+      // // cssのファイル出力設定
+      new MiniCssExtractPlugin({
+        // ハッシュ値付加
+        filename: path.join("css", "[name]-[chunkhash:8].css"),
+        chunkFilename: "bundle.css",
+      }),
+      // ビルドのクリーン
+      new CleanWebpackPlugin(),
   ],
   // import名前解決のルール
   resolve: {
@@ -176,3 +148,37 @@ module.exports = {
     children: true,
   },
 };
+
+// -----------------------------------------------------------
+
+const src = "./src/";
+const dist = "./dist/";
+
+// javascript
+const srcJs = src + "jsx";
+const distJs = dist + "jsx";
+
+// jsファイルentry化
+glob
+  .sync("*.jsx", {
+    cwd: srcJs,
+  })
+  .map((key) => {
+    const entryName = key.substring(0, key.lastIndexOf("."));
+    entries[entryName] = path.resolve(srcJs, key);
+    console.log(entryName);
+
+    // htmlカスタムできる
+    webpackConfig.plugins.push(new HtmlWebpackPlugin({
+      inject: "body",
+      template: "./src/html/template.html",
+      filename: path.join("html", `${entryName}.html`),
+      chunks: [entryName],
+    })
+    );
+  });
+
+console.log(entries);
+// -----------------------------------------------------------
+
+module.exports = webpackConfig;

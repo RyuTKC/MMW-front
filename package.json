@@ -13,7 +13,7 @@
     "webpack-dev": "webpack --mode development",
     "webpack-watch": "webpack --mode development --watch",
     "sass-ver": "dart-sass --version",
-    "react-dev": "webpack-dev-server",
+    "react-dev": "webpack serve",
     "next-dev": "next",
     "next-build": "next build",
     "next-start": "next start"
