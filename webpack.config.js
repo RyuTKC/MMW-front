@@ -24,6 +24,7 @@ const webpackConfig =
   output: {
     filename: path.join("js", "[name].js"), // ファイル名
     path: path.resolve(__dirname, "dist"), // 絶対パス
+    // publicPath: "localhost:8080"
   },
   // チャンク（共通ファイル）のまとめ先。
   optimization: {
@@ -44,7 +45,8 @@ const webpackConfig =
     open: true,
     historyApiFallback: true,
     static: {
-      directory: path.resolve(__dirname, "dist", "html"),
+      directory: path.resolve(__dirname, "dist"),
+      publicPath: "localhost:8080",
       serveIndex: true
     }
   },
@@ -79,6 +81,8 @@ const webpackConfig =
           // MiniCssExtractPluginのローダー
           {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+            }
           },
           // css-loaderの設定（cssのバンドル）
           {
@@ -136,7 +140,9 @@ const webpackConfig =
       inject: "body",
       template: "./src/html/index.html",
       filename: path.join(`index.html`),
-      chunks: []
+      chunks: [],
+      publicPath: "localhost:8080",
+
     }),
     // 不要なjsの排除
     new RemoveEmptyScripts(),
@@ -178,14 +184,13 @@ glob
     console.log(entryName);
 
     // htmlカスタムできる
-    // webpackConfig.plugins.push(new HtmlWebpackPlugin());
-    // webpackConfig.plugins.push(new HtmlWebpackPlugin({
-    //   inject: "body",
-    //   template: "./src/html/template.html",
-    //   filename: path.join("html", `${entryName}.html`),
-    //   chunks: [entryName],
-    // })
-    // );
+    webpackConfig.plugins.push(new HtmlWebpackPlugin({
+      inject: "body",
+      template: "./src/html/template.html",
+      filename: path.join("html", `${entryName}.html`),
+      chunks: [entryName],
+    })
+    );
   });
 
 console.log(entries);
