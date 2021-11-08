@@ -24,7 +24,7 @@ const webpackConfig =
   output: {
     filename: path.join("js", "[name].js"), // ファイル名
     path: path.resolve(__dirname, "dist"), // 絶対パス
-    // publicPath: "localhost:8080"
+    publicPath: "/"
   },
   // チャンク（共通ファイル）のまとめ先。
   optimization: {
@@ -41,12 +41,13 @@ const webpackConfig =
     liveReload: true,
     // Hot Module Replacement(非同期ファイル置き換え)を（明示）
     hot: false,
-    // ブラウザ開かせる
+    // ブラウザ開かせる（リモート開発の場合効かない）
     open: true,
     historyApiFallback: true,
+    // webpack外のリソースを指定する。
     static: {
-      directory: path.resolve(__dirname, "dist"),
-      publicPath: "localhost:8080",
+      directory: path.join(__dirname, "dist", "public"),
+      publicPath: "/",
       serveIndex: true
     }
   },
@@ -88,7 +89,9 @@ const webpackConfig =
           {
             loader: "css-loader",
             options: {
+              // url()メソッドの取り込み禁止
               url: false,
+              //ソースマップ利用有無
               sourceMap: false,
             },
           },
@@ -139,10 +142,8 @@ const webpackConfig =
     new HtmlWebpackPlugin({
       inject: "body",
       template: "./src/html/index.html",
-      filename: path.join(`index.html`),
+      filename: path.join("public", `index.html`),
       chunks: [],
-      publicPath: "localhost:8080",
-
     }),
     // 不要なjsの排除
     new RemoveEmptyScripts(),
@@ -153,7 +154,7 @@ const webpackConfig =
       chunkFilename: "bundle.css",
     }),
     // ビルドのクリーン
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
   ],
   // import名前解決のルール
   resolve: {
