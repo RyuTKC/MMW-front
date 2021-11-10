@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "../style/ReactTest.scss";
-import CompoA from "./components/CompoA";
+import InputSet from "./components/InputSet";
 import ReactTest from "./components/ReactTest";
 // import "../../style/pages/ReactTest.scss";
 
@@ -9,8 +9,8 @@ const target = document.getElementById("app");
 
 ReactDOM.render(
   <React.StrictMode>
-    <CompoA arg1={"おあああああっはっははんああああああ"}/>
-    <CompoA arg1={"おりおりおりよーーーーーーーーーーーーー"}/>
+    <InputSet top={"１個め"}/>
+    <InputSet top={"２個め"} />
     <ReactTest />
   </React.StrictMode>,
   target
