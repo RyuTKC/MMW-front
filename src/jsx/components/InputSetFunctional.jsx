@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 
 
-// hooks
-
-export default function inputSet(props) {
-  const [outputRes, setOutputRes] = useState("何が出るかな");
+// hooks and no name function export
+export default (props) =>  {
+  const [outputRes, setOutputRes] = useState("何が出るかなファンクショナルコンポーネント");
   const [inputValue, setInputValue] = useState("");
   const inputChange= (e)=>{
     setInputValue(e.target.value);
@@ -12,7 +11,7 @@ export default function inputSet(props) {
   
   return (
     <>
-      <h1>{props.top}</h1>
+      <h1>fanctional-LocalState</h1>
       <input type="input" value={inputValue} onChange={inputChange}></input>
       <button onClick={()=> setOutputRes(inputValue)}>出すもの変えるボタン</button>
       <h2>{outputRes}</h2>
