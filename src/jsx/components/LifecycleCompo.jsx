@@ -9,21 +9,23 @@ class InputSet extends React.Component {
     super(props);
     this.state = {
       inputValue: "",
-      outputValue: "何が出るかなクラスコンポーネント"
+      outputValue: "何が出るかなクラスコンポーネント",
+      count: 0
     }
 
     this.setInput = this.setInput.bind(this);
     this.setOutput = this.setOutput.bind(this);
   }
+  
 
-  a = ()=>{}
-
+  // 関数
   setInput(e) {
     this.setState({
       inputValue: e.target.value
     })
   }
 
+  // 関数
   setOutput() {
     this.setState({
       outputValue: this.state.inputValue
@@ -33,8 +35,8 @@ class InputSet extends React.Component {
   render() {
     return (
       <>
-        <h1>class-LocalState</h1>
-        <input type="input" onChange={this.setInput} value={this.state.inputValue}></input>
+        <h1>class-LifeCycle</h1>
+        <input type="check" onChange={this.setInput} value={this.state.inputValue}></input>
         <button onClick={this.setOutput}>出すもの変えるボタン</button>
         <h2>{this.state.outputValue}</h2>
       </>
