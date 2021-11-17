@@ -16,7 +16,7 @@ ReactDOM.render(
     <Router>
       <Routes>
         <Route path="/top" element={<InputSetFunctional />} />
-        <Route path="machines" element={<Machines />} />
+        <Route path="/machines" element={<Machines />} />
         <Route path ="systems" element={<Systems />}　/>
       </Routes>
       <Link to="/machines"> go to machines</Link>

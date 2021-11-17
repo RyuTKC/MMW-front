@@ -43,10 +43,13 @@ const webpackConfig =
     hot: false,
     // ブラウザ開かせる（リモート開発の場合効かない）
     open: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      //indx.htmlの変更
+      index: "MachineManageWeb.html"
+    },
     // webpack外のリソースを指定する。
     static: {
-      directory: path.join(__dirname, "dist", "html"),
+      directory: path.join(__dirname, "dist", "public"),
       publicPath: "/",
       serveIndex: true
     }
