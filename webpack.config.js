@@ -46,7 +46,7 @@ const webpackConfig =
     historyApiFallback: true,
     // webpack外のリソースを指定する。
     static: {
-      directory: path.join(__dirname, "dist", "public"),
+      directory: path.join(__dirname, "dist", "html"),
       publicPath: "/",
       serveIndex: true
     }
@@ -59,7 +59,7 @@ const webpackConfig =
       // react設定
       {
         //対象ファイルはjsとjsx
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|tsx)$/,
         use: [
           {
             loader: "babel-loader",
@@ -72,6 +72,9 @@ const webpackConfig =
               ],
             },
           },
+          // {
+          //   loader: "ts-loader"
+          // }
         ],
         exclude: /node_modules/,
       },
@@ -139,12 +142,12 @@ const webpackConfig =
   },
   //プラグイン設定
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: "body",
-      template: "./src/html/index.html",
-      filename: path.join("public", `index.html`),
-      chunks: [],
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: "body",
+    //   template: "./src/html/index.html",
+    //   filename: path.join("html", `index.html`),
+    //   chunks: [],
+    // }),
     // 不要なjsの排除
     new RemoveEmptyScripts(),
     // // cssのファイル出力設定
