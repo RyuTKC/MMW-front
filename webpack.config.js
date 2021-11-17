@@ -47,9 +47,9 @@ const webpackConfig =
       //indx.htmlの変更
       index: "MachineManageWeb.html"
     },
-    // webpack外のリソースを指定する。
+    // webpack外のリソースを指定する。(本来)
     static: {
-      directory: path.join(__dirname, "dist", "public"),
+      directory: path.join(__dirname, "dist", "html"),
       publicPath: "/",
       serveIndex: true
     }
