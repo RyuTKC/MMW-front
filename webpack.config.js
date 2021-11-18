@@ -45,12 +45,12 @@ const webpackConfig =
     open: true,
     historyApiFallback: {
       //indx.htmlの変更
-      index: "MachineManageWeb.html"
+      index: path.join("html","MachineManageWeb.html")
     },
     // webpack外のリソースを指定する。(本来)
     static: {
-      directory: path.join(__dirname, "dist", "html"),
-      publicPath: "/",
+      directory: path.join(__dirname, "dist", "public"),
+      publicPath: "/public",
       serveIndex: true
     }
   },
@@ -75,9 +75,9 @@ const webpackConfig =
               ],
             },
           },
-          // {
-          //   loader: "ts-loader"
-          // }
+          {
+            loader: "ts-loader"
+          }
         ],
         exclude: /node_modules/,
       },
