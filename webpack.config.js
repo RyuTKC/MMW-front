@@ -45,14 +45,22 @@ const webpackConfig =
     open: true,
     historyApiFallback: {
       //indx.htmlの変更
-      index: path.join("html","MachineManageWeb.html")
+      index: "MachineManageWeb.html",
+      rewrites: [{ from: /^\/*/, to: 'MachineManageWeb.html'}]
     },
     // webpack外のリソースを指定する。(本来)
-    static: {
-      directory: path.join(__dirname, "dist", "public"),
-      publicPath: "/public",
-      serveIndex: true
-    }
+    static: [
+      {
+        directory: path.join(__dirname, "dist", "public"),
+        publicPath: "/public",
+        // serveIndex: true
+      },
+      {
+        directory: path.join(__dirname, "dist", "html"),
+        publicPath: "/",
+        serveIndex: true
+      }
+    ]
   },
   module: {
     rules: [
@@ -71,13 +79,14 @@ const webpackConfig =
                 "minify",
                 "@babel/preset-env",
                 "@babel/preset-react",
+                "@babel/preset-typescript"
                 // "minify-dead-code-elimination",
               ],
             },
           },
-          {
-            loader: "ts-loader"
-          }
+          // {
+          //   loader: "ts-loader"
+          // }
         ],
         exclude: /node_modules/,
       },

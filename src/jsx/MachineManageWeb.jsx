@@ -23,7 +23,10 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<Top />} />
         <Route path="/machines" element={<Machines />} />
-        <Route path="systems" element={<Systems />} />
+        <Route path="/systems" element={<Systems />} />
+        <Route path="/products" element={<Systems />} />
+        <Route path="/companies" element={<Systems />} />
+        <Route path="/users" element={<Systems />} />
       </Routes>
     </Router>
 
