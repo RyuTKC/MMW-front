@@ -45,21 +45,17 @@ const webpackConfig =
     open: true,
     historyApiFallback: {
       //indx.htmlの変更
-      index: "MachineManageWeb.html",
-      rewrites: [{ from: /^\/*/, to: 'MachineManageWeb.html'}]
+      // index: path.join("/", "html","/MachineManageWeb.html"),
+      rewrites: [{ from: /^\/*/, to: '/html/MachineManageWeb.html'}],
+      // rewrites: [{ from: /\//, to: 'html/MachineManageWeb.html'}],
     },
-    // webpack外のリソースを指定する。(本来)
+    // webpack外のリソースを指定する。
     static: [
       {
         directory: path.join(__dirname, "dist", "public"),
         publicPath: "/public",
         // serveIndex: true
       },
-      {
-        directory: path.join(__dirname, "dist", "html"),
-        publicPath: "/",
-        serveIndex: true
-      }
     ]
   },
   module: {
@@ -70,7 +66,7 @@ const webpackConfig =
       // react設定
       {
         //対象ファイルはjsとjsx
-        test: /\.(js|jsx|tsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: [
           {
             loader: "babel-loader",
@@ -186,12 +182,11 @@ const src = "./src/";
 const dist = "./dist/";
 
 // javascript
-const srcJs = src + "jsx";
-const distJs = dist + "jsx";
+const srcJs = src + "react";
 
 // jsファイルentry化
 glob
-  .sync("*.jsx", {
+  .sync("*.[jt]sx", {
     cwd: srcJs,
   })
   .map((key) => {

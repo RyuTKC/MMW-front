@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
 
 
 // hooks and no name function export
@@ -19,6 +20,7 @@ export default (props) =>  {
       <input type="input" value={inputValue} onChange={setInput}></input>
       <button onClick={setOutput}>出すもの変えるボタン</button>
       <h2>{outputValue}</h2>
+      <Link to="machines">ためしてみる？</Link>
     </>
   );
 }
