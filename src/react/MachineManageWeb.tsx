@@ -1,4 +1,5 @@
 import React from "react";
+import {VFC} from "react";
 import ReactDOM from "react-dom";
 import "../style/ReactTest.scss";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"

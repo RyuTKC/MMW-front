@@ -75,14 +75,14 @@ const webpackConfig =
                 "minify",
                 "@babel/preset-env",
                 "@babel/preset-react",
-                "@babel/preset-typescript"
+                // "@babel/preset-typescript"
                 // "minify-dead-code-elimination",
               ],
             },
           },
-          // {
-          //   loader: "ts-loader"
-          // }
+          {
+            loader: "ts-loader"
+          }
         ],
         exclude: /node_modules/,
       },
@@ -169,7 +169,7 @@ const webpackConfig =
   ],
   // import名前解決のルール
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", "css", "scss", "sass"],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".sass"],
   },
   stats: {
     children: true,
