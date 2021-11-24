@@ -25,7 +25,6 @@ ReactDOM.render(
       </ul>
       <Routing/>
     </Router>
-
   </React.StrictMode>,
   target
 );

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { VFC } from "react";
 import axios from "axios";
-import {appConfig} from "../config/_setConfig.ts";
+import { appConfig } from "../config/_setConfig";
 
-export default () => {
+const Machines: VFC = () => {
     const getMachines = () => {
         axios.get("v1/machines");
     }
@@ -16,4 +16,6 @@ export default () => {
             <button onClick={getMachines}>now</button>
         </main>
     );
-}
+};
+
+export default Machines;

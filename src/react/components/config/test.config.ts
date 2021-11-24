@@ -1,4 +1,4 @@
-import confTemplate from "./_template.config";
+import confTemplate from "./config";
 
 let config: confTemplate;
 

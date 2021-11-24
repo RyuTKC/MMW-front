@@ -2,7 +2,7 @@ import React from "react";
 import Machines from "./Machines";
 import Systems from "./Systems";
 import Top from "./Top";
-import { BrowserRouter as Router, Switch, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 
 export default ()=> {
     return (
