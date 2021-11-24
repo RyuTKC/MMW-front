@@ -182,7 +182,7 @@ const src = "./src/";
 const dist = "./dist/";
 
 // javascript
-const srcJs = src + "react";
+const srcJs = src + "js";
 
 // jsファイルentry化
 glob
