@@ -165,12 +165,16 @@ const webpackConfig =
       chunkFilename: "bundle.css",
     }),
     // ビルドのクリーン
-    // new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(),
   ],
   // import名前解決のルール
   resolve: {
     alias: {
-      "root": path.resolve(".", "src", "js")
+      "js": path.resolve(".", "src", "js"),
+      "style": path.resolve(".", "src", "style"),
+      "image": path.resolve(".", "src", "image"),
+      "html": path.resolve(".", "src", "html"),
+
     },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".sass"],
   },

@@ -1,6 +1,6 @@
 import React, { VFC } from "react";
 import axios from "axios";
-import { appConfig } from "root/config/_setConfig";
+import { appConfig } from "js/config/_setConfig";
 // import a from "root/config/_setConfig";
 
 const Machines: VFC = () => {

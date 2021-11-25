@@ -1,16 +1,22 @@
-const development = {
+// interface appConfig {
+//     API_URL: string,
+//     VERSION: string,
+// }
+import * as a from "MMW";
+
+const development: appConfig = {
     API_URL: "http://localhost:3000",
-    VERSION: "",
+    VERSION: "v1",
 };
 
-const test = {
+const test: appConfig = {
     API_URL: "http://localhost:3000",
-    VERSION: "",
+    VERSION: "v1",
 };
 
-const production = {
+const production: appConfig = {
     API_URL: "http://localhost:3000",
-    VERSION: "",
+    VERSION: "v1",
 };
 
 
