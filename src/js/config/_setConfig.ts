@@ -1,6 +1,17 @@
-import {default as development} from "./develepment.config";
-import {default as test} from "./test.config";
-import {default as production} from "./production.config";
+const development = {
+    API_URL: "http://localhost:3000",
+    VERSION: "",
+};
+
+const test = {
+    API_URL: "http://localhost:3000",
+    VERSION: "",
+};
+
+const production = {
+    API_URL: "http://localhost:3000",
+    VERSION: "",
+};
 
 
-export {development as appConfig};
+export { development as appConfig };

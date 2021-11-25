@@ -46,7 +46,7 @@ const webpackConfig =
     historyApiFallback: {
       //indx.htmlの変更
       // index: path.join("/", "html","/MachineManageWeb.html"),
-      rewrites: [{ from: /^\/*/, to: '/html/MachineManageWeb.html'}],
+      rewrites: [{ from: /^\/*/, to: '/html/MachineManageWeb.html' }],
       // rewrites: [{ from: /\//, to: 'html/MachineManageWeb.html'}],
     },
     // webpack外のリソースを指定する。
@@ -169,6 +169,9 @@ const webpackConfig =
   ],
   // import名前解決のルール
   resolve: {
+    alias: {
+      "root": path.resolve(".", "src", "js")
+    },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".sass"],
   },
   stats: {
