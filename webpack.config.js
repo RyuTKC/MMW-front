@@ -171,6 +171,7 @@ const webpackConfig =
   resolve: {
     alias: {
       "js": path.resolve(".", "src", "js"),
+      "appConfig": ["js/config/appConfig.ts"],
       "style": path.resolve(".", "src", "style"),
       "image": path.resolve(".", "src", "image"),
       "html": path.resolve(".", "src", "html"),

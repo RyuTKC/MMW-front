@@ -1,11 +1,11 @@
 import React, { VFC } from "react";
 import axios from "axios";
-import { appConfig } from "js/config/_setConfig";
-// import a from "root/config/_setConfig";
+import { appConfig } from "appConfig";
+import {Link} from "react-router-dom";
 
 const Machines: VFC = () => {
     const getMachines = () => {
-        axios.get("v1/machines");
+        axios.get("/machines");
     }
     axios.defaults.baseURL = appConfig.API_URL;
     // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
@@ -15,6 +15,8 @@ const Machines: VFC = () => {
         <main>
             <h2>I am Machines</h2>
             <button onClick={getMachines}>now</button>
+            <Link to="/systems"> go to systems</Link>
+
         </main>
     );
 };
