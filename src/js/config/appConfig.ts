@@ -1,31 +1,26 @@
-import axios, {AxiosStatic} from "axios";
+import axios, { AxiosStatic } from "axios";
+import path from "path";
 
+import { development } from "./development";
+// import { test } from "./test";
+// import { production } from "./production";
 
+class AppConfig {
+    private _axios: AxiosStatic;
 
-declare interface configTemp {
-    API_URL: string,
-    VERSION: string,
-    axios: AxiosStatic
+    constructor(param: MMW.configParam) {
+        axios.defaults.baseURL = path.join(param.API_URL, param.VERSION);
+        axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        this._axios = axios;
+    }
+
+    get axios(): AxiosStatic {
+        return this._axios;
+    }
+
 }
 
+const config = new AppConfig(development);
 
-const development: configTemp = {
-    API_URL: "http://localhost:3000",
-    VERSION: "v1",
-    axios: axios
-};
-
-const test: configTemp = {
-    API_URL: "http://localhost:3000",
-    VERSION: "v1",
-    axios: axios
-};
-
-const production: configTemp = {
-    API_URL: "http://localhost:3000",
-    VERSION: "v1",
-    axios: axios
-};
-
-
-export { development as appConfig, };
+export { config as appConfig };

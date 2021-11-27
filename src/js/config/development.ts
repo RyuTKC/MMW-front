@@ -1,11 +1,16 @@
 import axios, {AxiosStatic} from "axios";
-
-const development: configTemp = {
+// import * as a from "MMW";
+const development: MMW.configParam = {
     API_URL: "http://localhost:3000",
     VERSION: "v1",
-    axios: axios
+    CONTROLLER:{
+        machines: {
+            search: "search",
+        },
+        companies: {},
+        system_masters:{},
+        products:{}
+    }
 };
-
-
 
 export { development };

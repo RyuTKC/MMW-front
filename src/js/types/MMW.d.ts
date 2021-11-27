@@ -1,6 +1,9 @@
 declare module MMW {
-  export interface appConfig {
+
+  export interface configParam {
     API_URL: string,
     VERSION: string,
+    CONTROLLER: {}
   }
+
 }
