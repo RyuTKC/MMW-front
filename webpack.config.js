@@ -78,6 +78,7 @@ const webpackConfig =
                 // "@babel/preset-typescript"
                 // "minify-dead-code-elimination",
               ],
+              sourceMap: true,
             },
           },
           {
@@ -175,7 +176,6 @@ const webpackConfig =
       "style": path.resolve(".", "src", "style"),
       "image": path.resolve(".", "src", "image"),
       "html": path.resolve(".", "src", "html"),
-
     },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".sass"],
   },

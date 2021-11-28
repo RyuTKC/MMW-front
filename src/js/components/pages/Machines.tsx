@@ -1,11 +1,11 @@
 import React, { VFC } from "react";
-import axios from "axios";
 import { appConfig } from "appConfig";
+// import * as MMW from "MMW";
 import {Link} from "react-router-dom";
 
 const Machines: VFC = () => {
     const getMachines = () => {
-        axios.get("/machines");
+        appConfig.axios.get(MMW.Machines.root);
     }
 
 
