@@ -78,7 +78,9 @@ const webpackConfig =
                 [
                   "@babel/preset-env",
                   {
-                    "targets": "> 1%, IE 11,IE 9"
+                    "targets": {
+                      "ie": 9
+                    }
                   }
                 ],
                 "@babel/preset-react",

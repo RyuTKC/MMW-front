@@ -36,6 +36,7 @@
     "babel-preset-minify": "^0.5.1",
     "browserslist": "^4.17.3",
     "clean-webpack-plugin": "^4.0.0",
+    "core-js": "^3.19.1",
     "css-loader": "^6.3.0",
     "dart-sass": "^1.25.0",
     "fibers": "^5.0.0",
