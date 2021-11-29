@@ -1,5 +1,3 @@
-// import * as MMW from "MMW";
-
 const development: MMW.configParam = {
     API_URL: "http://localhost:3000",
     VERSION: "v1",

@@ -50,6 +50,7 @@
     "react-router-dom": "^6.0.1",
     "sass-loader": "^12.1.0",
     "ts-loader": "^9.2.6",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.5.2",
     "url-loader": "^4.1.1",
     "webpack": "^5.57.1",

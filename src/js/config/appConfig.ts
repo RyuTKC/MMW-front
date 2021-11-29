@@ -1,25 +1,23 @@
 import axios, { AxiosStatic } from "axios";
-import path from "path";
-// import * as MMW from "MMW";
+import { MachinesAPI } from "./commonConfig"
 import { development } from "./development";
-// import { test } from "./test";
-// import { production } from "./production";
-class AppConfig {
-    private _axios: AxiosStatic;
 
+class AppConfig {
     constructor(param: MMW.configParam) {
         axios.defaults.baseURL = param.API_URL + "/" + param.VERSION;
-        axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        this._axios = axios;
+        // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+        // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     }
 
     get axios(): AxiosStatic {
-        return this._axios;
+        return axios;
     }
 
+    doAPI<T>(apiMehod: T): void {
+    }
 }
 
 const config = new AppConfig(development);
 
 export { config as appConfig };
+export { MachinesAPI as MachinesAPI };

@@ -5,15 +5,4 @@ declare namespace MMW {
     VERSION: string,
   }
 
-  const Machines = {
-    root: "machines",
-    search: "search",
-    show: "show",
-    exchange: "exchange",
-    edit_by_qr: "",
-
-  } as const;
-
-  export type Machines = typeof Machines[keyof typeof Machines];
-
 }

@@ -11,6 +11,8 @@ const RemoveEmptyScripts = require("webpack-remove-empty-scripts");
 // コンパイルディレクトリをクリーン
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+//tsconfigのimportルールを引き継ぐ
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const webpack = require("webpack");
 const entries = {};
 
@@ -73,10 +75,14 @@ const webpackConfig =
             options: {
               presets: [
                 "minify",
-                "@babel/preset-env",
+                [
+                  "@babel/preset-env",
+                  {
+                    "targets": "> 1%, IE 11,IE 9"
+                  }
+                ],
                 "@babel/preset-react",
                 // "@babel/preset-typescript"
-                // "minify-dead-code-elimination",
               ],
               sourceMap: true,
             },
@@ -170,13 +176,9 @@ const webpackConfig =
   ],
   // import名前解決のルール
   resolve: {
-    alias: {
-      "js": path.resolve(".", "src", "js"),
-      "appConfig": ["js/config/appConfig.ts"],
-      "style": path.resolve(".", "src", "style"),
-      "image": path.resolve(".", "src", "image"),
-      "html": path.resolve(".", "src", "html"),
-    },
+    plugins: [
+      new TsconfigPathsPlugin()
+    ],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".sass"],
   },
   stats: {
