@@ -18,11 +18,6 @@
     "next-build": "next build",
     "next-start": "next start"
   },
-  "browserslist": [
-    "> 1%",
-    "IE 11",
-    "IE 9"
-  ],
   "dependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",

@@ -20,6 +20,7 @@ const webpackConfig =
 {
   // モード設定
   mode: "development",
+  target: ["web", "es5"],
   // エントリポイント
   entry: entries,
   // jsファイルの出力先
@@ -78,9 +79,12 @@ const webpackConfig =
                 [
                   "@babel/preset-env",
                   {
-                    "targets": {
-                      "ie": 9
-                    }
+                    "useBuiltIns": "usage",
+                    "corejs":{
+                      "version":3,
+                      "proposals": false
+                    },
+                    "targets": "> 1%, IE 11, IE 9"
                   }
                 ],
                 "@babel/preset-react",
