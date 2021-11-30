@@ -36,6 +36,7 @@ const webpackConfig =
       chunks: "initial",
     },
   },
+  devtool: "source-map",
   // webpack-dev-server(ローカルデバッグサーバ)起動設定
   devServer: {
     // ポート
@@ -79,12 +80,8 @@ const webpackConfig =
                 [
                   "@babel/preset-env",
                   {
-                    "useBuiltIns": "usage",
-                    "corejs":{
-                      "version":3,
-                      "proposals": false
-                    },
-                    "targets": "> 1%, IE 11, IE 9"
+                    useBuiltIns: "usage",
+                    corejs: 3
                   }
                 ],
                 "@babel/preset-react",
