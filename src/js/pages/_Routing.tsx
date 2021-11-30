@@ -1,3 +1,4 @@
+import "core-js/stable";
 import React from "react";
 import Machines from "./Machines";
 import Systems from "./Systems";

@@ -1,4 +1,5 @@
 import React from "react";
+import "core-js/stable";
 import { VFC } from "react";
 import ReactDOM from "react-dom";
 // import "style/ReactTest.scss";

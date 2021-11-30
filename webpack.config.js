@@ -80,7 +80,7 @@ const webpackConfig =
                 [
                   "@babel/preset-env",
                   {
-                    useBuiltIns: "usage",
+                    useBuiltIns: "entry",
                     corejs: 3
                   }
                 ],
