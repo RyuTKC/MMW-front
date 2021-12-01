@@ -2,27 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link } from "react-router-dom" /* v5 */
 // import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom" /* v6 */
-import Button from "@material-ui/core/Button";
-import { HeaderComp, FooterComp, NavComp } from "components/_Commons/commonSet";
-import Routing from "pages/_Routing";
+import { Header, Footer, Nav } from "components/_Commons/commonSet";
+import Routing from "js/pages/_RoutingV5";
 
-const target = document.getElementById("app");
+const target = document.getElementById("body");
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <HeaderComp />
-      <NavComp />
-      <ul>
-        <li>
-          <Button variant="contained" color="primary">どうじゃ？</Button>
-        </li>
-        <li>
-          <Link to="/machines"> go to machines</Link>
-        </li>
-        <li>
-        </li>
-      </ul>
-      <FooterComp />
+      <Header />
+      <Nav />
+      <Footer />
       <Routing />
     </Router>
   </React.StrictMode>,
