@@ -3,7 +3,7 @@ import { appConfig, MachinesAPI } from "appConfig";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Machines: VFC = () => {
+export default () => {
     const getMachines = () => {
         appConfig.axios.get(MachinesAPI.root)
             .then((res) => console.log(res));
@@ -24,5 +24,3 @@ const Machines: VFC = () => {
         </main>
     );
 };
-
-export default Machines;
