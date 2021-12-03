@@ -4,5 +4,8 @@ declare namespace MMW {
     API_URL: string,
     VERSION: string,
   }
-
+  export interface getMachines {
+    API_URL: string,
+    VERSION: string,
+  }
 }

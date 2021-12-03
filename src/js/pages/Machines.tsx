@@ -7,9 +7,12 @@ export default () => {
   const getMachines = () => {
     const res = appConfig.axios.get<JSON>(MachinesAPI.root)
       .then((res) =>
-        console.log(res.data, typeof res.data));
+        console.log(res.data, typeof res.data))
+      .catch(
+        error => console.error(error)
+      )
   }
-
+  
   // リロード更新
   useEffect(getMachines, [])
 
