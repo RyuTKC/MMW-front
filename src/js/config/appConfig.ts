@@ -1,5 +1,5 @@
 import axios, { AxiosStatic } from "axios";
-import { MachinesAPI, RouteList } from "./common"
+import { MachinesAPI, SystemsAPI, RouteList } from "./commonConfig"
 import { development } from "./development";
 
 
@@ -22,4 +22,5 @@ const config = new AppConfig(development);
 
 export { config as appConfig };
 export { MachinesAPI as MachinesAPI };
+export { SystemsAPI as SystemsAPI };
 export { RouteList as RouteList }

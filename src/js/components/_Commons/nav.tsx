@@ -3,14 +3,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab";
-import { RouteList } from "js/config/common";
+import { RouteList } from "js/config/commonConfig";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default () => {
   const changeTabs = (e: React.ChangeEvent<{}>, value: number) => {
     setValue(value);
-    console.log(history.location.pathname);
   }
   const reloadTabFix = (): number => {
     switch (history.location.pathname) {
