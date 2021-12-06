@@ -9,7 +9,6 @@ export default () => {
     appConfig.axios.get<MMW.machineData[]>(MachinesAPI.root)
       .then(res => {
         setMachineDatas(res.data)
-        console.log(res.data)
       })
       .catch(error => {
         console.error(error)

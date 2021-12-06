@@ -31,4 +31,14 @@ declare namespace MMW {
     created_at: string,
     updated_at: string,
   }
+
+  export interface productData{
+    product_id: number,
+    product_name: string,
+    model_number: string,
+    prod_type: number,
+    company_id: number,
+    created_at: string,
+    updated_at: string,
+  }
 }

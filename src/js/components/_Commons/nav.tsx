@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab";
-import { RouteList } from "js/config/commonConfig";
+import { RouteList } from "appConfig";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
