@@ -2,30 +2,34 @@ import React, { useState } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@material-ui/data-grid"
+import { getNameOfDeclaration } from "typescript";
 
 type Props = {
   datas?: MMW.machineData[]
 }
-
+const Table = styled.table`
+  font-size: 16px;
+  color: #42a5f5;
+  @media (max-width: 640px){
+    font-size: 32px;
+    color: #444444;
+  }
+  @media print{
+    font-size: 32px;
+    color: #444444;
+  }
+  `
 export default ({ datas }: Props): JSX.Element => {
-
-  const Table = styled.table`
-    font-size: 16px;
-    color: #42a5f5;
-    @media (max-width: 640px){
-      font-size: 32px;
-      color: #444444;
-    }
-    @media print{
-      font-size: 32px;
-      color: #444444;
-    }
-    `
-    // const columns: GridColDef[]=[
-    //   {
-    //     field: 
-    //   }
-    // ]
+  type mappedConst<T extends string>  ={
+    [key in T]: key;
+  };
+  type a = mappedConst<keyof MMW.machineData>
+  console.log()
+  // const columns: GridColDef[]=[
+  //   {
+  //     field: b
+  //   }
+  // ]
 
   return (
     <Table>
