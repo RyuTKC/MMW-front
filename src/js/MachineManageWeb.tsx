@@ -8,12 +8,12 @@ import Routing from "js/pages/_RoutingV5";
 const target = document.getElementById("app");
 ReactDOM.render(
   <React.StrictMode>
+    <Header />
     <Router>
-      <Header />
       <Nav />
-      <Footer />
       <Routing />
     </Router>
+    <Footer />
   </React.StrictMode>,
   target
 );

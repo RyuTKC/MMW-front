@@ -1,15 +1,34 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
-
+import styled from "styled-components";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@material-ui/data-grid"
 
 type Props = {
-  datas: MMW.machineData[]
+  datas?: MMW.machineData[]
 }
 
 export default ({ datas }: Props): JSX.Element => {
 
+  const Table = styled.table`
+    font-size: 16px;
+    color: #42a5f5;
+    @media (max-width: 640px){
+      font-size: 32px;
+      color: #444444;
+    }
+    @media print{
+      font-size: 32px;
+      color: #444444;
+    }
+    `
+    // const columns: GridColDef[]=[
+    //   {
+    //     field: 
+    //   }
+    // ]
+
   return (
-    <table>
+    <Table>
       <thead>
         <tr>
           <td>machine_id</td>
@@ -30,9 +49,9 @@ export default ({ datas }: Props): JSX.Element => {
         </tr>
       </thead>
       <tbody>
-        {datas.map((value) => {
+        {datas?.map((value, index) => {
           return (
-            <tr>
+            <tr key={index}>
               <td>{value.machine_id}</td>
               <td>{value.machine_name}</td>
               <td>{value.host_name}</td>
@@ -52,6 +71,6 @@ export default ({ datas }: Props): JSX.Element => {
           )
         })}
       </tbody>
-    </table>
+    </Table>
   );
 }

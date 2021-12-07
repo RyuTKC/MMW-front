@@ -3,7 +3,7 @@ import { render } from "react-dom";
 
 
 type Props = {
-  datas: MMW.systemData[]
+  datas?: MMW.systemData[]
 }
 
 export default ({ datas }: Props): JSX.Element => {
@@ -19,7 +19,7 @@ export default ({ datas }: Props): JSX.Element => {
           </tr>
         </thead>
         <tbody>
-          {datas.map((value) => {
+          {datas?.map((value) => {
             return (
               <tr>
                 <td>{value.system_id}</td>

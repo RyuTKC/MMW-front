@@ -3,7 +3,7 @@ import { render } from "react-dom";
 
 
 type Props = {
-  datas: MMW.productData[]
+  datas?: MMW.productData[]
 }
 
 export default ({ datas }: Props): JSX.Element => {
@@ -21,7 +21,7 @@ export default ({ datas }: Props): JSX.Element => {
         </tr>
       </thead>
       <tbody>
-        {datas.map((value) => {
+        {datas?.map((value) => {
           return (
             <tr>
               <td>{value.product_id}</td>

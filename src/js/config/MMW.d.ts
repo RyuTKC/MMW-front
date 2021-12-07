@@ -24,7 +24,7 @@ declare namespace MMW {
     vender_id: number
   }
 
-  export interface systemData{
+  export interface systemData {
     system_id: number,
     system_name: string,
     system_en_name: string,
@@ -32,7 +32,7 @@ declare namespace MMW {
     updated_at: string,
   }
 
-  export interface productData{
+  export interface productData {
     product_id: number,
     product_name: string,
     model_number: string,
