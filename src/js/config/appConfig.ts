@@ -8,11 +8,11 @@ class AppConfig {
         // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
         // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     }
-    
+
     get axios(): AxiosStatic {
         return axios;
     }
-    
+
     doAPI<T>(apiMehod: T): void {
     }
 }
@@ -58,8 +58,29 @@ const RouteList = {
 }
 type RouteList = typeof RouteList[keyof typeof RouteList]
 
+const defaultMachine: Readonly<MMW.machineData> = {
+    machine_id: -1,
+    machine_name: "",
+    administrator: "",
+    host_name: "",
+    place: "",
+    qr_or_barcode: "",
+    maintenance_date: "",
+    assurance: "",
+    serial_number: "",
+    purchase_date: "",
+    notes: "",
+    product_id: -1,
+    status_type: -1,
+    role_id: -1,
+    vender_id: -1,
+    created_at: "",
+    updated_at: ""
+
+} as const
 
 export { config as appConfig };
+export { defaultMachine as defaultMachine }
 export { MachinesAPI as MachinesAPI };
 export { SystemsAPI as SystemsAPI };
 export { ProductsAPI as ProductsAPI };

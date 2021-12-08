@@ -5,23 +5,23 @@ declare namespace MMW {
     VERSION: string,
   }
   export interface machineData {
-    administrator: string
-    assurance: string
-    created_at: string
-    host_name: string
     machine_id: number
     machine_name: string
-    maintenance_date: string
-    notes: string
+    administrator: string
+    host_name: string
     place: string
-    product_id: number
-    purchase_date: string
     qr_or_barcode: string
-    role_id: number
+    maintenance_date: string
+    assurance: string
     serial_number: string
+    purchase_date: string
+    notes: string
+    product_id: number
     status_type: number
-    updated_at: string
+    role_id: number
     vender_id: number
+    created_at: string
+    updated_at: string
   }
 
   export interface systemData {

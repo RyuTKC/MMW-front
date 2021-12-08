@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
+import { defaultMachine } from "appConfig";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@material-ui/data-grid"
-import { getNameOfDeclaration } from "typescript";
 
 type Props = {
   datas?: MMW.machineData[]
@@ -19,12 +19,8 @@ const Table = styled.table`
     color: #444444;
   }
   `
-export default ({ datas }: Props): JSX.Element => {
-  type mappedConst<T extends string>  ={
-    [key in T]: key;
-  };
-  type a = mappedConst<keyof MMW.machineData>
-  console.log()
+export default ({ datas = [defaultMachine] }: Props): JSX.Element => {
+  console.log(Object.keys(defaultMachine));
   // const columns: GridColDef[]=[
   //   {
   //     field: b

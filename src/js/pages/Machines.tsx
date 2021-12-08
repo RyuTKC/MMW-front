@@ -1,5 +1,5 @@
 import React, { VFC, useEffect, useState } from "react";
-import { appConfig, MachinesAPI } from "appConfig";
+import { appConfig, MachinesAPI, defaultMachine } from "appConfig";
 import Table from "js/components/Machines/Table"
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -15,7 +15,7 @@ export default () => {
       })
   }
 
-  const [machineDatas, setMachineDatas] = useState<MMW.machineData[]>([]);
+  const [machineDatas, setMachineDatas] = useState<MMW.machineData[]>([defaultMachine]);
   // リロード更新
   useEffect(getMachines, [])
 
