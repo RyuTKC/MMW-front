@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { appConfig, SystemsAPI } from "appConfig";
+import { appConfig, SystemsAPI, systemData } from "appConfig";
 import Table from "components/Systems/Table"
 
 export default () => {
     const getSystems = (): void => {
-        appConfig.axios.get<MMW.systemData[]>(SystemsAPI.root)
+        appConfig.axios.get<systemData[]>(SystemsAPI.root)
             .then(res => {
                 setSystemDatas(res.data)
                 console.log(res.data)
@@ -14,7 +14,7 @@ export default () => {
             })
     }
 
-    const [systemDatas, setSystemDatas] = useState<MMW.systemData[]>([]);
+    const [systemDatas, setSystemDatas] = useState<systemData[]>([]);
     // リロード更新
     useEffect(getSystems, [])
 

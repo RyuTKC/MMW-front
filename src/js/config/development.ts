@@ -1,4 +1,6 @@
-const development: MMW.configParam = {
+import { configParam } from "appConfig";
+
+const development: configParam = {
     API_URL: "http://localhost:3000",
     VERSION: "v1",
 };

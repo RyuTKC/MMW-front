@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { appConfig, ProductsAPI } from "appConfig"
+import { appConfig, ProductsAPI, productData } from "appConfig"
 import Table from "components/Products/Table"
 
 export default () => {
     const getProducts = () => {
-        appConfig.axios.get<MMW.productData[]>(ProductsAPI.root)
+        appConfig.axios.get<productData[]>(ProductsAPI.root)
             .then(res => {
                 setProductDatas(res.data)
             })
             .catch()
     }
 
-    const [productDatas, setProductDatas] = useState<MMW.productData[]>([])
+    const [productDatas, setProductDatas] = useState<productData[]>([])
     useEffect(getProducts, [])
 
     return (

@@ -1,9 +1,10 @@
+import { systemData } from "js/config/appConfig";
 import React, { useState } from "react";
 import { render } from "react-dom";
 
 
 type Props = {
-  datas?: MMW.systemData[]
+  datas?: systemData[]
 }
 
 export default ({ datas }: Props): JSX.Element => {

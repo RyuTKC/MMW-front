@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { productData } from "appConfig";
 import { render } from "react-dom";
 
 
 type Props = {
-  datas?: MMW.productData[]
+  datas?: productData[]
 }
 
 export default ({ datas }: Props): JSX.Element => {
