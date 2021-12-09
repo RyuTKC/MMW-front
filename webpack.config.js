@@ -64,98 +64,98 @@ const webpackConfig =
   },
   module: {
     rules: [
-      // {
-      // それぞれのローダーに対して一度だけ行使
-      // oneOf: [
-      // react設定
       {
-        //対象ファイルはjsとjsx
-        test: /\.(js|jsx|ts|tsx)$/,
-        use: [
+        // それぞれのローダーに対して一度だけ行使
+        oneOf: [
+          // react設定
           {
-            loader: "babel-loader",
-            options: {
-              presets: [
-                "minify",
-                [
-                  "@babel/preset-env",
-                  {
-                    useBuiltIns: "entry",
-                    corejs: 3
-                  }
-                ],
-                "@babel/preset-react",
-                // "@babel/preset-typescript"
-              ],
-              sourceMap: true,
-            },
-          },
-          {
-            loader: "ts-loader"
-          }
-        ],
-        exclude: /node_modules/,
-      },
-      // css設定
-      {
-        test: /\.(|sass|scss|css)$/,
-        use: [
-          // MiniCssExtractPluginのローダー
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-            }
-          },
-          // css-loaderの設定（cssのバンドル）
-          {
-            loader: "css-loader",
-            options: {
-              // url()メソッドの取り込み禁止
-              url: false,
-              //ソースマップ利用有無
-              sourceMap: false,
-            },
-          },
-          // sass-loaderの設定（sass→css変換）
-          {
-            loader: "sass-loader",
-            options: {
-              // コンパイラにdart-sass優先
-              implementation: require("dart-sass"),
-              sassOptions: {
-                fiber: require("fibers"),
+            //対象ファイルはjsとjsx
+            test: /\.(js|jsx|ts|tsx)$/,
+            use: [
+              {
+                loader: "babel-loader",
+                options: {
+                  presets: [
+                    "minify",
+                    [
+                      "@babel/preset-env",
+                      {
+                        useBuiltIns: "entry",
+                        corejs: 3
+                      }
+                    ],
+                    "@babel/preset-react",
+                    // "@babel/preset-typescript"
+                  ],
+                  sourceMap: true,
+                },
               },
-              sourceMap: false,
-            },
+              {
+                loader: "ts-loader"
+              }
+            ],
+            exclude: /node_modules/,
           },
-        ],
-        exclude: /node_modules/,
-      },
-      // svg読み込み(要検証)
-      {
-        test: /\.svg$/,
-        use: [
+          // css設定
           {
-            loader: "url-loader",
-            options: {
-              encording: "utf8",
-            },
+            test: /\.(|sass|scss|css)$/,
+            use: [
+              // MiniCssExtractPluginのローダー
+              {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                }
+              },
+              // css-loaderの設定（cssのバンドル）
+              {
+                loader: "css-loader",
+                options: {
+                  // url()メソッドの取り込み禁止
+                  url: false,
+                  //ソースマップ利用有無
+                  sourceMap: false,
+                },
+              },
+              // sass-loaderの設定（sass→css変換）
+              {
+                loader: "sass-loader",
+                options: {
+                  // コンパイラにdart-sass優先
+                  implementation: require("dart-sass"),
+                  sassOptions: {
+                    fiber: require("fibers"),
+                  },
+                  sourceMap: false,
+                },
+              },
+            ],
+            exclude: /node_modules/,
           },
-        ],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$i/,
-        use: [
+          // svg読み込み(要検証)
           {
-            loader: "file-loader",
-            options: {
-              name: "[path][name].[ext]",
-            },
+            test: /\.svg$/,
+            use: [
+              {
+                loader: "url-loader",
+                options: {
+                  encording: "utf8",
+                },
+              },
+            ],
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)$i/,
+            use: [
+              {
+                loader: "file-loader",
+                options: {
+                  name: "[path][name].[ext]",
+                },
+              },
+            ],
           },
         ],
       },
-      // ],
-      // },
     ],
   },
   //プラグイン設定

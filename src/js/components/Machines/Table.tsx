@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
 import { MachineData, machineData } from "appConfig";
-import { DataGrid, GridColDef } from "@material-ui/data-grid"
+import MTable from "@material-ui/core/Table";
+import MTableBody from "@material-ui/core/TableBody";
 
 type Props = {
   datas?: machineData[]
 }
-const Table = styled.table`
+const MyTable = styled.table`
   font-size: 16px;
   color: #42a5f5;
   @media (max-width: 640px){
@@ -20,29 +21,17 @@ const Table = styled.table`
   }
   `
 
+const A = styled(MTable)`
+
+`
 export default ({ datas = [new MachineData] }: Props): JSX.Element => {
-  const columns: GridColDef[] = new Array<GridColDef>();
-  Object.keys(new MachineData).map((v, i)=>{
-    columns.push({
-      field: v,
-      headerName: v,
-      editable: false,
-      disableColumnMenu: false
-    })
-  })
-  const rows = datas
-  console.log(columns)
-  console.log(rows)
+
+
 
   return (
     <>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        checkboxSelection
-        disableSelectionOnClick
-      />
-      {/* <Table>
+      <A></A>
+      {/* <MyTable>
         <thead>
           <tr>
             <td>machine_id</td>
@@ -85,7 +74,7 @@ export default ({ datas = [new MachineData] }: Props): JSX.Element => {
             )
           })}
         </tbody>
-      </Table> */}
+      </MyTable> */}
     </>
   );
 }
