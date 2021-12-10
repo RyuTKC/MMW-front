@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { MachineData, machineData } from "appConfig";
 import MTable from "@material-ui/core/Table";
 import MTableBody from "@material-ui/core/TableBody";
+import MTableHead from "@material-ui/core/TableHead";
+import MTableRow from "@material-ui/core/TableRow";
+import MTableCell from "@material-ui/core/TableCell";
+import MTableSortLabel from "@material-ui/core/TableSortLabel"
 
 type Props = {
   datas?: machineData[]
@@ -21,16 +25,53 @@ const MyTable = styled.table`
   }
   `
 
-const A = styled(MTable)`
-
-`
 export default ({ datas = [new MachineData] }: Props): JSX.Element => {
-
-
 
   return (
     <>
-      <A></A>
+      <MTable>
+        <MTableHead>
+          <MTableRow>
+            {Object.keys(new MachineData).map((v, i) => {
+              return (
+                <>
+                  <MTableCell
+                  // sortDirection={orderBy}
+                  >{v}</MTableCell>
+                  <MTableSortLabel
+                  // active={orderBy === v}
+                  ></MTableSortLabel>
+                </>
+              )
+            })}
+          </MTableRow>
+        </MTableHead>
+        <MTableBody>
+          {datas.map((v, i) => {
+            return (
+              <MTableRow>
+                <MTableCell>{v.machine_id}</MTableCell>
+                <MTableCell>{v.machine_name}</MTableCell>
+                <MTableCell>{v.administrator}</MTableCell>
+                <MTableCell>{v.host_name}</MTableCell>
+                <MTableCell>{v.place}</MTableCell>
+                <MTableCell>{v.qr_or_barcode}</MTableCell>
+                <MTableCell>{v.maintenance_date}</MTableCell>
+                <MTableCell>{v.assurance}</MTableCell>
+                <MTableCell>{v.serial_number}</MTableCell>
+                <MTableCell>{v.purchase_date}</MTableCell>
+                <MTableCell>{v.notes}</MTableCell>
+                <MTableCell>{v.product_id}</MTableCell>
+                <MTableCell>{v.status_type}</MTableCell>
+                <MTableCell>{v.role_id}</MTableCell>
+                <MTableCell>{v.vender_id}</MTableCell>
+                <MTableCell>{v.created_at}</MTableCell>
+                <MTableCell>{v.updated_at}</MTableCell>
+              </MTableRow>
+            )
+          })}
+        </MTableBody>
+      </MTable>
       {/* <MyTable>
         <thead>
           <tr>
