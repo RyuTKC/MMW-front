@@ -25,8 +25,13 @@ const MyTable = styled.table`
   }
   `
 
-export default ({ datas = [new MachineData] }: Props): JSX.Element => {
+const dataSort= ()=>{
+  
+}
 
+
+export default ({ datas = [new MachineData] }: Props): JSX.Element => {
+datas.sort();
   return (
     <>
       <MTable>
