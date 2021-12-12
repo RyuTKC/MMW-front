@@ -14,15 +14,19 @@ export default () => {
         console.error(error)
       })
   }
+  const onClickButton = (e :React.MouseEvent)=>{
+    
+    getMachines;
+  }
 
-  const [machineDatas, setMachineDatas] = useState<machineData[]>([new MachineData()]);
+  const [machineDatas, setMachineDatas] = useState<machineData[]>([]);
   // リロード更新
   useEffect(getMachines, [])
 
   return (
     <main>
       <h2>I am Machines</h2>
-      <button onClick={getMachines}>now</button>
+      <button onClick={onClickButton}>now</button>
       <Table datas={machineDatas}></Table>
     </main>
   );

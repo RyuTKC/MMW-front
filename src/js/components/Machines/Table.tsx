@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
-import { MachineData, machineData } from "appConfig";
+import { MachineData, machineData, productData, systemData } from "appConfig";
 import MTable from "@material-ui/core/Table";
 import MTableBody from "@material-ui/core/TableBody";
 import MTableHead from "@material-ui/core/TableHead";
@@ -9,9 +9,6 @@ import MTableRow from "@material-ui/core/TableRow";
 import MTableCell from "@material-ui/core/TableCell";
 import MTableSortLabel from "@material-ui/core/TableSortLabel"
 
-type Props = {
-  datas?: machineData[]
-}
 const MyTable = styled.table`
   font-size: 16px;
   color: #42a5f5;
@@ -24,57 +21,63 @@ const MyTable = styled.table`
     color: #444444;
   }
   `
+// const dataSort = () => {
+//   // datas.sort();
 
-const dataSort= ()=>{
-  
+// }
+
+type Props = {
+  datas: machineData[] | systemData[] | productData[],
+  order?: "asc" | "desc"
+  orderBy?: string
 }
 
 
-export default ({ datas = [new MachineData] }: Props): JSX.Element => {
-datas.sort();
+export default ({ datas = [], order = "asc", orderBy = "" }: Props): JSX.Element => {
+
+  const sorting = (targetColumn: string) => (e: React.MouseEvent) => {
+    console.log(e);
+    console.log(targetColumn)
+  }
+  const test = (): string=>{return ""}
+
   return (
     <>
       <MTable>
         <MTableHead>
           <MTableRow>
-            {Object.keys(new MachineData).map((v, i) => {
-              return (
-                <>
-                  <MTableCell
+            {Object.keys(new MachineData).map((v, i) => (
+              <React.Fragment key={i}>
+                {/* <MTableCell
                   // sortDirection={orderBy}
-                  >{v}</MTableCell>
+                  ></MTableCell> */}
+                <MTableCell>
                   <MTableSortLabel
-                  // active={orderBy === v}
-                  ></MTableSortLabel>
-                </>
-              )
-            })}
+                    active={orderBy === v}
+                    onClick={sorting(v)}
+                  >
+                    {v}
+                    {/* <span>
+                        {order === "desc"? "sorted descending": "sorted ascending"}
+                      </span> */}
+                  </MTableSortLabel>
+                </MTableCell>
+              </React.Fragment>
+            )
+            )}
           </MTableRow>
         </MTableHead>
         <MTableBody>
-          {datas.map((v, i) => {
-            return (
-              <MTableRow>
-                <MTableCell>{v.machine_id}</MTableCell>
-                <MTableCell>{v.machine_name}</MTableCell>
-                <MTableCell>{v.administrator}</MTableCell>
-                <MTableCell>{v.host_name}</MTableCell>
-                <MTableCell>{v.place}</MTableCell>
-                <MTableCell>{v.qr_or_barcode}</MTableCell>
-                <MTableCell>{v.maintenance_date}</MTableCell>
-                <MTableCell>{v.assurance}</MTableCell>
-                <MTableCell>{v.serial_number}</MTableCell>
-                <MTableCell>{v.purchase_date}</MTableCell>
-                <MTableCell>{v.notes}</MTableCell>
-                <MTableCell>{v.product_id}</MTableCell>
-                <MTableCell>{v.status_type}</MTableCell>
-                <MTableCell>{v.role_id}</MTableCell>
-                <MTableCell>{v.vender_id}</MTableCell>
-                <MTableCell>{v.created_at}</MTableCell>
-                <MTableCell>{v.updated_at}</MTableCell>
-              </MTableRow>
-            )
-          })}
+          {datas.map((v, i) => (
+            <MTableRow key={i}>
+              {Object.values(v).map((v2, i2) => (
+                <MTableCell key={i2}>
+                  {v2}
+                </MTableCell>
+              ))}
+            </MTableRow>
+          )
+          )}
         </MTableBody>
       </MTable>
       {/* <MyTable>
