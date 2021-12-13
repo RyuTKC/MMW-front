@@ -30,14 +30,16 @@ type Props = {
   datas: machineData[] | systemData[] | productData[],
   order?: "asc" | "desc"
   orderBy?: string
+  orderByKey?: keyof machineData
 }
 
 
-export default ({ datas = [], order = "asc", orderBy = "" }: Props): JSX.Element => {
+export default ({ datas = [], order = "asc", orderBy = "", orderByKey= "machine_id"}: Props): JSX.Element => {
 
   const sorting = (targetColumn: string) => (e: React.MouseEvent) => {
     console.log(e);
     console.log(targetColumn)
+    console.log(orderByKey)
   }
   const test = (): string=>{return ""}
 
