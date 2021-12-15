@@ -30,25 +30,31 @@ type Props = {
   datas: machineData[] | systemData[] | productData[],
   order?: "asc" | "desc"
   orderBy?: string
-  orderByKey?: keyof machineData
 }
 
 
-export default ({ datas = [], order = "asc", orderBy = "", orderByKey= "machine_id"}: Props): JSX.Element => {
+export default ({ datas = [], order = "asc", orderBy = ""}: Props): JSX.Element => {
 
-  const sorting = (targetColumn: string) => (e: React.MouseEvent) => {
+  const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
     console.log(e);
     console.log(targetColumn)
-    console.log(orderByKey)
+
   }
-  const test = (): string=>{return ""}
+  const columns = datas.length!== 0? (Object.keys(datas[0])): [];
+  console.log(columns)
+
+  const [sortState, setSortState] = useState({
+    rows: datas,
+    order: "desc",
+    orderBy: columns[0]
+  })
 
   return (
     <>
       <MTable>
         <MTableHead>
           <MTableRow>
-            {Object.keys(new MachineData).map((v, i) => (
+            {columns.map((v, i) => (
               <React.Fragment key={i}>
                 {/* <MTableCell
                   // sortDirection={orderBy}
@@ -56,7 +62,7 @@ export default ({ datas = [], order = "asc", orderBy = "", orderByKey= "machine_
                 <MTableCell>
                   <MTableSortLabel
                     active={orderBy === v}
-                    onClick={sorting(v)}
+                    onClick={sortColumn(v)}
                   >
                     {v}
                     {/* <span>
