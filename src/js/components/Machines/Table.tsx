@@ -41,26 +41,22 @@ type sortObject = {
 
 
 export default ({ datas = [] }: Props): JSX.Element => {
-
-  // function----------------------------------------
-  // const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
-  //   console.log(e);
-  //   console.log(targetColumn)
-  // }
-  const sortColumn = ()=> {
+  const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
+    console.log(datas)
   }
 
   // constant--------------------------------------
   const columns = datas.length !== 0 ? (Object.keys(datas[0])) : [];
 
   // state-----------------------------------------
-  const [sortState, setSortState] = useState<sortObject>({
-    rows: datas,
-    order: "asc",
-    orderBy: columns[0]
-  })
+  const [sortState, setSortState] = useState<sortObject>(
+    {
+      rows: datas,
+      order: "asc",
+      orderBy: columns[0]
+    }
+  )
 
-  // useEffect(sortColumn(columns[0]), [])
 
   return (
     <>
@@ -69,16 +65,15 @@ export default ({ datas = [] }: Props): JSX.Element => {
           <MTableRow>
             {columns.map((v, i) => (
               <React.Fragment key={i}>
-                {/* <MTableCell
-                  // sortDirection={orderBy}
-                  ></MTableCell> */}
+                {console.log(v, sortState.orderBy, columns[0])}
+                {console.log(sortState)}
                 <MTableCell
                   sortDirection={sortState.orderBy === v ? sortState.order : false}
                 >
                   <MTableSortLabel
                     active={sortState.orderBy === v}
                     direction={sortState.order}
-                    onClick={sortColumn}
+                    onClick={sortColumn(v)}
                   >
                     {v}
                     {/* <span>
