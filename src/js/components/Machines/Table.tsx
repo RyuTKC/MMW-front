@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
 import { MachineData, machineData, productData, systemData } from "appConfig";
@@ -26,28 +26,41 @@ const MyTable = styled.table`
 
 // }
 
+// type----------------------------------------------------
+type datasType = machineData[] | systemData[] | productData[]
+type sortType = "asc" | "desc"
 type Props = {
-  datas: machineData[] | systemData[] | productData[],
-  order?: "asc" | "desc"
-  orderBy?: string
+  datas: datasType,
+}
+
+type sortObject = {
+  rows: datasType,
+  order: sortType,
+  orderBy: string
 }
 
 
-export default ({ datas = [], order = "asc", orderBy = ""}: Props): JSX.Element => {
+export default ({ datas = [] }: Props): JSX.Element => {
 
-  const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
-    console.log(e);
-    console.log(targetColumn)
-
+  // function----------------------------------------
+  // const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
+  //   console.log(e);
+  //   console.log(targetColumn)
+  // }
+  const sortColumn = ()=> {
   }
-  const columns = datas.length!== 0? (Object.keys(datas[0])): [];
-  console.log(columns)
 
-  const [sortState, setSortState] = useState({
+  // constant--------------------------------------
+  const columns = datas.length !== 0 ? (Object.keys(datas[0])) : [];
+
+  // state-----------------------------------------
+  const [sortState, setSortState] = useState<sortObject>({
     rows: datas,
-    order: "desc",
+    order: "asc",
     orderBy: columns[0]
   })
+
+  // useEffect(sortColumn(columns[0]), [])
 
   return (
     <>
@@ -59,10 +72,13 @@ export default ({ datas = [], order = "asc", orderBy = ""}: Props): JSX.Element 
                 {/* <MTableCell
                   // sortDirection={orderBy}
                   ></MTableCell> */}
-                <MTableCell>
+                <MTableCell
+                  sortDirection={sortState.orderBy === v ? sortState.order : false}
+                >
                   <MTableSortLabel
-                    active={orderBy === v}
-                    onClick={sortColumn(v)}
+                    active={sortState.orderBy === v}
+                    direction={sortState.order}
+                    onClick={sortColumn}
                   >
                     {v}
                     {/* <span>
