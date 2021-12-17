@@ -27,28 +27,37 @@ const MyTable = styled.table`
 // }
 
 // type----------------------------------------------------
-type datasType = machineData[] | systemData[] | productData[]
+type datasType = (machineData | systemData | productData)[]
+type dataType = machineData | systemData | productData
+
 type sortType = "asc" | "desc"
-type Props = {
-  datas: datasType,
-}
-
 type sortObject = {
-  rows: datasType,
+  rows: machineData[],
   order: sortType,
-  orderBy: string
+  orderBy: keyof machineData
 }
 
-
+type Props = {
+  datas: machineData[],
+}
 export default ({ datas = [] }: Props): JSX.Element => {
-  const sortColumn = (targetColumn: string) => (e: React.MouseEvent) => {
-    console.log(datas)
+  const sortColumn = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
+    if (sortState.orderBy === targetColumn) {
+    }
+
+    const sortResult = sortState.rows.slice().sort((a, b) => {
+      if (a[targetColumn] < b[targetColumn])
+        return 1
+      else if (a[targetColumn] > b[targetColumn])
+        return -1
+      else
+        return 0
+    })
+    console.log(sortResult);
   }
 
-  // constant--------------------------------------
-  const columns = datas.length !== 0 ? (Object.keys(datas[0])) : [];
+  const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
 
-  // state-----------------------------------------
   const [sortState, setSortState] = useState<sortObject>(
     {
       rows: datas,
@@ -56,7 +65,11 @@ export default ({ datas = [] }: Props): JSX.Element => {
       orderBy: columns[0]
     }
   )
-
+  useEffect(() => setSortState({
+    rows: datas,
+    order: "desc",
+    orderBy: columns[0]
+  }), [datas])
 
   return (
     <>
@@ -65,8 +78,6 @@ export default ({ datas = [] }: Props): JSX.Element => {
           <MTableRow>
             {columns.map((v, i) => (
               <React.Fragment key={i}>
-                {console.log(v, sortState.orderBy, columns[0])}
-                {console.log(sortState)}
                 <MTableCell
                   sortDirection={sortState.orderBy === v ? sortState.order : false}
                 >
@@ -87,7 +98,7 @@ export default ({ datas = [] }: Props): JSX.Element => {
           </MTableRow>
         </MTableHead>
         <MTableBody>
-          {datas.map((v, i) => (
+          {sortState.rows.map((v, i) => (
             <MTableRow key={i}>
               {Object.values(v).map((v2, i2) => (
                 <MTableCell key={i2}>
