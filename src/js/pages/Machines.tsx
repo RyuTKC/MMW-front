@@ -1,27 +1,25 @@
 import React, { VFC, useEffect, useState } from "react";
 import { appConfig, MachinesAPI, machineData, MachineData } from "appConfig";
 import Table from "js/components/Machines/Table"
-import { Link } from "react-router-dom";
-import axios from "axios";
 
 export default () => {
-  const getMachines = (): void => {
+  const [machineDatas, setMachineDatas] = useState<machineData[]>([]);
+
+  const onClickButton = (e: React.MouseEvent) => {
+    let getDatas: machineData[] = []
     appConfig.axios.get<machineData[]>(MachinesAPI.root)
       .then(res => {
-        setMachineDatas(res.data)
-      })
-      .catch(error => {
+        getDatas = res.data as machineData[]
+      }
+      )
+      .catch(error =>
         console.error(error)
-      })
+      )
+    console.log(getDatas)
+    setMachineDatas(getDatas)
   }
-  const onClickButton = (e :React.MouseEvent)=>{
-    
-    getMachines;
-  }
+    ;
 
-  const [machineDatas, setMachineDatas] = useState<machineData[]>([]);
-  // リロード更新
-  useEffect(getMachines, [])
 
   return (
     <main>

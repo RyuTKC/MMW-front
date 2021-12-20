@@ -9,7 +9,7 @@ import MTableRow from "@material-ui/core/TableRow";
 import MTableCell from "@material-ui/core/TableCell";
 import MTableSortLabel from "@material-ui/core/TableSortLabel"
 
-const MyTable = styled.table`
+const STable = styled.table`
   font-size: 16px;
   color: #42a5f5;
   @media (max-width: 640px){
@@ -21,55 +21,81 @@ const MyTable = styled.table`
     color: #444444;
   }
   `
-// const dataSort = () => {
-//   // datas.sort();
-
-// }
 
 // type----------------------------------------------------
 type datasType = (machineData | systemData | productData)[]
 type dataType = machineData | systemData | productData
-
 type sortType = "asc" | "desc"
 type sortObject = {
-  rows: machineData[],
   order: sortType,
   orderBy: keyof machineData
 }
-
 type Props = {
   datas: machineData[],
 }
-export default ({ datas = [] }: Props): JSX.Element => {
-  const sortColumn = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
-    if (sortState.orderBy === targetColumn) {
+
+const MyTable = ({ datas = [] }: Props): JSX.Element => {
+  const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
+  const initSortState: sortObject = {
+    orderBy: "machine_id",
+    order: "desc",
+  }
+  //ソート状態初期値
+  const [sortState, setSortState] = useState<sortObject>(initSortState)
+  const [sortDatas, setSortDatas] = useState<machineData[]>(datas)
+
+  //datas変更時にもソート実行
+  useEffect(() => columnSort("machine_id"), [datas])
+
+  //ソートクリックイベント
+  const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
+    columnSort(targetColumn)
+  }
+
+  const columnSort = (targetColumn: keyof machineData): void => {
+    if (datas.length === 0)
+      return
+
+    //次状態を現在のstateで初期化
+    const nextSortState: sortObject = initSortState
+    //ソート規則のオブジェクト
+    const sortRule = {
+      "asc": [1, -1],
+      "desc": [-1, 1],
     }
 
-    const sortResult = sortState.rows.slice().sort((a, b) => {
+    // カラムが同じならソート順を入れ替え
+    if (sortState.orderBy === targetColumn) {
+      switch (sortState.order) {
+        case "asc":
+          nextSortState.order = "desc"
+          break;
+        case "desc":
+          nextSortState.order = "asc"
+          break;
+      }
+    }
+    else {
+      nextSortState.orderBy = targetColumn
+      nextSortState.order = "desc"
+    }
+
+    //ソート
+    const sortDatas = datas.slice().sort((a, b) => {
       if (a[targetColumn] < b[targetColumn])
-        return 1
+        return sortRule[nextSortState.order][0]
       else if (a[targetColumn] > b[targetColumn])
-        return -1
+        return sortRule[nextSortState.order][1]
       else
         return 0
     })
-    console.log(sortResult);
+    console.log("nextSortState: ", nextSortState)
+    console.log("sortDatas: ", sortDatas)
+
+
+    setSortState(nextSortState)
+    setSortDatas(sortDatas)
   }
-
-  const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
-
-  const [sortState, setSortState] = useState<sortObject>(
-    {
-      rows: datas,
-      order: "asc",
-      orderBy: columns[0]
-    }
-  )
-  useEffect(() => setSortState({
-    rows: datas,
-    order: "desc",
-    orderBy: columns[0]
-  }), [datas])
 
   return (
     <>
@@ -83,13 +109,10 @@ export default ({ datas = [] }: Props): JSX.Element => {
                 >
                   <MTableSortLabel
                     active={sortState.orderBy === v}
-                    direction={sortState.order}
-                    onClick={sortColumn(v)}
+                    direction={sortState.orderBy === v ? sortState.order : "asc"}
+                    onClick={clickSort(v)}
                   >
                     {v}
-                    {/* <span>
-                        {order === "desc"? "sorted descending": "sorted ascending"}
-                      </span> */}
                   </MTableSortLabel>
                 </MTableCell>
               </React.Fragment>
@@ -98,7 +121,7 @@ export default ({ datas = [] }: Props): JSX.Element => {
           </MTableRow>
         </MTableHead>
         <MTableBody>
-          {sortState.rows.map((v, i) => (
+          {sortDatas.map((v, i) => (
             <MTableRow key={i}>
               {Object.values(v).map((v2, i2) => (
                 <MTableCell key={i2}>
@@ -110,50 +133,8 @@ export default ({ datas = [] }: Props): JSX.Element => {
           )}
         </MTableBody>
       </MTable>
-      {/* <MyTable>
-        <thead>
-          <tr>
-            <td>machine_id</td>
-            <td>machine_name</td>
-            <td>host_name</td>
-            <td>administrator</td>
-            <td>place</td>
-            <td>assurance</td>
-            <td>product_id</td>
-            <td>vender_id</td>
-            <td>serial_number</td>
-            <td>role_id</td>
-            <td>notes</td>
-            <td>purchase_date</td>
-            <td>maintenance_date</td>
-            <td>created_at</td>
-            <td>updated_at</td>
-          </tr>
-        </thead>
-        <tbody>
-          {datas?.map((value, index) => {
-            return (
-              <tr key={index}>
-                <td>{value.machine_id}</td>
-                <td>{value.machine_name}</td>
-                <td>{value.host_name}</td>
-                <td>{value.administrator}</td>
-                <td>{value.place}</td>
-                <td>{value.assurance}</td>
-                <td>{value.product_id}</td>
-                <td>{value.vender_id}</td>
-                <td>{value.serial_number}</td>
-                <td>{value.role_id}</td>
-                <td>{value.notes}</td>
-                <td>{value.purchase_date}</td>
-                <td>{value.maintenance_date}</td>
-                <td>{value.created_at}</td>
-                <td>{value.updated_at}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </MyTable> */}
     </>
   );
 }
+
+export default MyTable
