@@ -4,22 +4,19 @@ import Table from "js/components/Machines/Table"
 
 export default () => {
   const [machineDatas, setMachineDatas] = useState<machineData[]>([]);
+  useEffect(() => getDatas(), [])
+
 
   const onClickButton = (e: React.MouseEvent) => {
-    let getDatas: machineData[] = []
-    appConfig.axios.get<machineData[]>(MachinesAPI.root)
-      .then(res => {
-        getDatas = res.data as machineData[]
-      }
-      )
-      .catch(error =>
-        console.error(error)
-      )
-    console.log(getDatas)
-    setMachineDatas(getDatas)
+    getDatas()
   }
-    ;
-
+  const getDatas = () => {
+    appConfig.axios.get<machineData[]>(MachinesAPI.root)
+      .then(res =>
+        setMachineDatas(res.data as machineData[]))
+      .catch(error =>
+        console.error(error))
+  }
 
   return (
     <main>

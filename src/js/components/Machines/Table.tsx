@@ -32,30 +32,29 @@ type sortObject = {
 }
 type Props = {
   datas: machineData[],
+  updateFlg?: boolean
 }
 
 const MyTable = ({ datas = [] }: Props): JSX.Element => {
+  //カラム
   const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
+  //ソート状態初期値
   const initSortState: sortObject = {
     orderBy: "machine_id",
     order: "desc",
   }
-  //ソート状態初期値
   const [sortState, setSortState] = useState<sortObject>(initSortState)
   const [sortDatas, setSortDatas] = useState<machineData[]>(datas)
 
   //datas変更時にもソート実行
-  useEffect(() => columnSort("machine_id"), [datas])
+  useEffect(() => columnSort(), [datas])
 
   //ソートクリックイベント
   const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
     columnSort(targetColumn)
   }
 
-  const columnSort = (targetColumn: keyof machineData): void => {
-    if (datas.length === 0)
-      return
-
+  const columnSort = (targetColumn: keyof machineData= "machine_id"): void => {
     //次状態を現在のstateで初期化
     const nextSortState: sortObject = initSortState
     //ソート規則のオブジェクト
