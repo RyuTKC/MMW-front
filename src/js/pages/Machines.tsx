@@ -20,9 +20,9 @@ export default () => {
 
   return (
     <main>
-      <h2>I am Machines</h2>
-      <button onClick={onClickButton}>now</button>
-      <Table datas={machineDatas}></Table>
+      <h2>機材一覧表示</h2>
+      <button onClick={onClickButton}>更新</button>
+      <Table datas={machineDatas} ></Table>
     </main>
   );
 };

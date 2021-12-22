@@ -23,19 +23,16 @@ const STable = styled.table`
   `
 
 // type----------------------------------------------------
-type datasType = (machineData | systemData | productData)[]
-type dataType = machineData | systemData | productData
 type sortType = "asc" | "desc"
 type sortObject = {
   order: sortType,
   orderBy: keyof machineData
 }
-type Props = {
+type TableProps = {
   datas: machineData[],
-  updateFlg?: boolean
 }
 
-const MyTable = ({ datas = [] }: Props): JSX.Element => {
+const MyTable = ({ datas = [] }: TableProps): JSX.Element => {
   //カラム
   const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
   //ソート状態初期値
@@ -54,7 +51,7 @@ const MyTable = ({ datas = [] }: Props): JSX.Element => {
     columnSort(targetColumn)
   }
 
-  const columnSort = (targetColumn: keyof machineData= "machine_id"): void => {
+  const columnSort = (targetColumn: keyof machineData = "machine_id"): void => {
     //次状態を現在のstateで初期化
     const nextSortState: sortObject = initSortState
     //ソート規則のオブジェクト
@@ -122,11 +119,15 @@ const MyTable = ({ datas = [] }: Props): JSX.Element => {
         <MTableBody>
           {sortDatas.map((v, i) => (
             <MTableRow key={i}>
-              {Object.values(v).map((v2, i2) => (
+              {Object.values(v).map((v2, i2) =>
+              (
                 <MTableCell key={i2}>
                   {v2}
                 </MTableCell>
-              ))}
+              )
+
+              )
+              }
             </MTableRow>
           )
           )}
@@ -136,4 +137,9 @@ const MyTable = ({ datas = [] }: Props): JSX.Element => {
   );
 }
 
-export default MyTable
+export default styled(MyTable)`
+  &&&{
+    
+  }
+  
+`
