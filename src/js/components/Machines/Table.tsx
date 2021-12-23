@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
 import styled from "styled-components";
-import { MachineData, machineData, productData, systemData } from "appConfig";
+import { appConfig, MachineData, machineData, MachinesAPI, productData, systemData } from "appConfig";
 import MTable from "@material-ui/core/Table";
 import MTableBody from "@material-ui/core/TableBody";
 import MTableHead from "@material-ui/core/TableHead";
@@ -28,30 +28,38 @@ type sortObject = {
   order: sortType,
   orderBy: keyof machineData
 }
+//ソート状態初期値
+const initSortState: sortObject = {
+  orderBy: "machine_id",
+  order: "desc",
+}
 type TableProps = {
-  datas: machineData[],
+  datas?: machineData[],
 }
 
-const MyTable = ({ datas = [] }: TableProps): JSX.Element => {
-  //カラム
-  const columns: (keyof machineData)[] = datas.length !== 0 ? (Object.keys(datas[0])) as (keyof machineData)[] : [];
-  //ソート状態初期値
-  const initSortState: sortObject = {
-    orderBy: "machine_id",
-    order: "desc",
-  }
+const MyTable = (): JSX.Element => {
+  // 変数
   const [sortState, setSortState] = useState<sortObject>(initSortState)
-  const [sortDatas, setSortDatas] = useState<machineData[]>(datas)
+  const [sortDatas, setSortDatas] = useState<machineData[]>([])
+  const machineDatas= useRef<machineData[]>();
+  const columns: (keyof machineData)[] = (Object.keys(new MachineData)) as (keyof machineData)[];
+  
+  // ライフサイクル
+  useEffect(() => getDatas(), []);
 
-  //datas変更時にもソート実行
-  useEffect(() => columnSort(), [datas])
-
-  //ソートクリックイベント
-  const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
-    columnSort(targetColumn)
+  // 関数
+  const getDatas = (): void => {
+    appConfig.axios.get<machineData[]>(MachinesAPI.root)
+      .then(res => {
+        machineDatas.current= res.data as machineData[]
+        columnSort(sortState.orderBy, true)
+      }
+      )
+      .catch(error =>
+        console.error(error)
+      )
   }
-
-  const columnSort = (targetColumn: keyof machineData = "machine_id"): void => {
+  const columnSort = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false): void => {
     //次状態を現在のstateで初期化
     const nextSortState: sortObject = initSortState
     //ソート規則のオブジェクト
@@ -60,8 +68,8 @@ const MyTable = ({ datas = [] }: TableProps): JSX.Element => {
       "desc": [-1, 1],
     }
 
-    // カラムが同じならソート順を入れ替え
-    if (sortState.orderBy === targetColumn) {
+    // カラムが同じならソート順を入れ替え（データ更新時は無視）
+    if (sortState.orderBy === targetColumn && !updateFlg) {
       switch (sortState.order) {
         case "asc":
           nextSortState.order = "desc"
@@ -77,7 +85,7 @@ const MyTable = ({ datas = [] }: TableProps): JSX.Element => {
     }
 
     //ソート
-    const sortDatas = datas.slice().sort((a, b) => {
+    const sortDatas = (machineDatas.current as machineData[]).slice().sort((a, b) => {
       if (a[targetColumn] < b[targetColumn])
         return sortRule[nextSortState.order][0]
       else if (a[targetColumn] > b[targetColumn])
@@ -85,12 +93,13 @@ const MyTable = ({ datas = [] }: TableProps): JSX.Element => {
       else
         return 0
     })
-    console.log("nextSortState: ", nextSortState)
-    console.log("sortDatas: ", sortDatas)
-
-
     setSortState(nextSortState)
     setSortDatas(sortDatas)
+  }
+
+  //イベント
+  const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
+    columnSort(targetColumn)
   }
 
   return (
