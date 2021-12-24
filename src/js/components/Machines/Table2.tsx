@@ -34,36 +34,25 @@ const initSortState: sortObject = {
   order: "desc",
 }
 type TableProps = {
+  datas: machineData[],
   updateFlg?: boolean,
 }
 
-const MyTable = ({ updateFlg = false }: TableProps): JSX.Element => {
+const MyTable = ({ datas = [], updateFlg = false }: TableProps): JSX.Element => {
   // 変数
   const [sortState, setSortState] = useState<sortObject>(initSortState)
   const [sortDatas, setSortDatas] = useState<machineData[]>([])
-  const machineDatas = useRef<machineData[]>();
-  const columns: (keyof machineData)[] = (Object.keys(new MachineData)) as (keyof machineData)[];
+  const [columns, setColumns] = useState<(keyof machineData)[]>((Object.keys(datas[0])) as (keyof machineData)[]);
 
   // ライフサイクル
-  useEffect(() => getDatas(), []);
-  useEffect(() => getDatas(), [updateFlg]);
+  useEffect(() => columnSort(sortState.orderBy, true), [datas]);
+  useEffect(() => setColumns((Object.keys(datas[0])) as (keyof machineData)[]), [datas]);
 
   // 関数
-  const getDatas = (): void => {
-    appConfig.axios.get<machineData[]>(MachinesAPI.root)
-      .then(res => {
-        machineDatas.current = res.data as machineData[]
-        columnSort(sortState.orderBy, true)
-      }
-      )
-      .catch(error =>
-        console.error(error)
-      )
-  }
   const columnSort = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false): void => {
-    //次状態を現在のstateで初期化
+    // 次状態を現在のstateで初期化
     const nextSortState: sortObject = initSortState
-    //ソート規則のオブジェクト
+    // ソート規則のオブジェクト
     const sortRule = {
       "asc": [1, -1],
       "desc": [-1, 1],
@@ -86,7 +75,7 @@ const MyTable = ({ updateFlg = false }: TableProps): JSX.Element => {
     }
 
     //ソート
-    const sortDatas = (machineDatas.current as machineData[]).slice().sort((a, b) => {
+    const sortDatas = datas.slice().sort((a, b) => {
       if (a[targetColumn] < b[targetColumn])
         return sortRule[nextSortState.order][0]
       else if (a[targetColumn] > b[targetColumn])
