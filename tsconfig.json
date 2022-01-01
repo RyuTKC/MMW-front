@@ -35,6 +35,7 @@
       "js/*": ["js/*"],
       "pages/*": ["js/pages/*"],
       "components/*": ["js/components/*"],
+      "app-redux/*": ["js/app-redux/*"],
       "appConfig": ["js/config/appConfig.ts"],
       "html/*": ["html/*"],
       "image/*": ["image/*"],

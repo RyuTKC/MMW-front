@@ -42,11 +42,13 @@ const MyTable = ({ datas = [], updateFlg = false }: TableProps): JSX.Element => 
   // 変数
   const [sortState, setSortState] = useState<sortObject>(initSortState)
   const [sortDatas, setSortDatas] = useState<machineData[]>([])
-  const [columns, setColumns] = useState<(keyof machineData)[]>((Object.keys(datas[0])) as (keyof machineData)[]);
+  const [columns, setColumns] = useState<(keyof machineData)[]>([]);
 
   // ライフサイクル
-  useEffect(() => columnSort(sortState.orderBy, true), [datas]);
-  useEffect(() => setColumns((Object.keys(datas[0])) as (keyof machineData)[]), [datas]);
+  useEffect(() => {
+    // setColumns((Object.keys(datas[0])) as (keyof machineData)[])
+    columnSort(sortState.orderBy, true)
+  }, [datas]);
 
   // 関数
   const columnSort = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false): void => {
@@ -97,7 +99,7 @@ const MyTable = ({ datas = [], updateFlg = false }: TableProps): JSX.Element => 
       <MTable>
         <MTableHead>
           <MTableRow>
-            {columns.map((v, i) => (
+            {columns.length !== 0 ? columns.map((v, i) => (
               <React.Fragment key={i}>
                 <MTableCell
                   sortDirection={sortState.orderBy === v ? sortState.order : false}
@@ -112,7 +114,7 @@ const MyTable = ({ datas = [], updateFlg = false }: TableProps): JSX.Element => 
                 </MTableCell>
               </React.Fragment>
             )
-            )}
+            ) : []}
           </MTableRow>
         </MTableHead>
         <MTableBody>
