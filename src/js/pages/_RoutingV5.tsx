@@ -11,14 +11,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 export default () => {
   return (
-    <>
-      {/* <Switch> */}
+    <Switch>
       <Route exact path={RouteList.top} component={Top} />
       <Route exact path={RouteList.machines} component={Machines} />
       <Route exact path={RouteList.systems} component={Systems} />
       <Route exact path={RouteList.products} component={Products} />
       <Route exact path={RouteList.users} component={Users} />
-      {/* </Switch> */}
-    </>
+    </Switch>
   );
 }

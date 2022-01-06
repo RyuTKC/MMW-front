@@ -32,11 +32,11 @@
     // import等のパスを便利に設定する
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "js/*": ["js/*"],
       "pages/*": ["js/pages/*"],
       "components/*": ["js/components/*"],
-      "app-redux/*": ["js/app-redux/*"],
+      "reducks/*": ["js/reducks/*"],
       "appConfig": ["js/config/appConfig.ts"],
+      "js/*": ["js/*"],
       "html/*": ["html/*"],
       "image/*": ["image/*"],
       "style/*": ["style/*"],

@@ -5,6 +5,7 @@ const initialState: Count = {
 }
 
 export const countReducer = (state = initialState, action: CounterActionTypes): Count => {
+  let nextState = initialState
     switch (action.type) {
         case CountActionTypes.increment:
             return { value: state.value + 1 }
