@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action, ActionCreator } from "redux";
 import { CountActionType } from "./types";
 
 
@@ -12,4 +12,12 @@ export const decrementAction2: CountActionType = {
 
 export const resetAction2: CountActionType = {
   type: CountActionType.countReset
+}
+
+
+// じっけんちう-------------------------
+const i: ActionCreator<CountActionType> = () => {
+  return {
+    type: CountActionType.increment
+  }
 }

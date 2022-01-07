@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import store, { RootState } from "reducks/store";
 import { decrementAction, incrementAction } from "reducks/Counter/action"
 import { decrementAction2, incrementAction2 } from "reducks/Counter2/action"
+import { Increment2thunk } from "reducks/Counter2/operations";
 
 export default () => {
   const countState = useSelector((state: RootState) => state.count)
@@ -15,11 +16,18 @@ export default () => {
   const onDecrement = () => {
     dispatch(decrementAction())
   }
-  
+
   const onIncrement2 = () => {
     dispatch(incrementAction2)
   }
   const onDecrement2 = () => {
+    dispatch(decrementAction2)
+  }
+
+  const onIncrement2thunk = () => {
+    dispatch(Increment2thunk())
+  }
+  const onDecrement2thunk = () => {
     dispatch(decrementAction2)
   }
 
@@ -35,6 +43,8 @@ export default () => {
       <div>{store.getState().count2.value}</div>
       <button onClick={onIncrement2}>ぷらす</button>
       <button onClick={onDecrement2}>まいなす</button>
+      <button onClick={onIncrement2thunk}>ぷらすさんく</button>
+      <button onClick={onDecrement2thunk}>まいなすさんく</button>
     </>
   )
 }

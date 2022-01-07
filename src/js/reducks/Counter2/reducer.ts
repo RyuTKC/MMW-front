@@ -6,6 +6,11 @@ const initialState: CountStateType = {
 
 export const countReducer = (state: CountStateType = initialState, action: CountActionType): CountStateType => {
   let nextState = initialState
+  console.log({
+    ...state,
+    value: state.value
+  })
+
   switch (action.type) {
     case CountActionType.increment:
       return {
