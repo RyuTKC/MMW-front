@@ -34,7 +34,7 @@ const storeCreator = () => {
 // ストアの生成
 const store = storeCreator()
 
-export type RootState = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
+export type RootStateType = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export { history };
 export default store;

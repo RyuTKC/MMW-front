@@ -1,13 +1,13 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import store, { RootState } from "reducks/store";
+import store, { RootStateType } from "reducks/store";
 import { decrementAction, incrementAction } from "reducks/Counter/action"
 import { decrementAction2, incrementAction2 } from "reducks/Counter2/action"
 import { Increment2thunk } from "reducks/Counter2/operations";
 
 export default () => {
-  const countState = useSelector((state: RootState) => state.count)
-  const count2State = useSelector((state: RootState) => state.count2)
+  const countState = useSelector((state: RootStateType) => state.count)
+  const count2State = useSelector((state: RootStateType) => state.count2)
   const dispatch = useDispatch()
 
   const onIncrement = () => {
