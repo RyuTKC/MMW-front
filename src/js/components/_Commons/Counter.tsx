@@ -4,10 +4,12 @@ import store, { RootStateType } from "reducks/store";
 import { decrementAction, incrementAction } from "reducks/Counter/action"
 import { decrementAction2, incrementAction2 } from "reducks/Counter2/action"
 import { Increment2thunk } from "reducks/Counter2/operations";
+import { getCount2Value } from "reducks/Counter2/selectors";
 
 export default () => {
   const countState = useSelector((state: RootStateType) => state.count)
   const count2State = useSelector((state: RootStateType) => state.count2)
+  const count2State_select = getCount2Value(count2State)
   const dispatch = useDispatch()
 
   const onIncrement = () => {
@@ -41,6 +43,7 @@ export default () => {
       <div>かうんと２</div>
       <div>{count2State.value}</div>
       <div>{store.getState().count2.value}</div>
+      <div>{count2State_select}</div>
       <button onClick={onIncrement2}>ぷらす</button>
       <button onClick={onDecrement2}>まいなす</button>
       <button onClick={onIncrement2thunk}>ぷらすさんく</button>
