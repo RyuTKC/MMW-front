@@ -35,6 +35,7 @@
       "pages/*": ["js/pages/*"],
       "components/*": ["js/components/*"],
       "reducks/*": ["js/reducks/*"],
+      "reducks_toolkit/*": ["js/reducks_toolkit/*"],
       "appConfig": ["js/config/appConfig.ts"],
       "js/*": ["js/*"],
       "html/*": ["html/*"],

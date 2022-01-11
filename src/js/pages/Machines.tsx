@@ -2,6 +2,7 @@ import React, { VFC, useEffect, useState, useRef, useContext, useReducer } from 
 import { appConfig, MachinesAPI, machineData, MachineData } from "appConfig";
 import Table2 from "components/Machines/Table2"
 import Counter from "components/_Commons/Counter";
+import ToolkitCounter from "components/_Commons/toolkitCounter"
 
 
 type hookState = {
@@ -35,7 +36,8 @@ export default () => {
 
   return (
     <main>
-      <Counter></Counter>
+      {/* <Counter></Counter> */}
+      <ToolkitCounter></ToolkitCounter>
       <h2>機材一覧表示</h2>
       <button onClick={onClickButton}>更新</button>
       <Table2 datas={machineDatas.current} />
