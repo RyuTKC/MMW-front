@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootStateType } from "reducks/store";
 import { Increment3thunk2 } from "./operations";
 import { CountStateType } from "./types";
+import { countReducer } from "./reducer";
 
 const initialState: CountStateType = {
   value: 0
