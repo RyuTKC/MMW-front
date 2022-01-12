@@ -20,14 +20,21 @@ export const countSlice = createSlice(
       },
     },
     extraReducers: (builder) => {
-      builder.addCase(Increment3thunk2.fulfilled, (state, action) => {
-        console.log(action.payload)
-        state.value += 1
-      })
+      builder
+        .addCase(Increment3thunk2.pending, (state, action) => {
+          console.log(action.payload)
+        })
+        .addCase(Increment3thunk2.fulfilled, (state, action) => {
+          console.log(action.payload)
+          state.value += 1
+        })
+        .addCase(Increment3thunk2.rejected, (state, action) => {
+          console.log(action.payload)
+        })
     },
   }
 )
 
-export const { increment, decrement, incrementByAmount } = countSlice.actions
+export const { increment, decrement, incrementByAmount, } = countSlice.actions
 export const selectCount = (state: RootStateType) => state.count.value
 export default countSlice.reducer
