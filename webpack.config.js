@@ -11,6 +11,15 @@ const RemoveEmptyScripts = require("webpack-remove-empty-scripts");
 // コンパイルディレクトリをクリーン
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+// Polyfill.io
+// const polyfillLibrary = require("polyfill-library");
+// const polyfillBundle = polyfillLibrary.getPolyfillString({
+//   minify: true,
+//   features: {
+//     "es6": { flags: ["gated"] }
+//   }
+// })
+const TsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 //tsconfigのimportルールを引き継ぐ
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const webpack = require("webpack");
@@ -89,9 +98,13 @@ const webpackConfig =
                   ],
                   sourceMap: true,
                 },
+                // babelrc: false,
               },
               {
-                loader: "ts-loader"
+                loader: "ts-loader",
+                options: {
+                  transpileOnly: true,
+                }
               }
             ],
             exclude: /node_modules/,
@@ -160,12 +173,6 @@ const webpackConfig =
   },
   //プラグイン設定
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   inject: "body",
-    //   template: "./src/html/index.html",
-    //   filename: path.join("html", `index.html`),
-    //   chunks: [],
-    // }),
     // 不要なjsの排除
     new RemoveEmptyScripts(),
     // // cssのファイル出力設定
@@ -208,6 +215,14 @@ glob
     console.log(entryName);
 
     // htmlカスタムできる
+    // webpackConfig.plugins.push(new HtmlWebpackPlugin({
+    //   inject: "body",
+    //   template: "./src/html/index.html",
+    //   filename: path.join("html", `index.html`),
+    //   chunks: [entryName],
+    // })
+    // );
+
     webpackConfig.plugins.push(new HtmlWebpackPlugin({
       inject: "body",
       template: "./src/html/template.html",
