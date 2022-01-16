@@ -1,10 +1,13 @@
 import { CountStateType, CountActionType } from "./types";
+import { Reducer } from "redux";
+import { incrementAction2 } from "./action";
+
 
 const initialState: CountStateType = {
   value: 0
 }
 
-export const countReducer = (state: CountStateType = initialState, action: CountActionType): CountStateType => {
+export const countReducer: Reducer<CountStateType, CountActionType> = (state = initialState, action): CountStateType => {
   let nextState = initialState
   // console.log({
   //   ...state,

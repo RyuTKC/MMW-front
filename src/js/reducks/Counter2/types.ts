@@ -10,8 +10,10 @@ const CountActionType = {
 	decrement: "DECREMENT2",
 	countReset: "COUNT_RESET2"
 } as const;
-type CountActionType = Action & {
-	type: typeof CountActionType[keyof typeof CountActionType]
+// type CountActionType = Action & {
+// 	type: typeof CountActionType[keyof typeof CountActionType]
+// }
+type CountActionType = Action<typeof CountActionType[keyof typeof CountActionType]> & {
 }
 
 export { CountStateType, CountActionType }

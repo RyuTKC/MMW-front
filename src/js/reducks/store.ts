@@ -35,7 +35,6 @@ const storeCreator = () => {
 const store = storeCreator()
 
 export type RootStateType = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
-export type AppDispatchType = typeof store.dispatch
 export { history };
-export default store; 
+export default store;
 

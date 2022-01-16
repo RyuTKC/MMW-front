@@ -1,10 +1,11 @@
 import { Count, CounterActionTypes, CountActionTypes } from "./types";
+import { Reducer } from "redux";
 
 const initialState: Count = {
     value: 0
 }
 
-export const countReducer = (state = initialState, action: CounterActionTypes): Count => {
+export const countReducer: Reducer<Count, CounterActionTypes>= (state = initialState, action: CounterActionTypes): Count => {
     switch (action.type) {
         case CountActionTypes.increment:
             return { value: state.value + 1 }

@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import store, { RootStateType } from "reducks/store";
 import { decrementAction, incrementAction } from "reducks/Counter/action"
 import { decrementAction2, incrementAction2 } from "reducks/Counter2/action"
