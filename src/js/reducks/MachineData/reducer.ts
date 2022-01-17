@@ -31,7 +31,7 @@ export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActi
         sortElement: action.sortElement
       }
     default:
-      // const _: never = action
+      const _: never = action
       return state
   }
 }
