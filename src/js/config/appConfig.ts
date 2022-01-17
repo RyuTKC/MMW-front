@@ -57,27 +57,6 @@ const RouteList = {
 }
 type RouteList = typeof RouteList[keyof typeof RouteList]
 
-const defaultMachine: Readonly<machineData> = {
-    machine_id: -1,
-    machine_name: "",
-    administrator: "",
-    host_name: "",
-    place: "",
-    qr_or_barcode: "",
-    maintenance_date: "",
-    assurance: "",
-    serial_number: "",
-    purchase_date: "",
-    notes: "",
-    product_id: -1,
-    status_type: -1,
-    role_id: -1,
-    vender_id: -1,
-    created_at: "",
-    updated_at: ""
-
-} as const
-
 interface configParam {
     API_URL: string,
     VERSION: string,
@@ -101,6 +80,7 @@ interface machineData {
     created_at: string
     updated_at: string
 }
+
 class MachineData implements machineData {
     machine_id: number
     machine_name: string
@@ -120,7 +100,7 @@ class MachineData implements machineData {
     created_at: string
     updated_at: string
 
-    constructor(data: machineData= {
+    constructor(data: machineData = {
         machine_id: -1,
         machine_name: "",
         administrator: "",

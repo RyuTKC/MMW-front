@@ -3,6 +3,7 @@ import TableRedux from "components/Machines/TableRedux";
 import { sortMachineDatas2, updateMachineDatas } from "reducks/MachineData/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateType } from "reducks/store";
+import { machineData, MachineData } from "appConfig";
 
 type hookState = {}
 type hookAction = {}
@@ -12,15 +13,19 @@ const hookReducer = (state: hookState, action: hookAction) => { }
 export default () => {
   const dispatch = useDispatch()
   const machineDataState = useSelector((state: RootStateType) => state.machineData)
-  useEffect(() => {
-    dispatch(updateMachineDatas())
-  }, []);
+  const b = new MachineData()
+  // console.log({...machineDataState.sortData})
 
+  // 更新イベント
   const onClickUpdate = (e: React.MouseEvent) => {
     dispatch(updateMachineDatas())
   }
 
-  console.log(machineDataState)
+  // 更新
+  useEffect(() => {
+    dispatch(updateMachineDatas())
+  }, []);
+
 
   return (
     <main>

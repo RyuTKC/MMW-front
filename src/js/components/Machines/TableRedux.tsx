@@ -47,7 +47,6 @@ const MyTable = (): JSX.Element => {
   const dispatch = useDispatch()
   const machineDataState = useSelector((state: RootStateType) => state.machineData)
   // local state
-  const [columns, setColumns] = useState<(keyof machineData)[]>((Object.keys(new MachineData) as (keyof machineData)[]));
 
   // ライフサイクル (更新時の挙動)
   useEffect(() => {
@@ -64,7 +63,7 @@ const MyTable = (): JSX.Element => {
       <MTable>
         <MTableHead>
           <MTableRow>
-            {columns.length !== 0 ? columns.map((v, i) => (
+            {/* {  Object.values(machineDataState.columnDisplayName).map((v, i) => (
               <React.Fragment key={i}>
                 <MTableCell
                   sortDirection={machineDataState.sortElement.orderBy === v ? machineDataState.sortElement.sortDirection : false}
@@ -72,18 +71,27 @@ const MyTable = (): JSX.Element => {
                   <MTableSortLabel
                     active={machineDataState.sortElement.orderBy === v}
                     direction={machineDataState.sortElement.orderBy === v ? machineDataState.sortElement.sortDirection : "asc"}
-                    onClick={clickSort(v)}
+                    onClick={clickSort(v as keyof machineData)}
                   >
                     {v}
                   </MTableSortLabel>
                 </MTableCell>
               </React.Fragment>
             )
-            ) : []}
+            )} */}
+            {/* <MTableCell sortDirection={}>
+              <MTableSortLabel
+                active={}
+                direction={}
+                onClick={}
+              >
+                {}
+              </MTableSortLabel>
+            </MTableCell> */}
           </MTableRow>
         </MTableHead>
         <MTableBody>
-          {machineDataState.sortData.map((v, i) => (
+          {/* {machineDataState.sortData.map((v, i) => (
             <MTableRow key={i}>
               {Object.values(v).map((v2, i2) =>
               (
@@ -91,12 +99,15 @@ const MyTable = (): JSX.Element => {
                   {v2}
                 </MTableCell>
               )
-
               )
               }
             </MTableRow>
           )
-          )}
+          )} */}
+            <MTableRow key={""}>
+                <MTableCell key={2}>
+                </MTableCell>
+            </MTableRow>
         </MTableBody>
       </MTable>
     </>

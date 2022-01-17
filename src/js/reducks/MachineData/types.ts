@@ -1,5 +1,5 @@
 import { SortDirection } from "@material-ui/core";
-import { machineData } from "appConfig";
+import { MachineData, machineData } from "appConfig";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
@@ -7,18 +7,13 @@ import { ThunkAction } from "redux-thunk";
 type MachineTableStateType = {
 	// 今持っている最新のデータ
 	data: machineData[],
-
 	// ソートされたデータ
-	sortData: machineData[],
+	sortData: machineData[]
 
-	// テーブルに入れるデータ群
-	tableData: {
-		// 表示するカラム
-		displayColumns:{},
+	// カラムのデータ
+	columnDisplayName: {
 		// ソートに用いるカラム（データカラム）
-		actualColumns: (keyof machineData)[]
-		// ソートされたデータ
-		sortData: machineData[]
+		[key in keyof machineData]: string
 	},
 
 	// ソート要素
@@ -37,7 +32,7 @@ type MachineTableActionKind = keyof typeof MachineTableActionKind
 
 // データ更新
 type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
-	data: machineData[]
+	data: machineData[],
 }
 
 // データソート
@@ -54,6 +49,6 @@ type MachineTableActionType = UpdateActionType | SortActionType
 
 export {
 	type MachineTableStateType,
-	MachineTableActionKind,
 	type MachineTableActionType,
+	MachineTableActionKind,
 }
