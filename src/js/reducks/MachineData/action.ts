@@ -1,19 +1,23 @@
+import { SortDirection } from "@material-ui/core";
+import { machineData } from "appConfig";
 import { Action, ActionCreator } from "redux";
-import { MachineTableActionType } from "./types";
+import { MachineTableActionKind, MachineTableActionType } from "./types";
 
 
-export const updateAction: MachineTableActionType = {
-  type: MachineTableActionType.update,
-  sortElement: {
-    orderBy: "",
-    sortDirection: "asc"
+export const updateAction = (machineDatas: machineData[]): MachineTableActionType => {
+  return {
+    type: MachineTableActionKind.update,
+    data: machineDatas
   }
 }
 
-export const sortAction: MachineTableActionType = {
-  type: MachineTableActionType.sort,
-  sortElement:{
-    orderBy: "",
-    sortDirection: "asc"
+export const sortAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachineTableActionType => {
+  return {
+    type: MachineTableActionKind.sort,
+    sortData: machineDatas,
+    sortElement: {
+      orderBy: orderBy,
+      sortDirection: sortDirection
+    }
   }
 }

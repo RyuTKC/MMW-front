@@ -1,34 +1,49 @@
+import { SortDirection } from "@material-ui/core";
 import { machineData } from "appConfig";
 import { Action } from "redux";
-
-
-// sort Type
-const sortType={
-	asc: "asc",
-	desc: "desc" 
-} as const
-type sortType = keyof typeof sortType
+import { ThunkAction } from "redux-thunk";
 
 // State Type
 type MachineTableStateType = {
 	data: machineData[],
 	sortData: machineData[],
-	orderBy: string,
-	sortDirection: sortType
-}
-// Action Type
-const MachineTableActionType = {
-	update: "UPDATE",
-	sort: "sort",
-} as const;
-// type CountActionType = Action & {
-// 	type: typeof CountActionType[keyof typeof CountActionType]
-// }
-type MachineTableActionType = Action<typeof MachineTableActionType[keyof typeof MachineTableActionType]> & {
 	sortElement: {
-		orderBy: string,
-		sortDirection: sortType
+		orderBy: keyof machineData,
+		sortDirection: Exclude<SortDirection, boolean>
 	}
 }
 
-export { MachineTableStateType, MachineTableActionType }
+// Action Type
+const MachineTableActionKind = {
+	update: "UPDATE",
+	sort: "sort",
+} as const;
+type MachineTableActionKind = keyof typeof MachineTableActionKind
+
+// データ更新
+type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
+	data: machineData[]
+}
+
+// データソート
+type SortActionType = Action<typeof MachineTableActionKind.sort> & {
+	sortData: machineData[],
+	sortElement: {
+		orderBy: keyof machineData,
+		sortDirection: Exclude<SortDirection, boolean>
+	}
+}
+
+// アクションタイプ統合
+type MachineTableActionType = UpdateActionType | SortActionType
+
+
+// Thunk-Action Type
+type MachineTableThunkActionType = ThunkAction<Promise<void>, MachineTableStateType, undefined, MachineTableActionType>
+
+export {
+	type MachineTableStateType,
+	MachineTableActionKind,
+	type MachineTableActionType,
+	type MachineTableThunkActionType
+}
