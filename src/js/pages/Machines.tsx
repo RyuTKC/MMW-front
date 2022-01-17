@@ -1,7 +1,6 @@
 import React, { VFC, useEffect, useState, useRef, useContext, useReducer } from "react";
-import Counter from "components/_Commons/Counter";
 import TableRedux from "components/Machines/TableRedux";
-import { updateMachineDatas } from "reducks/MachineData/operations";
+import { sortMachineDatas2, updateMachineDatas } from "reducks/MachineData/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateType } from "reducks/store";
 
@@ -17,19 +16,17 @@ export default () => {
     dispatch(updateMachineDatas())
   }, []);
 
-  const onClickButton = (e: React.MouseEvent) => {
+  const onClickUpdate = (e: React.MouseEvent) => {
     dispatch(updateMachineDatas())
   }
 
-
+  console.log(machineDataState)
 
   return (
     <main>
-      <Counter></Counter>
       <h2>機材一覧表示</h2>
-      <button onClick={onClickButton}>更新</button>
+      <button onClick={onClickUpdate}>更新</button>
       <TableRedux></TableRedux>
-      {/* <Table2 datas={machineDatas.current} /> */}
     </main>
   );
 };

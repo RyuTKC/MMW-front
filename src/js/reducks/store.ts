@@ -1,10 +1,11 @@
-import { createStore, combineReducers, applyMiddleware, compose, AnyAction } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose, AnyAction, type Action } from "redux";
+import { Dispatch } from "react";
 import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createBrowserHistory } from "history"
 import { countReducer } from "./Counter/reducer";
 import { countReducer as count2Reducer } from "./Counter2/reducer";
 import * as H from "history"
-import thunk, { ThunkDispatch } from "redux-thunk";
+import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { machineDataReducer } from "./MachineData/reducer";
 
 const history = createBrowserHistory()
@@ -35,10 +36,11 @@ const storeCreator = () => {
 
 // ストアの生成
 const store = storeCreator()
-import { Action } from "redux";
-import { Dispatch } from "react";
 
+// 全stateの型
 export type RootStateType = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
+// 全thunkActionの型
+export type AppThunkAction<MyActionType extends Action> = ThunkAction<Promise<void>, RootStateType, undefined, MyActionType>
 export type AppDispatchType = typeof store.dispatch | Dispatch<ThunkDispatch<RootStateType, unknown, Action>>
 export { history };
 export default store;

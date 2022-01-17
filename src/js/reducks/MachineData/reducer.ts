@@ -2,21 +2,21 @@ import { MachineTableStateType, MachineTableActionType, MachineTableActionKind }
 import { Reducer } from "redux";
 import { updateAction } from "./action";
 
-const initialState: MachineTableStateType = {
+export const initialState: MachineTableStateType = {
   data: [],
   sortData: [],
+  tableData: {
+    displayColumns: {},
+    actualColumns: [],
+    sortData: []
+  },
   sortElement: {
     orderBy: "machine_id",
-    sortDirection: "asc"
+    sortDirection: "desc"
   }
 }
 
 export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActionType> = (state = initialState, action): MachineTableStateType => {
-  let nextState = initialState
-  // console.log({
-  //   ...state,
-  //   value: state.value
-  // })
 
   switch (action.type) {
     case MachineTableActionKind.update:

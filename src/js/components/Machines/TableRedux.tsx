@@ -10,7 +10,7 @@ import MTableCell from "@material-ui/core/TableCell";
 import MTableSortLabel from "@material-ui/core/TableSortLabel"
 import { RootStateType } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
-import { sortMachineDatas } from "reducks/MachineData/operations";
+import { sortMachineDatas, sortMachineDatas2 } from "reducks/MachineData/operations";
 
 const STable = styled.table`
   font-size: 16px;
@@ -50,16 +50,13 @@ const MyTable = (): JSX.Element => {
   const [columns, setColumns] = useState<(keyof machineData)[]>((Object.keys(new MachineData) as (keyof machineData)[]));
 
   // ライフサイクル (更新時の挙動)
-  useEffect(
-    () => {
-      dispatch(sortMachineDatas(machineDataState.sortElement.orderBy, true))
-    },
-    [machineDataState.data]
-  );
+  useEffect(() => {
+    dispatch(sortMachineDatas2(machineDataState.sortElement.orderBy, true))
+  }, [machineDataState.data]);
 
   //イベント
   const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
-    dispatch(sortMachineDatas(targetColumn, false))
+    dispatch(sortMachineDatas2(targetColumn, false))
   }
 
   return (

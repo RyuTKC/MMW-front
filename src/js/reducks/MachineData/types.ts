@@ -5,8 +5,23 @@ import { ThunkAction } from "redux-thunk";
 
 // State Type
 type MachineTableStateType = {
+	// 今持っている最新のデータ
 	data: machineData[],
+
+	// ソートされたデータ
 	sortData: machineData[],
+
+	// テーブルに入れるデータ群
+	tableData: {
+		// 表示するカラム
+		displayColumns:{},
+		// ソートに用いるカラム（データカラム）
+		actualColumns: (keyof machineData)[]
+		// ソートされたデータ
+		sortData: machineData[]
+	},
+
+	// ソート要素
 	sortElement: {
 		orderBy: keyof machineData,
 		sortDirection: Exclude<SortDirection, boolean>
@@ -37,13 +52,8 @@ type SortActionType = Action<typeof MachineTableActionKind.sort> & {
 // アクションタイプ統合
 type MachineTableActionType = UpdateActionType | SortActionType
 
-
-// Thunk-Action Type
-type MachineTableThunkActionType = ThunkAction<Promise<void>, MachineTableStateType, undefined, MachineTableActionType>
-
 export {
 	type MachineTableStateType,
 	MachineTableActionKind,
 	type MachineTableActionType,
-	type MachineTableThunkActionType
 }

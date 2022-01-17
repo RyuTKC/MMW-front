@@ -1,18 +1,19 @@
 import { sortAction, updateAction } from "./action"
 import { ThunkAction } from "redux-thunk"
-import { MachineTableActionType, MachineTableStateType, MachineTableThunkActionType } from "./types"
+import { MachineTableActionType } from "./types"
 import { RootStateType } from "reducks/store"
 import { appConfig, machineData, MachinesAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"
+import { initialState } from "./reducer"
+
 
 export const updateMachineDatas = (): ThunkAction<Promise<void>, RootStateType, undefined, MachineTableActionType> => {
   return async (dispatch, getState) => {
     let machineDatas: machineData[] = []
 
-    appConfig.axios.get<machineData[]>(MachinesAPI.root)
+    await appConfig.axios.get<machineData[]>(MachinesAPI.root)
       .then(res => {
         machineDatas = res.data as machineData[]
-        console.log(machineDatas)
         dispatch(updateAction(machineDatas))
       }
       )
@@ -24,22 +25,14 @@ export const updateMachineDatas = (): ThunkAction<Promise<void>, RootStateType, 
 }
 
 export const sortMachineDatas = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false)
-  : MachineTableThunkActionType => {
+  : AppThunkAction<MachineTableActionType> => {
 
   return async (dispatch, getState) => {
-    const sortState = getState().sortElement
-    const datas = getState().data
+    const sortState = getState().machineData.sortElement
+    const datas = getState().machineData.data
 
-    type sortObject = {
-      sortDirection: Exclude<SortDirection, boolean>,
-      orderBy: keyof machineData
-    }
-    const initSortState: sortObject = {
-      orderBy: "machine_id",
-      sortDirection: "desc",
-    }
     // 次状態を現在のstateで初期化
-    const nextSortState: sortObject = initSortState
+    const nextSortState = initialState.sortElement
     // ソート規則のオブジェクト
     const sortRule = {
       "asc": [1, -1],
@@ -75,18 +68,11 @@ export const sortMachineDatas = (targetColumn: keyof machineData = "machine_id",
     dispatch(sortAction(sortDatas, nextSortState.orderBy, nextSortState.sortDirection))
   }
 }
-
+import { AppThunkAction } from "reducks/store"
 export const sortMachineDatas2 = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false)
-  : MachineTableThunkActionType => {
+  : AppThunkAction<MachineTableActionType> => {
 
   return async (dispatch, getState) => {
-    const sortState = getState().sortElement
-    const datas = getState().data
-    console.log(sortState)
-    console.log(datas)
-
-
-
     type sortObject = {
       sortDirection: Exclude<SortDirection, boolean>,
       orderBy: keyof machineData
@@ -95,6 +81,15 @@ export const sortMachineDatas2 = (targetColumn: keyof machineData = "machine_id"
       orderBy: "machine_id",
       sortDirection: "desc",
     }
+
+    const sortState = getState().machineData.sortElement === undefined ? initSortState : getState().machineData.sortElement
+    const datas = getState().machineData.data === undefined ? [] : getState().machineData.data
+
+    if (datas.length === 0)
+      return
+
+
+
     // 次状態を現在のstateで初期化
     const nextSortState: sortObject = initSortState
     // ソート規則のオブジェクト
