@@ -1,8 +1,8 @@
 import { SortDirection } from "@material-ui/core";
 import { machineData } from "appConfig";
 import { Action, ActionCreator } from "redux";
+import { initialState } from "./reducer";
 import { MachineTableActionKind, MachineTableActionType } from "./types";
-
 
 export const updateAction = (machineDatas: machineData[]): MachineTableActionType => {
   return {

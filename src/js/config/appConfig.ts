@@ -81,64 +81,7 @@ interface machineData {
     updated_at: string
 }
 
-class MachineData implements machineData {
-    machine_id: number
-    machine_name: string
-    administrator: string
-    host_name: string
-    place: string
-    qr_or_barcode: string
-    maintenance_date: string
-    assurance: string
-    serial_number: string
-    purchase_date: string
-    notes: string
-    product_id: number
-    status_type: number
-    role_id: number
-    vender_id: number
-    created_at: string
-    updated_at: string
 
-    constructor(data: machineData = {
-        machine_id: -1,
-        machine_name: "",
-        administrator: "",
-        host_name: "",
-        place: "",
-        qr_or_barcode: "",
-        maintenance_date: "",
-        assurance: "",
-        serial_number: "",
-        purchase_date: "",
-        notes: "",
-        product_id: -1,
-        status_type: -1,
-        role_id: -1,
-        vender_id: -1,
-        created_at: "",
-        updated_at: ""
-    }
-    ) {
-        this.machine_id = data.machine_id
-        this.machine_name = data.machine_name
-        this.administrator = data.administrator
-        this.host_name = data.host_name
-        this.place = data.place
-        this.qr_or_barcode = data.qr_or_barcode
-        this.maintenance_date = data.maintenance_date
-        this.assurance = data.assurance
-        this.serial_number = data.serial_number
-        this.purchase_date = data.purchase_date
-        this.notes = data.notes
-        this.product_id = data.product_id
-        this.status_type = data.status_type
-        this.role_id = data.role_id
-        this.vender_id = data.vender_id
-        this.created_at = data.created_at
-        this.updated_at = data.updated_at
-    }
-}
 interface systemData {
     system_id: number,
     system_name: string,
@@ -163,6 +106,5 @@ export { SystemsAPI };
 export { ProductsAPI };
 export { RouteList };
 export { machineData };
-export { MachineData };
 export { systemData };
 export { productData };

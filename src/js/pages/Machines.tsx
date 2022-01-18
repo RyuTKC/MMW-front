@@ -1,9 +1,7 @@
-import React, { VFC, useEffect, useState, useRef, useContext, useReducer } from "react";
-import TableRedux from "components/Machines/TableRedux";
-import { sortMachineDatas2, updateMachineDatas } from "reducks/MachineData/operations";
-import { useDispatch, useSelector } from "react-redux";
-import { RootStateType } from "reducks/store";
-import { machineData, MachineData } from "appConfig";
+import React, { useEffect, useContext, useReducer } from "react";
+import TableRedux from "components/Machines/Table";
+import { updateMachineDatas } from "reducks/MachineData/operations";
+import { useDispatch } from "react-redux";
 
 type hookState = {}
 type hookAction = {}
@@ -12,9 +10,6 @@ const hookReducer = (state: hookState, action: hookAction) => { }
 
 export default () => {
   const dispatch = useDispatch()
-  const machineDataState = useSelector((state: RootStateType) => state.machineData)
-  const b = new MachineData()
-  // console.log({...machineDataState.sortData})
 
   // 更新イベント
   const onClickUpdate = (e: React.MouseEvent) => {

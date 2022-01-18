@@ -1,5 +1,5 @@
 import { SortDirection } from "@material-ui/core";
-import { MachineData, machineData } from "appConfig";
+import { machineData } from "appConfig";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
@@ -26,7 +26,7 @@ type MachineTableStateType = {
 // Action Type
 const MachineTableActionKind = {
 	update: "UPDATE",
-	sort: "sort",
+	sort: "SORT",
 } as const;
 type MachineTableActionKind = keyof typeof MachineTableActionKind
 
@@ -46,7 +46,6 @@ type SortActionType = Action<typeof MachineTableActionKind.sort> & {
 
 // アクションタイプ統合
 type MachineTableActionType = UpdateActionType | SortActionType
-
 export {
 	type MachineTableStateType,
 	type MachineTableActionType,

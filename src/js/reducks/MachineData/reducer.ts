@@ -47,6 +47,7 @@ export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActi
       return {
         ...state,
         sortData: action.sortData,
+        ...state.columnDisplayName,
         sortElement: action.sortElement,
       }
     default:

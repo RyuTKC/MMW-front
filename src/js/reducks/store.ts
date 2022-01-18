@@ -18,6 +18,11 @@ const reducers = combineReducers({
     machineData: machineDataReducer
 })
 
+const b = () =>{
+    reducers
+    // if(action.type=== "INITIALIZE")
+}
+
 // ミドルウェアの統合
 const middlewares = applyMiddleware(
     // storeと接続
