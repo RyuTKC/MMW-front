@@ -6,16 +6,19 @@ import { AppThunkAction } from "reducks/store"
 import { appConfig, machineData, MachinesAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"
 import { initialState } from "./reducer"
-
+import { ActionCreator } from "redux"
 
 export const updateMachineDatas = (): AppThunkAction<MachineTableActionType> => {
   return async (dispatch, getState) => {
     let machineDatas: machineData[] = []
+    const machinDataState= getState().machineData
+    const sortElement= machinDataState.sortElement
 
     await appConfig.axios.get<machineData[]>(MachinesAPI.root)
       .then(res => {
         machineDatas = res.data as machineData[]
         dispatch(updateAction(machineDatas))
+        dispatch(sortMachineDatas(sortElement.orderBy, true))
       }
       )
       .catch(error =>
@@ -25,21 +28,13 @@ export const updateMachineDatas = (): AppThunkAction<MachineTableActionType> => 
   }
 }
 
-export const sortMachineDatas = (targetColumn: keyof machineData = "machine_id", updateFlg: boolean = false)
+export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boolean = false)
   : AppThunkAction<MachineTableActionType> => {
 
   return async (dispatch, getState) => {
-    type sortObject = {
-      sortDirection: Exclude<SortDirection, boolean>,
-      orderBy: keyof machineData
-    }
-    const initSortState: sortObject = {
-      orderBy: "machine_id",
-      sortDirection: "desc",
-    }
 
-    const sortState = getState().machineData.sortElement === undefined ? initSortState : getState().machineData.sortElement
-    const datas = getState().machineData.data === undefined ? [] : getState().machineData.data
+    const sortState = getState().machineData.sortElement
+    const datas = getState().machineData.data
 
     if (datas.length === 0)
       return
@@ -47,7 +42,7 @@ export const sortMachineDatas = (targetColumn: keyof machineData = "machine_id",
 
 
     // 次状態を現在のstateで初期化
-    const nextSortState: sortObject = initSortState
+    const nextSortState = sortState
     // ソート規則のオブジェクト
     const sortRule = {
       "asc": [1, -1],
@@ -81,5 +76,11 @@ export const sortMachineDatas = (targetColumn: keyof machineData = "machine_id",
     })
 
     dispatch(sortAction(sortDatas, nextSortState.orderBy, nextSortState.sortDirection))
+  }
+}
+
+export const pagingTable= (): AppThunkAction<MachineTableActionType>=>{
+  return async()=>{
+    
   }
 }

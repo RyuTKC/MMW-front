@@ -21,6 +21,14 @@ type MachineTableStateType = {
 		orderBy: keyof machineData,
 		sortDirection: Exclude<SortDirection, boolean>
 	}
+
+	// ページに関する要素
+	pageElement: {
+		nowPage: number,
+		displayPerPage: number,
+		rowCount: number
+		pageCount: number,
+	}
 }
 
 // Action Type

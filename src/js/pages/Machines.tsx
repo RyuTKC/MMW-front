@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useReducer } from "react";
-import TableRedux from "components/Machines/Table";
+import Table from "components/Machines/Table";
 import { updateMachineDatas } from "reducks/MachineData/operations";
 import { useDispatch } from "react-redux";
 
@@ -26,7 +26,7 @@ export default () => {
     <main>
       <h2>機材一覧表示</h2>
       <button onClick={onClickUpdate}>更新</button>
-      <TableRedux></TableRedux>
+      <Table></Table>
     </main>
   );
 };

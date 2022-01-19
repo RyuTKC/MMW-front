@@ -24,6 +24,12 @@ export const initialState: MachineTableStateType = {
     updated_at: "更新日"
   },
   sortData: [],
+  pageElement:{
+    nowPage: 1,
+    displayPerPage: 20,
+    rowCount: 0,
+    pageCount: 0,
+  },
   sortElement: {
     orderBy: "machine_id",
     sortDirection: "desc"
