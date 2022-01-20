@@ -8,7 +8,10 @@ type MachineTableStateType = {
 	// 今持っている最新のデータ
 	data: machineData[],
 	// ソートされたデータ
-	sortData: machineData[]
+	sortData: machineData[],
+
+	// レコード数
+	recordCount: number,
 
 	// カラムのデータ
 	columnDisplayName: {
@@ -24,9 +27,13 @@ type MachineTableStateType = {
 
 	// ページに関する要素
 	pageElement: {
+		// 表示しているデータ
+		displayData: machineData[],
+		// 現在のページ
 		nowPage: number,
-		displayPerPage: number,
-		rowCount: number
+		// 表示している行数
+		recordPerPage: number,
+		// 総ページ数
 		pageCount: number,
 	}
 }
@@ -41,6 +48,7 @@ type MachineTableActionKind = keyof typeof MachineTableActionKind
 // データ更新
 type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
 	data: machineData[],
+	recordCount: number,
 }
 
 // データソート

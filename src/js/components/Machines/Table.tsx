@@ -70,7 +70,7 @@ const MyTable = ({ className }: TableProps) => {
           </MTableBody>
           <MTableFooter>
             <MTableRow>
-              <MTablePageNation count={pageData.rowCount} onPageChange={paging} page={pageData.nowPage} />
+              <MTablePageNation count={machineDataState.recordCount} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
             </MTableRow>
           </MTableFooter>
         </MTable>

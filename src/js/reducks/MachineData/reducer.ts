@@ -24,10 +24,11 @@ export const initialState: MachineTableStateType = {
     updated_at: "更新日"
   },
   sortData: [],
-  pageElement:{
+  recordCount: 0,
+  pageElement: {
+    displayData: [],
     nowPage: 1,
-    displayPerPage: 20,
-    rowCount: 0,
+    recordPerPage: 25,
     pageCount: 0,
   },
   sortElement: {
@@ -42,7 +43,11 @@ export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActi
     case MachineTableActionKind.update:
       return {
         ...state,
-        data: action.data
+        data: action.data,
+        pageElement: {
+          ...state.pageElement,
+          nowPage: 1
+        }
       }
     case MachineTableActionKind.sort:
       // return {
