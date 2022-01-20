@@ -4,11 +4,10 @@ import { Action, ActionCreator } from "redux";
 import { initialState } from "./reducer";
 import { MachineTableActionKind, MachineTableActionType } from "./types";
 
-export const updateAction = (machineDatas: machineData[], recordCount: number): MachineTableActionType => {
+export const updateAction = (machineDatas: machineData[]): MachineTableActionType => {
   return {
     type: MachineTableActionKind.update,
     data: machineDatas,
-    recordCount: recordCount,
   }
 }
 
@@ -20,5 +19,12 @@ export const sortAction = (machineDatas: machineData[], orderBy: keyof machineDa
       orderBy: orderBy,
       sortDirection: sortDirection
     }
+  }
+}
+
+export const pagingAction = (nextPage: number): MachineTableActionType => {
+  return {
+    type: MachineTableActionKind.paging,
+    nextPage: nextPage
   }
 }

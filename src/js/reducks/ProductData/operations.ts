@@ -1,25 +1,24 @@
 import { sortAction, updateAction } from "./action"
 import { ThunkAction } from "redux-thunk"
-import { MachineTableActionType } from "./types"
+import { ProductTableActionType } from "./types"
 import { RootStateType } from "reducks/store"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, machineData, MachinesAPI } from "appConfig"
+import { appConfig, productData, ProductsAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"
 import { initialState } from "./reducer"
 import { ActionCreator } from "redux"
 
-export const updateMachineDatas = (): AppThunkAction<MachineTableActionType> => {
+export const updateProductDatas = (): AppThunkAction<ProductTableActionType> => {
   return async (dispatch, getState) => {
-    let machineDatas: machineData[] = []
-    const machinDataState= getState().machineData
+    let productDatas: productData[] = []
+    const machinDataState= getState().productData
     const sortElement= machinDataState.sortElement
 
-    await appConfig.axios.get<machineData[]>(MachinesAPI.root)
+    await appConfig.axios.get<productData[]>(ProductsAPI.root)
       .then(res => {
-        console.log(res)
-        machineDatas = res.data as machineData[]
-        dispatch(updateAction(machineDatas))
-        dispatch(sortMachineDatas(sortElement.orderBy, true))
+        productDatas = res.data as productData[]
+        dispatch(updateAction(productDatas))
+        dispatch(sortProductDatas(sortElement.orderBy, true))
       }
       )
       .catch(error =>
@@ -29,13 +28,13 @@ export const updateMachineDatas = (): AppThunkAction<MachineTableActionType> => 
   }
 }
 
-export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boolean = false)
-  : AppThunkAction<MachineTableActionType> => {
+export const sortProductDatas = (targetColumn: keyof productData, updateFlg: boolean = false)
+  : AppThunkAction<ProductTableActionType> => {
 
   return async (dispatch, getState) => {
 
-    const sortState = getState().machineData.sortElement
-    const datas = getState().machineData.data
+    const sortState = getState().productData.sortElement
+    const datas = getState().productData.data
 
     if (datas.length === 0)
       return
@@ -80,7 +79,7 @@ export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boo
   }
 }
 
-export const pagingTable= (): AppThunkAction<MachineTableActionType>=>{
+export const pagingTable= (): AppThunkAction<ProductTableActionType>=>{
   return async()=>{
     
   }

@@ -10,8 +10,8 @@ import MTableFooter from "@material-ui/core/TableFooter";
 import MTableContainer from "@material-ui/core/TableContainer";
 import { RootStateType } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
-import { sortMachineDatas } from "reducks/MachineData/operations";
 import TitleColumn from "./TitleColumn";
+import { pagingAction } from "reducks/MachineData/action";
 
 
 type TableProps = {
@@ -20,13 +20,15 @@ type TableProps = {
 
 const MyTable = ({ className }: TableProps) => {
   // redux hooks
+  const dispatch = useDispatch()
   const machineDataState = useSelector((state: RootStateType) => state.machineData)
   const columnData = machineDataState.columnDisplayName
   const sortData = machineDataState.sortData
   const pageData = machineDataState.pageElement
 
   const paging = (e: unknown, newPage: number) => {
-
+    dispatch(pagingAction(newPage))
+    window.scrollTo(0, 0)
   }
 
   return (
@@ -49,9 +51,9 @@ const MyTable = ({ className }: TableProps) => {
             </MTableRow>
           </MTableHead>
           <MTableBody>
-            {sortData.map((v, i) => {
+            {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
               return (
-                <MTableRow key={i}>
+                <MTableRow key={i} onClick={() => { }}>
                   <MTableCell>{v.machine_id}</MTableCell>
                   <MTableCell>{v.machine_name}</MTableCell>
                   <MTableCell>{v.host_name}</MTableCell>
@@ -70,7 +72,7 @@ const MyTable = ({ className }: TableProps) => {
           </MTableBody>
           <MTableFooter>
             <MTableRow>
-              <MTablePageNation count={machineDataState.recordCount} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
+              <MTablePageNation count={sortData.length} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
             </MTableRow>
           </MTableFooter>
         </MTable>
@@ -81,9 +83,13 @@ const MyTable = ({ className }: TableProps) => {
 
 export default styled(MyTable)`
   width: 75%;
-  font-size: 16px;
   color: #42a5f5;
   
+  th, td{
+    font-size: 12px;
+    
+  }
+
   /* @media (max-width: 640px){
     font-size: 32px;
     color: #444444;

@@ -24,17 +24,15 @@ export const initialState: MachineTableStateType = {
     updated_at: "更新日"
   },
   sortData: [],
-  recordCount: 0,
-  pageElement: {
-    displayData: [],
-    nowPage: 1,
-    recordPerPage: 25,
-    pageCount: 0,
-  },
   sortElement: {
     orderBy: "machine_id",
     sortDirection: "desc"
-  }
+  },
+  pageElement: {
+    nowPage: 0,
+    recordPerPage: 25,
+    pageCount: 0,
+  },
 }
 
 export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActionType> = (state = initialState, action): MachineTableStateType => {
@@ -46,20 +44,23 @@ export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActi
         data: action.data,
         pageElement: {
           ...state.pageElement,
-          nowPage: 1
+          nowPage: 0
         }
       }
     case MachineTableActionKind.sort:
-      // return {
-      //   ...state,
-      //   sortData: action.sortData,
-      //   sortElement: action.sortElement
-      // }
       return {
         ...state,
         sortData: action.sortData,
-        ...state.columnDisplayName,
         sortElement: action.sortElement,
+      }
+
+    case MachineTableActionKind.paging:
+      return {
+        ...state,
+        pageElement: {
+          ...state.pageElement,
+          nowPage: action.nextPage
+        }
       }
     default:
       const _: never = action

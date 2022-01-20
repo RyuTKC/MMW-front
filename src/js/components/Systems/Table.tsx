@@ -1,37 +1,81 @@
-import { systemData } from "js/config/appConfig";
-import React, { useState } from "react";
-import { render } from "react-dom";
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import MTable from "@material-ui/core/Table";
+import MTableBody from "@material-ui/core/TableBody";
+import MTableHead from "@material-ui/core/TableHead";
+import MTableRow from "@material-ui/core/TableRow";
+import MTableCell from "@material-ui/core/TableCell";
+import MTablePageNation from "@material-ui/core/TablePagination";
+import MTableFooter from "@material-ui/core/TableFooter";
+import MTableContainer from "@material-ui/core/TableContainer";
+import { RootStateType } from "reducks/store";
+import { useDispatch, useSelector } from "react-redux";
+import TitleColumn from "./TitleColumn";
+import { pagingAction } from "reducks/SystemData/action";
 
 
-type Props = {
-  datas?: systemData[]
+type TableProps = {
+  className?: string
 }
 
-export default ({ datas }: Props): JSX.Element => {
+const MyTable = ({ className }: TableProps) => {
+  // redux hooks
+  const dispatch = useDispatch()
+  const systemDataState = useSelector((state: RootStateType) => state.systemData)
+  const columnData = systemDataState.columnDisplayName
+  const sortData = systemDataState.sortData
+  const pageData = systemDataState.pageElement
+
+  const paging = (e: unknown, newPage: number) => {
+    dispatch(pagingAction(newPage))
+  }
+  
   return (
-      <table>
-        <thead>
-          <tr>
-            <td>system_id</td>
-            <td>system_name</td>
-            <td>system_en_name</td>
-            <td>created_at</td>
-            <td>updated_at</td>
-          </tr>
-        </thead>
-        <tbody>
-          {datas?.map((value) => {
-            return (
-              <tr>
-                <td>{value.system_id}</td>
-                <td>{value.system_name}</td>
-                <td>{value.system_en_name}</td>
-                <td>{value.created_at}</td>
-                <td>{value.updated_at}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+    <>
+      <MTableContainer>
+        <MTable className={className}>
+          <MTableHead>
+            <MTableRow>
+              <TitleColumn sortKey={"system_id"}>{columnData.system_id}</TitleColumn>
+              <TitleColumn sortKey={"system_name"}>{columnData.system_name}</TitleColumn>
+              <TitleColumn sortKey={"system_en_name"}>{columnData.system_en_name}</TitleColumn>
+            </MTableRow>
+          </MTableHead>
+          <MTableBody>
+            {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
+              return (
+                <MTableRow key={i} onClick={()=>{}}>
+                  <MTableCell>{v.system_id}</MTableCell>
+                  <MTableCell>{v.system_name}</MTableCell>
+                  <MTableCell>{v.system_en_name}</MTableCell>
+                </MTableRow>
+              )
+            }
+            )}
+          </MTableBody>
+          <MTableFooter>
+            <MTableRow>
+              <MTablePageNation count={sortData.length} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
+            </MTableRow>
+          </MTableFooter>
+        </MTable>
+      </MTableContainer>
+    </>
   );
-}
+};
+
+export default styled(MyTable)`
+  width: 75%;
+  font-size: 16px;
+  color: #42a5f5;
+  
+  /* @media (max-width: 640px){
+    font-size: 32px;
+    color: #444444;
+  }
+  @media print{
+    font-size: 32px;
+    color: #444444;
+  
+} */
+`

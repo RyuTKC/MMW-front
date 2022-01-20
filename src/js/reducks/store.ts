@@ -7,6 +7,8 @@ import { countReducer as count2Reducer } from "./Counter2/reducer";
 import * as H from "history"
 import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { machineDataReducer } from "./MachineData/reducer";
+import {systemDataReducer} from "./SystemData/reducer"
+import { productDataReducer } from "./ProductData/reducer";
 
 const history = createBrowserHistory()
 
@@ -15,7 +17,9 @@ const reducers = combineReducers({
     router: connectRouter(history),
     count: countReducer,
     count2: count2Reducer,
-    machineData: machineDataReducer
+    machineData: machineDataReducer,
+    systemData: systemDataReducer,
+    productData: productDataReducer,
 })
 
 const b = () =>{

@@ -1,24 +1,23 @@
 import { SortDirection } from "@material-ui/core";
-import { machineData } from "appConfig";
+import { productData } from "appConfig";
 import { Action } from "redux";
-import { ThunkAction } from "redux-thunk";
 
 // State Type
-type MachineTableStateType = {
+type ProductTableStateType = {
 	// 今持っている最新のデータ
-	data: machineData[],
+	data: productData[],
 	// ソートされたデータ
-	sortData: machineData[],
+	sortData: productData[],
 
 	// カラムのデータ
 	columnDisplayName: {
 		// ソートに用いるカラム（データカラム）
-		[key in keyof machineData]: string
+		[key in keyof productData]: string
 	},
 
 	// ソート要素
 	sortElement: {
-		orderBy: keyof machineData,
+		orderBy: keyof productData,
 		sortDirection: Exclude<SortDirection, boolean>
 	}
 
@@ -34,36 +33,36 @@ type MachineTableStateType = {
 }
 
 // Action Type
-const MachineTableActionKind = {
+const ProductTableActionKind = {
 	update: "UPDATE",
 	sort: "SORT",
 	paging: "PAGING"
 } as const;
-type MachineTableActionKind = keyof typeof MachineTableActionKind
+type ProductTableActionKind = keyof typeof ProductTableActionKind
 
 // データ更新
-type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
-	data: machineData[],
+type UpdateActionType = Action<typeof ProductTableActionKind.update> & {
+	data: productData[],
 }
 
 // データソート
-type SortActionType = Action<typeof MachineTableActionKind.sort> & {
-	sortData: machineData[],
+type SortActionType = Action<typeof ProductTableActionKind.sort> & {
+	sortData: productData[],
 	sortElement: {
-		orderBy: keyof machineData,
+		orderBy: keyof productData,
 		sortDirection: Exclude<SortDirection, boolean>
 	}
 }
 
 // ページング関連アクション
-type PagingActionType = Action<typeof MachineTableActionKind.paging>&{
+type PagingActionType = Action<typeof ProductTableActionKind.paging>&{
 	nextPage: number
 }
 
 // アクションタイプ統合
-type MachineTableActionType = UpdateActionType | SortActionType | PagingActionType
+type ProductTableActionType = UpdateActionType | SortActionType | PagingActionType
 export {
-	type MachineTableStateType,
-	type MachineTableActionType,
-	MachineTableActionKind,
+	type ProductTableStateType,
+	type ProductTableActionType,
+	ProductTableActionKind,
 }

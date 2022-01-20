@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import Table from "components/Machines/Table";
-import { updateMachineDatas } from "reducks/MachineData/operations";
+import { sortMachineDatas, updateMachineDatas } from "reducks/MachineData/operations";
 import { useDispatch } from "react-redux";
 
 type hookState = {}
@@ -19,6 +19,7 @@ export default () => {
   // 更新
   useEffect(() => {
     dispatch(updateMachineDatas())
+    dispatch(sortMachineDatas("machine_id", false))
   }, []);
 
 

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { appConfig, ProductsAPI, productData } from "appConfig"
 import Table from "components/Products/Table"
+import { useDispatch } from "react-redux";
+import { sortProductDatas, updateProductDatas } from "reducks/ProductData/operations";
 
 export default () => {
-    const getProducts = () => {
-        appConfig.axios.get<productData[]>(ProductsAPI.root)
-            .then(res => {
-                setProductDatas(res.data)
-            })
-            .catch()
-    }
-
-    const [productDatas, setProductDatas] = useState<productData[]>([])
-    useEffect(getProducts, [])
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(updateProductDatas())
+        dispatch(sortProductDatas("product_id", false))
+    }, [])
 
     return (
         <main>
-            <Table datas={productDatas}></Table>
+            <Table></Table>
         </main>
     );
 }

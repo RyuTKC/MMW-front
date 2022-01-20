@@ -1,24 +1,24 @@
 import { SortDirection } from "@material-ui/core";
-import { machineData } from "appConfig";
+import { systemData } from "appConfig";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 // State Type
-type MachineTableStateType = {
+type SystemTableStateType = {
 	// 今持っている最新のデータ
-	data: machineData[],
+	data: systemData[],
 	// ソートされたデータ
-	sortData: machineData[],
+	sortData: systemData[],
 
 	// カラムのデータ
 	columnDisplayName: {
 		// ソートに用いるカラム（データカラム）
-		[key in keyof machineData]: string
+		[key in keyof systemData]: string
 	},
 
 	// ソート要素
 	sortElement: {
-		orderBy: keyof machineData,
+		orderBy: keyof systemData,
 		sortDirection: Exclude<SortDirection, boolean>
 	}
 
@@ -34,36 +34,36 @@ type MachineTableStateType = {
 }
 
 // Action Type
-const MachineTableActionKind = {
+const SystemTableActionKind = {
 	update: "UPDATE",
 	sort: "SORT",
 	paging: "PAGING"
 } as const;
-type MachineTableActionKind = keyof typeof MachineTableActionKind
+type SystemTableActionKind = keyof typeof SystemTableActionKind
 
 // データ更新
-type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
-	data: machineData[],
+type UpdateActionType = Action<typeof SystemTableActionKind.update> & {
+	data: systemData[],
 }
 
 // データソート
-type SortActionType = Action<typeof MachineTableActionKind.sort> & {
-	sortData: machineData[],
+type SortActionType = Action<typeof SystemTableActionKind.sort> & {
+	sortData: systemData[],
 	sortElement: {
-		orderBy: keyof machineData,
+		orderBy: keyof systemData,
 		sortDirection: Exclude<SortDirection, boolean>
 	}
 }
 
 // ページング関連アクション
-type PagingActionType = Action<typeof MachineTableActionKind.paging>&{
+type PagingActionType = Action<typeof SystemTableActionKind.paging>&{
 	nextPage: number
 }
 
 // アクションタイプ統合
-type MachineTableActionType = UpdateActionType | SortActionType | PagingActionType
+type SystemTableActionType = UpdateActionType | SortActionType | PagingActionType
 export {
-	type MachineTableStateType,
-	type MachineTableActionType,
-	MachineTableActionKind,
+	type SystemTableStateType,
+	type SystemTableActionType,
+	SystemTableActionKind,
 }
