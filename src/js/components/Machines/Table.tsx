@@ -12,6 +12,8 @@ import { RootStateType } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/MachineData/action";
+import { machineData } from "appConfig";
+import ModalForm from "./ModalForm";
 
 
 type TableProps = {
@@ -19,6 +21,7 @@ type TableProps = {
 }
 
 const MyTable = ({ className }: TableProps) => {
+  // react hooks
   // redux hooks
   const dispatch = useDispatch()
   const machineDataState = useSelector((state: RootStateType) => state.machineData)
@@ -29,6 +32,9 @@ const MyTable = ({ className }: TableProps) => {
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
     window.scrollTo(0, 0)
+  }
+
+  const onClickRecord = (machine_id: number) => (e: React.MouseEvent<unknown>) => {
   }
 
   return (
@@ -53,7 +59,7 @@ const MyTable = ({ className }: TableProps) => {
           <MTableBody>
             {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
               return (
-                <MTableRow key={i} onClick={() => { }}>
+                <MTableRow className={"tableRow"} key={i} onClick={onClickRecord(v.machine_id)}>
                   <MTableCell>{v.machine_id}</MTableCell>
                   <MTableCell>{v.machine_name}</MTableCell>
                   <MTableCell>{v.host_name}</MTableCell>
@@ -90,13 +96,18 @@ export default styled(MyTable)`
     
   }
 
-  /* @media (max-width: 640px){
+  & .tableRow:hover{
+    cursor: pointer;
+    background-color: rgba(30, 184, 223, 0.176);
+  }
+
+  & @media (max-width: 640px){
     font-size: 32px;
     color: #444444;
   }
-  @media print{
+  & @media print{
     font-size: 32px;
     color: #444444;
   
-} */
+}
 `
