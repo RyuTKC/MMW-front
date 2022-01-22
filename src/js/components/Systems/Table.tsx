@@ -8,20 +8,20 @@ import MTableCell from "@material-ui/core/TableCell";
 import MTablePageNation from "@material-ui/core/TablePagination";
 import MTableFooter from "@material-ui/core/TableFooter";
 import MTableContainer from "@material-ui/core/TableContainer";
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/SystemData/action";
 
 
-type TableProps = {
+type Props = {
   className?: string
 }
 
-const MyTable = ({ className }: TableProps) => {
+const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
-  const systemDataState = useSelector((state: RootStateType) => state.systemData)
+  const systemDataState = useSelector((state: RootState) => state.systemData)
   const columnData = systemDataState.columnDisplayName
   const sortData = systemDataState.sortData
   const pageData = systemDataState.pageElement

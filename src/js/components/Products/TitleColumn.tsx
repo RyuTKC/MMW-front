@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import MTableCell from "@material-ui/core/TableCell";
 import MTableSortLabel from "@material-ui/core/TableSortLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { productData } from "appConfig";
 import { sortProductDatas } from "reducks/ProductData/operations";
 
@@ -14,7 +14,7 @@ type ColumnProps = {
 
 export default ({ sortKey, children }: ColumnProps) => {
   const dispatch = useDispatch()
-  const productDataState = useSelector((state: RootStateType) => state.productData)
+  const productDataState = useSelector((state: RootState) => state.productData)
   const sortElement = productDataState.sortElement
 
   //イベント

@@ -1,65 +1,104 @@
-import { MachineTableStateType, MachineTableActionType, MachineTableActionKind } from "./types"
+import { MachineTableState, MachineTableAction, MachineTableActionType } from "./types"
 import { Reducer } from "redux";
-import { updateAction } from "./action";
+import { machineData } from "appConfig";
 
-export const initialState: MachineTableStateType = {
-  data: [],
-  columnDisplayName: {
-    machine_id: "ID",
-    machine_name: "マシン名",
-    host_name: "ホスト名",
-    administrator: "管理者",
-    place: "保管場所",
-    qr_or_barcode: "QRコード",
-    maintenance_date: "最終メンテ日",
-    assurance: "保障",
-    serial_number: "シリアル",
-    purchase_date: "購入年月",
-    notes: "備考",
-    product_id: "製品",
-    status_type: "ステータス",
-    role_id: "ロール",
-    vender_id: "購入ベンダー",
-    created_at: "登録日",
-    updated_at: "更新日"
+export const initialState: MachineTableState = {
+  datas: [],
+  editElement: {
+    data: {} as machineData,
+    modalFlg: false,
   },
-  sortData: [],
-  sortElement: {
-    orderBy: "machine_id",
-    sortDirection: "desc"
-  },
-  pageElement: {
-    nowPage: 0,
-    recordPerPage: 25,
-    pageCount: 0,
-  },
+  tableData: {
+    sortData: [],
+    columnDisplayName: {
+      machine_id: "ID",
+      machine_name: "マシン名",
+      host_name: "ホスト名",
+      administrator: "管理者",
+      place: "保管場所",
+      qr_or_barcode: "QRコード",
+      maintenance_date: "最終メンテ日",
+      assurance: "保障",
+      serial_number: "シリアル",
+      purchase_date: "購入年月",
+      notes: "備考",
+      product_id: "製品",
+      status_type: "ステータス",
+      role_id: "ロール",
+      vender_id: "購入ベンダー",
+      created_at: "登録日",
+      updated_at: "更新日"
+    },
+    sortElement: {
+      orderBy: "machine_id",
+      sortDirection: "desc"
+    },
+    pageElement: {
+      nowPage: 0,
+      recordPerPage: 25,
+      pageCount: 0,
+    },
+  }
 }
 
-export const machineDataReducer: Reducer<MachineTableStateType, MachineTableActionType> = (state = initialState, action): MachineTableStateType => {
+export const machineDataReducer: Reducer<MachineTableState, MachineTableAction> = (state = initialState, action): MachineTableState => {
 
   switch (action.type) {
-    case MachineTableActionKind.update:
+    case MachineTableActionType.getData:
       return {
         ...state,
-        data: action.data,
-        pageElement: {
-          ...state.pageElement,
-          nowPage: 0
+
+        editElement: {
+          ...state.editElement,
+
+          data: action.data,
+          modalFlg: action.modalFlg
+        }
+
+      }
+    case MachineTableActionType.getDatas:
+      return {
+        ...state,
+
+        datas: action.data,
+        tableData: {
+          ...state.tableData,
+
+          pageElement: {
+            ...state.tableData.pageElement,
+
+            nowPage: 0
+          }
+        }
+
+      }
+    case MachineTableActionType.editPost:
+      return {
+        ...state
+      }
+    case MachineTableActionType.sort:
+      return {
+        ...state,
+
+        tableData: {
+          ...state.tableData,
+
+          sortData: action.sortData,
+          sortElement: action.sortElement,
         }
       }
-    case MachineTableActionKind.sort:
+    case MachineTableActionType.paging:
       return {
         ...state,
-        sortData: action.sortData,
-        sortElement: action.sortElement,
-      }
 
-    case MachineTableActionKind.paging:
-      return {
-        ...state,
-        pageElement: {
-          ...state.pageElement,
-          nowPage: action.nextPage
+        tableData: {
+          ...state.tableData,
+
+          pageElement: {
+            ...state.tableData.pageElement,
+
+            nowPage: action.nextPage
+          }
         }
       }
     default:

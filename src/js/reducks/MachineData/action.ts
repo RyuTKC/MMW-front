@@ -2,18 +2,26 @@ import { SortDirection } from "@material-ui/core";
 import { machineData } from "appConfig";
 import { Action, ActionCreator } from "redux";
 import { initialState } from "./reducer";
-import { MachineTableActionKind, MachineTableActionType } from "./types";
+import { MachineTableActionType, MachineTableAction } from "./types";
 
-export const updateAction = (machineDatas: machineData[]): MachineTableActionType => {
+export const getDataAction = (machineData: machineData, modalFlg: boolean): MachineTableAction=>{
   return {
-    type: MachineTableActionKind.update,
+    type: MachineTableActionType.getData,
+    data: machineData,
+    modalFlg: modalFlg,
+  }
+}
+
+export const getDatasAction = (machineDatas: machineData[]): MachineTableAction => {
+  return {
+    type: MachineTableActionType.getDatas,
     data: machineDatas,
   }
 }
 
-export const sortAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachineTableActionType => {
+export const sortAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachineTableAction => {
   return {
-    type: MachineTableActionKind.sort,
+    type: MachineTableActionType.sort,
     sortData: machineDatas,
     sortElement: {
       orderBy: orderBy,
@@ -22,9 +30,9 @@ export const sortAction = (machineDatas: machineData[], orderBy: keyof machineDa
   }
 }
 
-export const pagingAction = (nextPage: number): MachineTableActionType => {
+export const pagingAction = (nextPage: number): MachineTableAction => {
   return {
-    type: MachineTableActionKind.paging,
+    type: MachineTableActionType.paging,
     nextPage: nextPage
   }
 }

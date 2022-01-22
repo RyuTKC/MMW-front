@@ -1,8 +1,8 @@
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { createSelector } from "reselect";
-import { MachineTableStateType } from "./types";
+import { SystemTableStateType } from "./types";
 
-const machineDataSelector = (state: MachineTableStateType) => state
+const machineDataSelector = (state: SystemTableStateType) => state
 
 export const getColumns = createSelector(
   [machineDataSelector],

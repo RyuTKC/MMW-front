@@ -1,7 +1,7 @@
 import { sortAction, updateAction } from "./action"
 import { ThunkAction } from "redux-thunk"
 import { ProductTableActionType } from "./types"
-import { RootStateType } from "reducks/store"
+import { RootState } from "reducks/store"
 import { AppThunkAction } from "reducks/store"
 import { appConfig, productData, ProductsAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"

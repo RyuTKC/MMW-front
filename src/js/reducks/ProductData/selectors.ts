@@ -1,4 +1,4 @@
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { createSelector } from "reselect";
 import { ProductTableStateType } from "./types";
 

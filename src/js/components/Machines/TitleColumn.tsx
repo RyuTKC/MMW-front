@@ -2,20 +2,20 @@ import React, { ReactNode } from "react";
 import MTableCell from "@material-ui/core/TableCell";
 import MTableSortLabel from "@material-ui/core/TableSortLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { machineData } from "appConfig";
 import { sortMachineDatas } from "reducks/MachineData/operations";
 
 
-type ColumnProps = {
+type Props = {
   sortKey: keyof machineData,
   children: ReactNode
 }
 
-export default ({ sortKey, children }: ColumnProps) => {
+export default ({ sortKey, children }: Props) => {
   const dispatch = useDispatch()
-  const machineDataState = useSelector((state: RootStateType) => state.machineData)
-  const sortElement = machineDataState.sortElement
+  const machineDataState = useSelector((state: RootState) => state.machineData)
+  const sortElement = machineDataState.tableData.sortElement
 
   //イベント
   const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import MTable from "@material-ui/core/Table";
 import MTableBody from "@material-ui/core/TableBody";
@@ -8,26 +8,25 @@ import MTableCell from "@material-ui/core/TableCell";
 import MTablePageNation from "@material-ui/core/TablePagination";
 import MTableFooter from "@material-ui/core/TableFooter";
 import MTableContainer from "@material-ui/core/TableContainer";
-import { RootStateType } from "reducks/store";
+import { RootState } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/MachineData/action";
 import { machineData } from "appConfig";
-import ModalForm from "./ModalForm";
+import { getMachineData } from "reducks/MachineData/operations";
 
 
-type TableProps = {
+type Props = {
   className?: string
 }
 
-const MyTable = ({ className }: TableProps) => {
-  // react hooks
+const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
-  const machineDataState = useSelector((state: RootStateType) => state.machineData)
-  const columnData = machineDataState.columnDisplayName
-  const sortData = machineDataState.sortData
-  const pageData = machineDataState.pageElement
+  const machineDataState = useSelector((state: RootState) => state.machineData)
+  const columnData = machineDataState.tableData.columnDisplayName
+  const sortData = machineDataState.tableData.sortData
+  const pageData = machineDataState.tableData.pageElement
 
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
@@ -35,6 +34,7 @@ const MyTable = ({ className }: TableProps) => {
   }
 
   const onClickRecord = (machine_id: number) => (e: React.MouseEvent<unknown>) => {
+    dispatch(getMachineData(machine_id))
   }
 
   return (
@@ -101,11 +101,11 @@ export default styled(MyTable)`
     background-color: rgba(30, 184, 223, 0.176);
   }
 
-  & @media (max-width: 640px){
+   @media (max-width: 640px){
     font-size: 32px;
     color: #444444;
   }
-  & @media print{
+  @media print{
     font-size: 32px;
     color: #444444;
   

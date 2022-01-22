@@ -4,50 +4,72 @@ import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 // State Type
-type MachineTableStateType = {
+type MachineTableState = {
 	// 今持っている最新のデータ
-	data: machineData[],
-	// ソートされたデータ
-	sortData: machineData[],
+	datas: machineData[],
 
-	// カラムのデータ
-	columnDisplayName: {
-		// ソートに用いるカラム（データカラム）
-		[key in keyof machineData]: string
-	},
-
-	// ソート要素
-	sortElement: {
-		orderBy: keyof machineData,
-		sortDirection: Exclude<SortDirection, boolean>
+	editElement: {
+		data: machineData,
+		modalFlg: boolean,
 	}
 
-	// ページに関する要素
-	pageElement: {
-		// 現在のページ
-		nowPage: number,
-		// 表示している行数
-		recordPerPage: number,
-		// 総ページ数
-		pageCount: number,
+	// テーブルのデータ
+	tableData: {
+		// ソートされたデータ
+		sortData: machineData[],
+
+		// カラムのデータ
+		columnDisplayName: {
+			// ソートに用いるカラム（データカラム）: 表示のデータ
+			[key in keyof machineData]: string
+		},
+
+		// ソート要素
+		sortElement: {
+			orderBy: keyof machineData,
+			sortDirection: Exclude<SortDirection, boolean>
+		}
+
+		// ページに関する要素
+		pageElement: {
+			// 現在のページ
+			nowPage: number,
+			// 表示している行数
+			recordPerPage: number,
+			// 総ページ数
+			pageCount: number,
+		}
 	}
 }
 
 // Action Type
-const MachineTableActionKind = {
-	update: "UPDATE",
+const MachineTableActionType = {
+	getData: "GET_DATA",
+	editPost: "EDIT_POST",
+	getDatas: "GET_DATAS",
 	sort: "SORT",
 	paging: "PAGING"
 } as const;
-type MachineTableActionKind = keyof typeof MachineTableActionKind
+type MachineTableActionType = keyof typeof MachineTableActionType
 
-// データ更新
-type UpdateActionType = Action<typeof MachineTableActionKind.update> & {
+// データ取得
+type GetDataAction = Action<typeof MachineTableActionType.getData> & {
+	data: machineData,
+	modalFlg: boolean,
+}
+
+// 編集データPOST
+type EditPostAction= Action<typeof MachineTableActionType.editPost> &{
+	data: machineData,
+}
+
+// データ一覧取得
+type GetDatasAction = Action<typeof MachineTableActionType.getDatas> & {
 	data: machineData[],
 }
 
 // データソート
-type SortActionType = Action<typeof MachineTableActionKind.sort> & {
+type SortAction = Action<typeof MachineTableActionType.sort> & {
 	sortData: machineData[],
 	sortElement: {
 		orderBy: keyof machineData,
@@ -56,14 +78,14 @@ type SortActionType = Action<typeof MachineTableActionKind.sort> & {
 }
 
 // ページング関連アクション
-type PagingActionType = Action<typeof MachineTableActionKind.paging>&{
+type PagingAction = Action<typeof MachineTableActionType.paging> & {
 	nextPage: number
 }
 
 // アクションタイプ統合
-type MachineTableActionType = UpdateActionType | SortActionType | PagingActionType
+type MachineTableAction = GetDataAction | GetDatasAction | SortAction | PagingAction | EditPostAction
 export {
-	type MachineTableStateType,
-	type MachineTableActionType,
-	MachineTableActionKind,
+	type MachineTableState,
+	type MachineTableAction,
+	MachineTableActionType,
 }
