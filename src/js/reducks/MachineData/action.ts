@@ -1,10 +1,10 @@
 import { SortDirection } from "@material-ui/core";
-import { machineData } from "appConfig";
+import { machineData, machineData2 } from "appConfig";
 import { Action, ActionCreator } from "redux";
 import { initialState } from "./reducer";
 import { MachineTableActionType, MachineTableAction } from "./types";
 
-export const getDataAction = (machineData: machineData, modalFlg: boolean): MachineTableAction=>{
+export const getDataAction = (machineData: machineData2, modalFlg: boolean): MachineTableAction=>{
   return {
     type: MachineTableActionType.getData,
     data: machineData,

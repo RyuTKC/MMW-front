@@ -1,5 +1,5 @@
 import { SortDirection } from "@material-ui/core";
-import { machineData } from "appConfig";
+import { machineData, machineData2 } from "appConfig";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
@@ -9,7 +9,7 @@ type MachineTableState = {
 	datas: machineData[],
 
 	editElement: {
-		data: machineData,
+		data: machineData2,
 		modalFlg: boolean,
 	}
 
@@ -54,7 +54,7 @@ type MachineTableActionType = keyof typeof MachineTableActionType
 
 // データ取得
 type GetDataAction = Action<typeof MachineTableActionType.getData> & {
-	data: machineData,
+	data: machineData2,
 	modalFlg: boolean,
 }
 

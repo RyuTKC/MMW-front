@@ -81,6 +81,23 @@ interface machineData {
     updated_at: string
 }
 
+interface ip_address{
+    ip_id: number,
+    ipv4_address: string,
+    created_at: string,
+    updated_at: string,
+    machine_id: number,
+    wiredflg: boolean
+}
+
+interface machineData2 {
+    machine_id: number
+    machine_name: string
+    host_name: string
+    ip_addresses: ip_address[]
+    systems: []
+}
+
 
 interface systemData {
     system_id: number,
@@ -105,6 +122,6 @@ export { MachinesAPI };
 export { SystemsAPI };
 export { ProductsAPI };
 export { RouteList };
-export { machineData };
+export { machineData, machineData2 };
 export { systemData };
 export { productData };
