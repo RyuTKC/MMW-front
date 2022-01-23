@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk"
 import { MachineTableActionType, MachineTableAction } from "./types"
 import { RootState } from "reducks/store"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, machineData, machineData2, MachinesAPI } from "appConfig"
+import { appConfig, initialMachineData, machineData, MachinesAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"
 import { initialState } from "./reducer"
 import { ActionCreator } from "redux"
@@ -29,16 +29,18 @@ export const updateMachineDatas = (): AppThunkAction<MachineTableAction> => {
 }
 
 export const getMachineData = (machine_id: number): AppThunkAction<MachineTableAction> => {
-  return async (dispatch, getState) => { 
+  return async (dispatch, getState) => {
+    let data: machineData = initialMachineData
+    
     appConfig.axios.get(MachinesAPI.root + `/${machine_id}`)
-    .then(res => {
-      const data = res.data.machine
-      console.log(data)
-      dispatch(getDataAction(data, true))
-    })
-    .catch(e => {
-      console.log(e)
-    })
+      .then(res => {
+        const data = res.data.machine as machineData
+        console.log(data)
+        dispatch(getDataAction(data, true))
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 }
 

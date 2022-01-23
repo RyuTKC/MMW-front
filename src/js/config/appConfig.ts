@@ -1,5 +1,9 @@
 import axios, { AxiosStatic } from "axios";
 import { development } from "./development";
+import { machineData, initialMachineData } from "./dataFormat/machine";
+import { systemData, initialSystemData } from "./dataFormat/system";
+import { ipAddress, initialIpAddress } from "./dataFormat/ipAddress";
+import { productData, initialProductData } from "./dataFormat/product"
 
 class AppConfig {
     constructor(param: configParam) {
@@ -61,60 +65,6 @@ interface configParam {
     API_URL: string,
     VERSION: string,
 }
-interface machineData {
-    machine_id: number
-    machine_name: string
-    administrator: string
-    host_name: string
-    place: string
-    qr_or_barcode: string
-    maintenance_date: string
-    assurance: string
-    serial_number: string
-    purchase_date: string
-    notes: string
-    product_id: number
-    status_type: number
-    role_id: number
-    vender_id: number
-    created_at: string
-    updated_at: string
-}
-
-interface ip_address{
-    ip_id: number,
-    ipv4_address: string,
-    created_at: string,
-    updated_at: string,
-    machine_id: number,
-    wiredflg: boolean
-}
-
-interface machineData2 {
-    machine_id: number
-    machine_name: string
-    host_name: string
-    ip_addresses: ip_address[]
-    systems: []
-}
-
-
-interface systemData {
-    system_id: number,
-    system_name: string,
-    system_en_name: string,
-    created_at: string,
-    updated_at: string,
-}
-interface productData {
-    product_id: number,
-    product_name: string,
-    model_number: string,
-    prod_type: number,
-    company_id: number,
-    created_at: string,
-    updated_at: string,
-}
 
 export { configParam };
 export { config as appConfig };
@@ -122,6 +72,7 @@ export { MachinesAPI };
 export { SystemsAPI };
 export { ProductsAPI };
 export { RouteList };
-export { machineData, machineData2 };
-export { systemData };
+export { machineData, initialMachineData };
+export { ipAddress, initialIpAddress }
+export { systemData, initialSystemData };
 export { productData };

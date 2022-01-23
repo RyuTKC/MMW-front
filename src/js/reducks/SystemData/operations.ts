@@ -3,21 +3,22 @@ import { ThunkAction } from "redux-thunk"
 import { SystemTableActionType } from "./types"
 import { RootState } from "reducks/store"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, systemData, SystemsAPI } from "appConfig"
+import { appConfig, initialSystemData, systemData, SystemsAPI } from "appConfig"
 import { SortDirection } from "@material-ui/core"
 import { initialState } from "./reducer"
 import { ActionCreator } from "redux"
 
 export const updatesystemDatas = (): AppThunkAction<SystemTableActionType> => {
   return async (dispatch, getState) => {
-    let systemDatas: systemData[] = []
+    let datas: systemData[] = [initialSystemData]
     const systemDataState= getState().systemData
     const sortElement= systemDataState.sortElement
 
-    await appConfig.axios.get<systemData[]>(SystemsAPI.root)
+    await appConfig.axios.get(SystemsAPI.root)
       .then(res => {
-        systemDatas = res.data as systemData[]
-        dispatch(updateAction(systemDatas))
+        console.log(res)
+        datas = res.data.systems as systemData[]
+        dispatch(updateAction(datas))
         dispatch(sortsystemDatas(sortElement.orderBy, true))
       }
       )

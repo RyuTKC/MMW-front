@@ -1,15 +1,15 @@
 import { MachineTableState, MachineTableAction, MachineTableActionType } from "./types"
 import { Reducer } from "redux";
-import { machineData } from "appConfig";
+import { initialMachineData, machineData } from "appConfig";
 
 export const initialState: MachineTableState = {
-  datas: [],
+  datas: [initialMachineData],
   editElement: {
-    data: {} as machineData,
+    data: initialMachineData,
     modalFlg: false,
   },
   tableData: {
-    sortData: [],
+    sortData: [initialMachineData],
     columnDisplayName: {
       machine_id: "ID",
       machine_name: "マシン名",
@@ -24,6 +24,8 @@ export const initialState: MachineTableState = {
       notes: "備考",
       product_id: "製品",
       status_type: "ステータス",
+      ip_addresses: "IPアドレス",
+      systems: "システム",
       role_id: "ロール",
       vender_id: "購入ベンダー",
       created_at: "登録日",
