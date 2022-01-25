@@ -1,7 +1,7 @@
 import { Box as MBox, Checkbox as MCheckbox, FormControlLabel as MFormControlLabel, Modal as MModal, Radio as MRadio, RadioGroup as MRadioGroup, Select as MSelect } from "@material-ui/core"
 import { initialMachineData } from "appConfig"
 import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { getDataAction } from "reducks/MachineData/action"
 import { RootState } from "reducks/store"
 import styled from "styled-components"
@@ -12,7 +12,7 @@ type Props = {
 
 const ModalComponent = ({ className = "", }: Props) => {
   const dispatch = useDispatch()
-  const editElement = useSelector((state: RootState) => state.machineData.editElement)
+  const editElement = useSelector((state: RootState) => state.machineData.editElement, shallowEqual)
   const data = editElement.data
 
   const onModalClose = () => {
@@ -45,11 +45,11 @@ const ModalComponent = ({ className = "", }: Props) => {
             }
           )
           }
-          <MSelect></MSelect>
+          {/* <MSelect></MSelect>
           <MCheckbox></MCheckbox>
           <MRadioGroup>
-            <MFormControlLabel value="1" control={<MRadio value=""/>} label=""></MFormControlLabel>
-          </MRadioGroup>
+            <MFormControlLabel value="1" control={<MRadio value="a"/>} label="b"></MFormControlLabel>
+          </MRadioGroup> */}
         </MBox>
       </MModal>
     </>

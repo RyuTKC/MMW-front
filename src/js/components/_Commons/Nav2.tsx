@@ -8,39 +8,26 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { push, getAction } from "connected-react-router";
-import store from "reducks/store"
-
-const reloadTabFix = (): number => {
-  switch (store.getState().router.location.pathname) {
-    case RouteList.top:
-      return 0;
-    case RouteList.machines:
-      return 1;
-    case RouteList.systems:
-      return 2;
-    case RouteList.products:
-      return 3;
-    case RouteList.users:
-      return 4;
-    default:
-      return 0;
-  }
-}
+import store, { RootState } from "reducks/store"
+import { getPageNumber } from "reducks/Router/selectors";
 
 export default () => {
+  const locationName = useSelector((state: RootState) => state.router.location.pathname)
+  const locationState = useSelector((state: RootState) => state.router)
   const dispatch = useDispatch()
-  const [pageNo, setPageNo] = useState(reloadTabFix());
+  const pageNumber = getPageNumber(locationState);
 
-  const changeTabs = (Route: string) => {
-    console.log("path:", store.getState().router.location.pathname)
-    dispatch(push(Route))
-    setPageNo(reloadTabFix());
+  console.log(pageNumber)
+
+  const changeTabs = (PageName: string) => {
+    console.log("path:", locationName)
+    dispatch(push(PageName))
   }
 
   return (
     // <AppBar position="static">
     <Paper>
-      <Tabs value={pageNo}>
+      <Tabs value={pageNumber}>
         <Tab label="TOP" onClick={() => changeTabs(RouteList.top)}></Tab>
         <Tab label="機材管理" onClick={() => changeTabs(RouteList.machines)}></Tab>
         <Tab label="システム管理" onClick={() => changeTabs(RouteList.systems)}></Tab>

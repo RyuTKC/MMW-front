@@ -9,7 +9,7 @@ import MTablePageNation from "@material-ui/core/TablePagination";
 import MTableFooter from "@material-ui/core/TableFooter";
 import MTableContainer from "@material-ui/core/TableContainer";
 import { RootState } from "reducks/store";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/MachineData/action";
 import { machineData } from "appConfig";
@@ -23,10 +23,10 @@ type Props = {
 const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
-  const machineDataState = useSelector((state: RootState) => state.machineData)
-  const columnData = machineDataState.tableData.columnDisplayName
-  const sortData = machineDataState.tableData.sortData
-  const pageData = machineDataState.tableData.pageElement
+  const tableDataState = useSelector((state: RootState) => state.machineData.tableData, shallowEqual)
+  const columnDataState = useSelector((state: RootState)=> state.machineData.tableData.columnDisplayName, shallowEqual)
+  const sortData = tableDataState.sortData
+  const pageData = tableDataState.pageElement
 
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
@@ -43,17 +43,17 @@ const MyTable = ({ className }: Props) => {
         <MTable className={className}>
           <MTableHead>
             <MTableRow>
-              <TitleColumn sortKey={"machine_id"}>{columnData.machine_id}</TitleColumn>
-              <TitleColumn sortKey={"machine_name"}>{columnData.machine_name}</TitleColumn>
-              <TitleColumn sortKey={"host_name"}>{columnData.host_name}</TitleColumn>
-              <TitleColumn sortKey={"administrator"}>{columnData.administrator}</TitleColumn>
-              <TitleColumn sortKey={"place"}>{columnData.place}</TitleColumn>
-              <TitleColumn sortKey={"serial_number"}>{columnData.serial_number}</TitleColumn>
-              <TitleColumn sortKey={"product_id"}>{columnData.product_id}</TitleColumn>
-              <TitleColumn sortKey={"assurance"}>{columnData.assurance}</TitleColumn>
-              <TitleColumn sortKey={"vender_id"}>{columnData.vender_id}</TitleColumn>
-              <TitleColumn sortKey={"notes"}>{columnData.notes}</TitleColumn>
-              <TitleColumn sortKey={"maintenance_date"}>{columnData.maintenance_date}</TitleColumn>
+              <TitleColumn sortKey={"machine_id"}>{columnDataState.machine_id}</TitleColumn>
+              <TitleColumn sortKey={"machine_name"}>{columnDataState.machine_name}</TitleColumn>
+              <TitleColumn sortKey={"host_name"}>{columnDataState.host_name}</TitleColumn>
+              <TitleColumn sortKey={"administrator"}>{columnDataState.administrator}</TitleColumn>
+              <TitleColumn sortKey={"place"}>{columnDataState.place}</TitleColumn>
+              <TitleColumn sortKey={"serial_number"}>{columnDataState.serial_number}</TitleColumn>
+              <TitleColumn sortKey={"product_id"}>{columnDataState.product_id}</TitleColumn>
+              <TitleColumn sortKey={"assurance"}>{columnDataState.assurance}</TitleColumn>
+              <TitleColumn sortKey={"vender_id"}>{columnDataState.vender_id}</TitleColumn>
+              <TitleColumn sortKey={"notes"}>{columnDataState.notes}</TitleColumn>
+              <TitleColumn sortKey={"maintenance_date"}>{columnDataState.maintenance_date}</TitleColumn>
             </MTableRow>
           </MTableHead>
           <MTableBody>
