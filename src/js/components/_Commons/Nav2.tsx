@@ -17,10 +17,8 @@ export default () => {
   const dispatch = useDispatch()
   const pageNumber = getPageNumber(locationState);
 
-  console.log(pageNumber)
 
   const changeTabs = (PageName: string) => {
-    console.log("path:", locationName)
     dispatch(push(PageName))
   }
 

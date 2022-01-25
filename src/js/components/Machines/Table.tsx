@@ -23,10 +23,9 @@ type Props = {
 const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
-  const tableDataState = useSelector((state: RootState) => state.machineData.tableData, shallowEqual)
+  const sortDataState = useSelector((state: RootState) => state.machineData.tableData.sortData, shallowEqual)
+  const pageDataState = useSelector((state: RootState) => state.machineData.tableData.pageElement, shallowEqual)
   const columnDataState = useSelector((state: RootState)=> state.machineData.tableData.columnDisplayName, shallowEqual)
-  const sortData = tableDataState.sortData
-  const pageData = tableDataState.pageElement
 
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
@@ -57,7 +56,7 @@ const MyTable = ({ className }: Props) => {
             </MTableRow>
           </MTableHead>
           <MTableBody>
-            {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
+            {sortDataState.slice((pageDataState.nowPage) * pageDataState.recordPerPage, (pageDataState.nowPage + 1) * pageDataState.recordPerPage).map((v, i) => {
               return (
                 <MTableRow className={"tableRow"} key={i} onClick={onClickRecord(v.machine_id)}>
                   <MTableCell>{v.machine_id}</MTableCell>
@@ -78,7 +77,7 @@ const MyTable = ({ className }: Props) => {
           </MTableBody>
           <MTableFooter>
             <MTableRow>
-              <MTablePageNation count={sortData.length} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
+              <MTablePageNation count={sortDataState.length} onPageChange={paging} page={pageDataState.nowPage} rowsPerPage={pageDataState.recordPerPage} />
             </MTableRow>
           </MTableFooter>
         </MTable>
