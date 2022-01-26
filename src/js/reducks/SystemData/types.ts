@@ -4,7 +4,7 @@ import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 // State Type
-type SystemTableStateType = {
+type SystemTableState = {
 	// 今持っている最新のデータ
 	data: systemData[],
 	// ソートされたデータ
@@ -34,20 +34,20 @@ type SystemTableStateType = {
 }
 
 // Action Type
-const SystemTableActionKind = {
+const SystemTableActionType = {
 	update: "UPDATE",
 	sort: "SORT",
 	paging: "PAGING"
 } as const;
-type SystemTableActionKind = keyof typeof SystemTableActionKind
+type SystemTableActionType = keyof typeof SystemTableActionType
 
 // データ更新
-type UpdateActionType = Action<typeof SystemTableActionKind.update> & {
+type UpdateAction = Action<typeof SystemTableActionType.update> & {
 	data: systemData[],
 }
 
 // データソート
-type SortActionType = Action<typeof SystemTableActionKind.sort> & {
+type SortAction = Action<typeof SystemTableActionType.sort> & {
 	sortData: systemData[],
 	sortElement: {
 		orderBy: keyof systemData,
@@ -56,14 +56,14 @@ type SortActionType = Action<typeof SystemTableActionKind.sort> & {
 }
 
 // ページング関連アクション
-type PagingActionType = Action<typeof SystemTableActionKind.paging>&{
+type PagingAction = Action<typeof SystemTableActionType.paging>&{
 	nextPage: number
 }
 
 // アクションタイプ統合
-type SystemTableActionType = UpdateActionType | SortActionType | PagingActionType
+type SystemTableAction = UpdateAction | SortAction | PagingAction
 export {
-	type SystemTableStateType,
-	type SystemTableActionType,
-	SystemTableActionKind,
+	type SystemTableState,
+	type SystemTableAction,
+	SystemTableActionType,
 }

@@ -13,7 +13,10 @@ type Props = {
 const ModalComponent = ({ className = "", }: Props) => {
   const dispatch = useDispatch()
   const editElement = useSelector((state: RootState) => state.machineData.editElement, shallowEqual)
-  const data = editElement.data
+  const systemDatas = useSelector((state: RootState)=> state.systemData.data, shallowEqual)
+  const machineData = editElement.data
+
+  console.log(systemDatas)
 
   const onModalClose = () => {
     dispatch(getDataAction(initialMachineData, false))
@@ -24,17 +27,17 @@ const ModalComponent = ({ className = "", }: Props) => {
       <MModal open={editElement.modalFlg} onClose={onModalClose}>
         <MBox className={className}>
           <div>
-            {data.host_name}
+            {machineData.host_name}
           </div>
           <div>
-            {data.machine_id}
+            {machineData.machine_id}
           </div>
           <div>
-            {data.machine_name}
+            {machineData.machine_name}
           </div>
           <div>
           </div>
-          {Object.values(data.ip_addresses).map(
+          {Object.values(machineData.ip_addresses).map(
             (v, i) => {
               return (
                 <div key={i}>

@@ -1,17 +1,16 @@
-import { SystemTableStateType, SystemTableActionType, SystemTableActionKind } from "./types"
+import { SystemTableState, SystemTableAction, SystemTableActionType } from "./types"
 import { Reducer } from "redux";
 import { updateAction } from "./action";
+import { initialSystemData } from "appConfig";
 
-export const initialState: SystemTableStateType = {
-  data: [],
+export const initialState: SystemTableState = {
+  data: [initialSystemData],
   columnDisplayName: {
     system_id: "ID",
     system_name: "システム名",
     system_en_name: "システム英名",
-    created_at: "登録日",
-    updated_at: "更新日"
   },
-  sortData: [],
+  sortData: [initialSystemData],
   sortElement: {
     orderBy: "system_id",
     sortDirection: "desc"
@@ -23,10 +22,10 @@ export const initialState: SystemTableStateType = {
   },
 }
 
-export const systemDataReducer: Reducer<SystemTableStateType, SystemTableActionType> = (state = initialState, action): SystemTableStateType => {
+export const systemDataReducer: Reducer<SystemTableState, SystemTableAction> = (state = initialState, action): SystemTableState => {
 
   switch (action.type) {
-    case SystemTableActionKind.update:
+    case SystemTableActionType.update:
       return {
         ...state,
         data: action.data,
@@ -35,14 +34,14 @@ export const systemDataReducer: Reducer<SystemTableStateType, SystemTableActionT
           nowPage: 0
         }
       }
-    case SystemTableActionKind.sort:
+    case SystemTableActionType.sort:
       return {
         ...state,
         sortData: action.sortData,
         sortElement: action.sortElement,
       }
 
-    case SystemTableActionKind.paging:
+    case SystemTableActionType.paging:
       return {
         ...state,
         pageElement: {

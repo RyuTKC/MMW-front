@@ -21,8 +21,8 @@ export const updateProductDatas = (): AppThunkAction<ProductTableActionType> => 
         dispatch(sortProductDatas(sortElement.orderBy, true))
       }
       )
-      .catch(error =>
-        console.error(error)
+      .catch(e =>
+        console.error(e)
       )
 
   }

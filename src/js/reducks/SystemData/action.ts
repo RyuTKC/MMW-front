@@ -2,18 +2,18 @@ import { SortDirection } from "@material-ui/core";
 import { systemData } from "appConfig";
 import { Action, ActionCreator } from "redux";
 import { initialState } from "./reducer";
-import { SystemTableActionKind, SystemTableActionType } from "./types";
+import { SystemTableActionType, SystemTableAction } from "./types";
 
-export const updateAction = (systemDatas: systemData[]): SystemTableActionType => {
+export const updateAction = (systemDatas: systemData[]): SystemTableAction => {
   return {
-    type: SystemTableActionKind.update,
+    type: SystemTableActionType.update,
     data: systemDatas,
   }
 }
 
-export const sortAction = (systemDatas: systemData[], orderBy: keyof systemData, sortDirection: Exclude<SortDirection, boolean>): SystemTableActionType => {
+export const sortAction = (systemDatas: systemData[], orderBy: keyof systemData, sortDirection: Exclude<SortDirection, boolean>): SystemTableAction => {
   return {
-    type: SystemTableActionKind.sort,
+    type: SystemTableActionType.sort,
     sortData: systemDatas,
     sortElement: {
       orderBy: orderBy,
@@ -22,9 +22,9 @@ export const sortAction = (systemDatas: systemData[], orderBy: keyof systemData,
   }
 }
 
-export const pagingAction = (nextPage: number): SystemTableActionType => {
+export const pagingAction = (nextPage: number): SystemTableAction => {
   return {
-    type: SystemTableActionKind.paging,
+    type: SystemTableActionType.paging,
     nextPage: nextPage
   }
 }

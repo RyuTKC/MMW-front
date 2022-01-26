@@ -1,6 +1,6 @@
 import { sortAction, updateAction } from "./action"
 import { ThunkAction } from "redux-thunk"
-import { SystemTableActionType } from "./types"
+import { SystemTableAction } from "./types"
 import { RootState } from "reducks/store"
 import { AppThunkAction } from "reducks/store"
 import { appConfig, initialSystemData, systemData, SystemsAPI } from "appConfig"
@@ -8,7 +8,7 @@ import { SortDirection } from "@material-ui/core"
 import { initialState } from "./reducer"
 import { ActionCreator } from "redux"
 
-export const updatesystemDatas = (): AppThunkAction<SystemTableActionType> => {
+export const updatesystemDatas = (): AppThunkAction<SystemTableAction> => {
   return async (dispatch, getState) => {
     let datas: systemData[] = [initialSystemData]
     const systemDataState= getState().systemData
@@ -16,21 +16,20 @@ export const updatesystemDatas = (): AppThunkAction<SystemTableActionType> => {
 
     await appConfig.axios.get(SystemsAPI.root)
       .then(res => {
-        console.log(res)
         datas = res.data.systems as systemData[]
         dispatch(updateAction(datas))
         dispatch(sortsystemDatas(sortElement.orderBy, true))
       }
       )
-      .catch(error =>
-        console.error(error)
+      .catch(e =>
+        console.error(e)
       )
 
   }
 }
 
 export const sortsystemDatas = (targetColumn: keyof systemData, updateFlg: boolean = false)
-  : AppThunkAction<SystemTableActionType> => {
+  : AppThunkAction<SystemTableAction> => {
 
   return async (dispatch, getState) => {
 
@@ -80,7 +79,7 @@ export const sortsystemDatas = (targetColumn: keyof systemData, updateFlg: boole
   }
 }
 
-export const pagingTable= (): AppThunkAction<SystemTableActionType>=>{
+export const pagingTable= (): AppThunkAction<SystemTableAction>=>{
   return async()=>{
     
   }

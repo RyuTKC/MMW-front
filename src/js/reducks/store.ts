@@ -43,7 +43,7 @@ const store = storeCreator()
 // 全stateの型
 export type RootState = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
 // 全thunkActionの型
-export type AppThunkAction<MyActionType extends Action = Action, T = void> = ThunkAction<Promise<T>, RootState, undefined, MyActionType>
+export type AppThunkAction<MyActionType extends Action = Action, T = void> = ThunkAction<T, RootState, undefined, MyActionType>
 export type AppDispatchType = typeof store.dispatch
 export { history };
 export default store;
