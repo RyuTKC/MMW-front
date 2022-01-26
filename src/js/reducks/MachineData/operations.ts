@@ -11,9 +11,9 @@ export const updateMachineDatas = (): AppThunkAction<MachineTableAction> => {
     const machinDataState = getState().machineData
     const sortElement = machinDataState.tableData.sortElement
 
-    await appConfig.axios.get<machineData[]>(MachinesAPI.root)
+    await appConfig.axios.get(MachinesAPI.root)
       .then(res => {
-        machineDatas = res.data as machineData[]
+        machineDatas = res.data.machines as machineData[]
         dispatch(getDatasAction(machineDatas))
         dispatch(sortMachineDatas(sortElement.orderBy, true))
       }
