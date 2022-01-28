@@ -13,7 +13,7 @@ type Props = {
 const ModalComponent = ({ className = "", }: Props) => {
   const dispatch = useDispatch()
   const editElement = useSelector((state: RootState) => state.machineData.editElement, shallowEqual)
-  const systemDatas = useSelector((state: RootState)=> state.systemData.data, shallowEqual)
+  const systemDatas = useSelector((state: RootState) => state.systemData.data, shallowEqual)
   const machineData = editElement.data
 
   console.log(systemDatas)
@@ -26,6 +26,7 @@ const ModalComponent = ({ className = "", }: Props) => {
     <>
       <MModal open={editElement.modalFlg} onClose={onModalClose}>
         <MBox className={className}>
+          <button onClick={onModalClose}>とじる</button>
           <div>
             {machineData.host_name}
           </div>
@@ -48,11 +49,20 @@ const ModalComponent = ({ className = "", }: Props) => {
             }
           )
           }
-          {/* <MSelect></MSelect>
-          <MCheckbox></MCheckbox>
+          {/* <MSelect></MSelect> */}
+          {/* <MCheckbox></MCheckbox> */}
           <MRadioGroup>
-            <MFormControlLabel value="1" control={<MRadio value="a"/>} label="b"></MFormControlLabel>
-          </MRadioGroup> */}
+            {Object.values(systemDatas.map((v, i) => {
+              return (
+                <React.Fragment key={i}>
+                  <MFormControlLabel value={v.system_id} control={<MRadio />} label={v.system_name}></MFormControlLabel>
+                </React.Fragment>
+              )
+            }
+            )
+            )
+            }
+          </MRadioGroup>
         </MBox>
       </MModal>
     </>

@@ -39,8 +39,6 @@ export const sortsystemDatas = (targetColumn: keyof systemData, updateFlg: boole
     if (datas.length === 0)
       return
 
-
-
     // 次状態を現在のstateで初期化
     const nextSortState = sortState
     // ソート規則のオブジェクト
