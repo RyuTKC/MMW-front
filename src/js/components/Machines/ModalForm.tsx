@@ -1,6 +1,14 @@
-import { Box as MBox, Checkbox as MCheckbox, FormControlLabel as MFormControlLabel, Modal as MModal, Radio as MRadio, RadioGroup as MRadioGroup, Select as MSelect } from "@material-ui/core"
-import { initialMachineData } from "appConfig"
-import React from "react"
+import {
+  Box as MBox,
+  Checkbox as MCheckbox,
+  FormControlLabel as MFormControlLabel,
+  Modal as MModal,
+  Radio as MRadio,
+  RadioGroup as MRadioGroup,
+  Select as MSelect,
+} from "@material-ui/core"
+import { initialMachineData, initialSystemData, systemData } from "appConfig"
+import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { getDataAction } from "reducks/MachineData/action"
 import { RootState } from "reducks/store"
@@ -16,10 +24,18 @@ const ModalComponent = ({ className = "", }: Props) => {
   const systemDatas = useSelector((state: RootState) => state.systemData.data, shallowEqual)
   const machineData = editElement.data
 
-  console.log(systemDatas)
+  const [testRadio, setTestRadio] = useState(-1);
+  const [testChecks, setTestChecks]= useState([] as boolean[]);
 
   const onModalClose = () => {
     dispatch(getDataAction(initialMachineData, false))
+  }
+
+  const radioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTestRadio(Number((e.target as HTMLInputElement).value))
+  }
+  const checkboxChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
+
   }
 
   return (
@@ -51,11 +67,16 @@ const ModalComponent = ({ className = "", }: Props) => {
           }
           {/* <MSelect></MSelect> */}
           {/* <MCheckbox></MCheckbox> */}
-          <MRadioGroup>
+          <MRadioGroup value={testRadio} onChange={radioChange}>
             {Object.values(systemDatas.map((v, i) => {
               return (
                 <React.Fragment key={i}>
-                  <MFormControlLabel value={v.system_id} control={<MRadio />} label={v.system_name}></MFormControlLabel>
+                  <MFormControlLabel value={v.system_id} control={
+                    <>
+                      <MRadio />
+                      <MCheckbox onChange={checkboxChange}/>
+                    </>
+                  } label={v.system_name}></MFormControlLabel>
                 </React.Fragment>
               )
             }
