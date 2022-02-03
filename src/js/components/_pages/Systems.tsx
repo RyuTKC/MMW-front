@@ -7,11 +7,7 @@ import { sortsystemDatas, updatesystemDatas } from "reducks/SystemData/operation
 export default () => {
   const dispatch = useDispatch()
 
-  // リロード更新
-  useEffect(() => {
-    dispatch(updatesystemDatas())
-    dispatch(sortsystemDatas("system_id"))
-  }, [])
+
 
   return (
     <main>

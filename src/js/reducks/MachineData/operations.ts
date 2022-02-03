@@ -5,7 +5,7 @@ import { appConfig, initialMachineData, machineData, MachinesAPI, systemData } f
 import { updateAction } from "reducks/SystemData/action"
 import { SystemTableAction } from "reducks/SystemData/types"
 
-export const updateMachineDatas = (): AppThunkAction<MachineTableAction> => {
+export const getMachineDatas = (): AppThunkAction<MachineTableAction> => {
   return async (dispatch, getState) => {
     let machineDatas: machineData[] = []
     const machinDataState = getState().machineData
@@ -21,13 +21,12 @@ export const updateMachineDatas = (): AppThunkAction<MachineTableAction> => {
       .catch(error =>
         console.error(error)
       )
-
   }
 }
 
 export const getMachineData = (machine_id: number): AppThunkAction<MachineTableAction | SystemTableAction> => {
   return async (dispatch, getState) => {
-    
+
     appConfig.axios.get(MachinesAPI.root + `/${machine_id}`)
       .then(res => {
         const machineData = res.data.machine as machineData

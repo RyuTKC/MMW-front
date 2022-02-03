@@ -5,10 +5,6 @@ import { sortProductDatas, updateProductDatas } from "reducks/ProductData/operat
 
 export default () => {
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(updateProductDatas())
-        dispatch(sortProductDatas("product_id", false))
-    }, [])
 
     return (
         <main>

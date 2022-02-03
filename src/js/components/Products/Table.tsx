@@ -12,6 +12,7 @@ import { RootState } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/ProductData/action";
+import { sortProductDatas, updateProductDatas } from "reducks/ProductData/operations";
 
 
 type TableProps = {
@@ -29,6 +30,11 @@ const MyTable = ({ className }: TableProps) => {
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
   }
+
+  useEffect(() => {
+    dispatch(updateProductDatas())
+    dispatch(sortProductDatas("product_id", false))
+}, [])
   
   return (
     <>

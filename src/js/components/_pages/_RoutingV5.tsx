@@ -1,10 +1,10 @@
 import "core-js/stable";
 import React from "react";
-import Top from "pages/Top";
-import Machines from "pages/Machines";
-import Systems from "pages/Systems";
-import Products from "pages/Products";
-import Users from "pages/Users";
+import Top from "components/_pages/Top";
+import Machines from "components/_pages/Machines";
+import Systems from "components/_pages/Systems";
+import Products from "components/_pages/Products";
+import Users from "components/_pages/Users";
 import { RouteList } from "appConfig"
 /****** routing version 5 ******/
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"

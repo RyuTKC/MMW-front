@@ -22,12 +22,12 @@ export const initialState: MachineTableState = {
       serial_number: "シリアル",
       purchase_date: "購入年月",
       notes: "備考",
-      product_id: "製品",
+      product: "製品",
       status_type: "ステータス",
       ip_addresses: "IPアドレス",
       systems: "システム",
       role_id: "ロール",
-      vender_id: "購入ベンダー",
+      vender: "購入ベンダー",
       created_at: "登録日",
       updated_at: "更新日"
     },
@@ -74,9 +74,23 @@ export const machineDataReducer: Reducer<MachineTableState, MachineTableAction> 
         }
 
       }
-    case MachineTableActionType.editPost:
+    case MachineTableActionType.postData:
       return {
         ...state
+      }
+
+    case MachineTableActionType.editData:
+      return {
+        ...state,
+        editElement: {
+          ...state.editElement,
+
+          data: {
+            ...state.editElement.data,
+
+            [action.key]: action.data
+          }
+        }
       }
     case MachineTableActionType.sort:
       return {

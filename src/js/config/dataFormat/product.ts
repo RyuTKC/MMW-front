@@ -4,8 +4,6 @@ interface productData {
     model_number: string,
     prod_type: number,
     company_id: number,
-    created_at: string,
-    updated_at: string,
 }
 
 const initialProductData: productData = {
@@ -14,8 +12,6 @@ const initialProductData: productData = {
     model_number: "-",
     prod_type: -1,
     company_id: -1,
-    created_at: "-",
-    updated_at: "",
 }
 
 export { productData, initialProductData };

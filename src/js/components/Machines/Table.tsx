@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, } from "react";
 import styled from "styled-components";
 import MTable from "@material-ui/core/Table";
 import MTableBody from "@material-ui/core/TableBody";
@@ -12,8 +12,8 @@ import { RootState } from "reducks/store";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/MachineData/action";
-import { machineData } from "appConfig";
-import { getMachineData } from "reducks/MachineData/operations";
+import { getMachineData, sortMachineDatas, getMachineDatas } from "reducks/MachineData/operations";
+import { CircularProgress as MCircularProgress } from "@material-ui/core";
 
 
 type Props = {
@@ -23,10 +23,10 @@ type Props = {
 const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
+  const DataState = useSelector((state: RootState) => state.machineData.datas, shallowEqual)
   const sortDataState = useSelector((state: RootState) => state.machineData.tableData.sortData, shallowEqual)
   const pageDataState = useSelector((state: RootState) => state.machineData.tableData.pageElement, shallowEqual)
-  const columnDataState = useSelector((state: RootState)=> state.machineData.tableData.columnDisplayName, shallowEqual)
-
+  const columnDataState = useSelector((state: RootState) => state.machineData.tableData.columnDisplayName, shallowEqual)
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
     window.scrollTo(0, 0)
@@ -36,11 +36,21 @@ const MyTable = ({ className }: Props) => {
     dispatch(getMachineData(machine_id))
   }
 
+  // 更新
+  useEffect(() => {
+    console.log("更新")
+    dispatch(getMachineDatas())
+    dispatch(sortMachineDatas("machine_id", false))
+  }, []);
+
   return (
     <>
       <MTableContainer>
         <MTable className={className}>
           <MTableHead>
+            <MTableRow>
+              <MTablePageNation count={sortDataState.length} onPageChange={paging} page={pageDataState.nowPage} rowsPerPage={pageDataState.recordPerPage} />
+            </MTableRow>
             <MTableRow>
               <TitleColumn sortKey={"machine_id"}>{columnDataState.machine_id}</TitleColumn>
               <TitleColumn sortKey={"machine_name"}>{columnDataState.machine_name}</TitleColumn>
@@ -48,9 +58,9 @@ const MyTable = ({ className }: Props) => {
               <TitleColumn sortKey={"administrator"}>{columnDataState.administrator}</TitleColumn>
               <TitleColumn sortKey={"place"}>{columnDataState.place}</TitleColumn>
               <TitleColumn sortKey={"serial_number"}>{columnDataState.serial_number}</TitleColumn>
-              <TitleColumn sortKey={"product_id"}>{columnDataState.product_id}</TitleColumn>
+              <TitleColumn sortKey={"product"}>{columnDataState.product}</TitleColumn>
               <TitleColumn sortKey={"assurance"}>{columnDataState.assurance}</TitleColumn>
-              <TitleColumn sortKey={"vender_id"}>{columnDataState.vender_id}</TitleColumn>
+              <TitleColumn sortKey={"vender"}>{columnDataState.vender}</TitleColumn>
               <TitleColumn sortKey={"notes"}>{columnDataState.notes}</TitleColumn>
               <TitleColumn sortKey={"maintenance_date"}>{columnDataState.maintenance_date}</TitleColumn>
             </MTableRow>
@@ -65,9 +75,9 @@ const MyTable = ({ className }: Props) => {
                   <MTableCell>{v.administrator}</MTableCell>
                   <MTableCell>{v.place}</MTableCell>
                   <MTableCell>{v.serial_number}</MTableCell>
-                  <MTableCell>{v.product_id}</MTableCell>
+                  <MTableCell>{v.product.product_name}</MTableCell>
                   <MTableCell>{v.assurance}</MTableCell>
-                  <MTableCell>{v.vender_id}</MTableCell>
+                  <MTableCell>{v.vender.company_name}</MTableCell>
                   <MTableCell>{v.notes}</MTableCell>
                   <MTableCell>{v.maintenance_date}</MTableCell>
                 </MTableRow>

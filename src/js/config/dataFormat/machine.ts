@@ -1,4 +1,6 @@
+import { companyData, initialCompanyData } from "./company";
 import { initialIpAddress, ipAddress } from "./ipAddress";
+import { initialProductData, productData } from "./product";
 import { initialSystemData, systemData } from "./system";
 
 interface machineData {
@@ -13,12 +15,14 @@ interface machineData {
     serial_number: string
     purchase_date: string
     notes: string
-    product_id: number
+    product: productData
     status_type: number
     role_id: number
     ip_addresses: ipAddress[],
-    systems: systemData[]
-    vender_id: number
+    systems: ({
+        main_flg: boolean,
+    } & systemData)[]
+    vender: companyData
     created_at: string
     updated_at: string
 }
@@ -34,12 +38,15 @@ const initialMachineData: machineData = {
     serial_number: "-",
     purchase_date: "-",
     notes: "-",
-    product_id: -1,
+    product: initialProductData,
     status_type: -1,
     ip_addresses: [initialIpAddress],
-    systems: [initialSystemData],
+    systems: [{
+        ...initialSystemData,
+        main_flg: false
+    }],
     role_id: -1,
-    vender_id: -1,
+    vender: initialCompanyData,
     created_at: "-",
     updated_at: "-"
 }

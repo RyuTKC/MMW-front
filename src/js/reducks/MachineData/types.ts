@@ -45,8 +45,9 @@ type MachineTableState = {
 // Action Type
 const MachineTableActionType = {
 	getData: "GET_DATA",
-	editPost: "EDIT_POST",
+	postData: "POST_DATA",
 	getDatas: "GET_DATAS",
+	editData: "EDIT_DATA",
 	sort: "SORT",
 	paging: "PAGING"
 } as const;
@@ -59,13 +60,19 @@ type GetDataAction = Action<typeof MachineTableActionType.getData> & {
 }
 
 // 編集データPOST
-type EditPostAction= Action<typeof MachineTableActionType.editPost> &{
+type PostDataAction = Action<typeof MachineTableActionType.postData> & {
 	data: machineData,
 }
 
 // データ一覧取得
 type GetDatasAction = Action<typeof MachineTableActionType.getDatas> & {
 	data: machineData[],
+}
+
+// データ編集
+type EditDataAction = Action<typeof MachineTableActionType.editData> & {
+	data: machineData[keyof machineData],
+	key: keyof machineData
 }
 
 // データソート
@@ -83,7 +90,7 @@ type PagingAction = Action<typeof MachineTableActionType.paging> & {
 }
 
 // アクションタイプ統合
-type MachineTableAction = GetDataAction | GetDatasAction | SortAction | PagingAction | EditPostAction
+type MachineTableAction = GetDataAction | GetDatasAction | PostDataAction | EditDataAction | SortAction | PagingAction
 export {
 	type MachineTableState,
 	type MachineTableAction,

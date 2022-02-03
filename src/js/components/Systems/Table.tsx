@@ -12,6 +12,7 @@ import { RootState } from "reducks/store";
 import { useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
 import { pagingAction } from "reducks/SystemData/action";
+import { sortsystemDatas, updatesystemDatas } from "reducks/SystemData/operations";
 
 
 type Props = {
@@ -29,7 +30,13 @@ const MyTable = ({ className }: Props) => {
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
   }
-  
+
+  // リロード更新
+  useEffect(() => {
+    dispatch(updatesystemDatas())
+    dispatch(sortsystemDatas("system_id"))
+  }, [])
+
   return (
     <>
       <MTableContainer>
@@ -44,7 +51,7 @@ const MyTable = ({ className }: Props) => {
           <MTableBody>
             {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
               return (
-                <MTableRow key={i} onClick={()=>{}}>
+                <MTableRow key={i} onClick={() => { }}>
                   <MTableCell>{v.system_id}</MTableCell>
                   <MTableCell>{v.system_name}</MTableCell>
                   <MTableCell>{v.system_en_name}</MTableCell>

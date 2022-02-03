@@ -6,7 +6,7 @@ import store, { history } from "reducks/store";
 import { StylesProvider } from "@material-ui/core";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
-import Routing from "pages/_RoutingV5";
+import Routing from "components/_pages/_RoutingV5";
 import { Header, Footer, Nav, Nav2 } from "components/_Commons/commonSet";
 
 const target = document.getElementById("app");

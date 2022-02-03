@@ -1,19 +1,18 @@
 import { ProductTableStateType, ProductTableActionType, ProductTableActionKind } from "./types"
 import { Reducer } from "redux";
 import { updateAction } from "./action";
+import { initialProductData } from "js/config/dataFormat/product";
 
 export const initialState: ProductTableStateType = {
-  data: [],
+  data: [initialProductData],
   columnDisplayName: {
     product_id: "ID",
     product_name: "製品名",
     model_number: "型番",
     prod_type: "機材タイプ",
     company_id: "メーカー",
-    created_at: "登録日",
-    updated_at: "更新日"
   },
-  sortData: [],
+  sortData: [initialProductData],
   sortElement: {
     orderBy: "product_id",
     sortDirection: "desc"
