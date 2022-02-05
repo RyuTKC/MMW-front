@@ -1,7 +1,7 @@
 import { companyData, initialCompanyData } from "./company";
 import { initialIpAddress, ipAddress } from "./ipAddress";
 import { initialProductData, productData } from "./product";
-import { initialSystemData, systemData } from "./system";
+import { initialSystemData, isSystemData, systemData } from "./system";
 
 interface machineData {
     machine_id: number
@@ -18,14 +18,17 @@ interface machineData {
     product: productData
     status_type: number
     role_id: number
-    ip_addresses: ipAddress[],
-    systems: ({
-        main_flg: boolean,
-    } & systemData)[]
+    ip_addresses: ipAddress[]
+    systems: machineSystem[]
     vender: companyData
     created_at: string
     updated_at: string
 }
+
+type machineSystem = ({
+    main_flg: boolean,
+} & systemData)
+
 const initialMachineData: machineData = {
     machine_id: -1,
     machine_name: "-",
@@ -51,4 +54,14 @@ const initialMachineData: machineData = {
     updated_at: "-"
 }
 
-export { machineData, initialMachineData };
+
+// type guard関数
+const isMachineData = (target: any): target is machineData => {
+    return target.machine_id !== undefined
+}
+const isMachineSystem = (target: any): target is machineSystem => {
+    return target.main_flg !== undefined && isSystemData(delete target.main_flg)
+
+}
+
+export { machineData, machineSystem, initialMachineData, isMachineSystem, isMachineData };

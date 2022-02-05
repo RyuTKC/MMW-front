@@ -32,7 +32,7 @@
     // import等のパスを便利に設定する
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "pages/*": ["js/components/pages/*"],
+      "pages/*": ["js/components/_pages/*"],
       "components/*": ["js/components/*"],
       "reducks/*": ["js/reducks/*"],
       "reducks_toolkit/*": ["js/reducks_toolkit/*"],

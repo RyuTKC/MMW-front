@@ -3,11 +3,10 @@ import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createBrowserHistory } from "history"
 import { countReducer } from "./Counter/reducer";
 import { countReducer as count2Reducer } from "./Counter2/reducer";
-import * as H from "history"
-import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { machineDataReducer } from "./MachineData/reducer";
-import { systemDataReducer } from "./SystemData/reducer"
-import { productDataReducer } from "./ProductData/reducer";
+import thunk, { ThunkAction } from "redux-thunk";
+import { machinesReducer } from "./Machines/reducer";
+import { systemsReducer } from "./Systems/reducer";
+import { productsReducer } from "./Products/reducer";
 
 const history = createBrowserHistory()
 
@@ -16,9 +15,9 @@ const reducers = combineReducers({
     router: connectRouter(history),
     count: countReducer,
     count2: count2Reducer,
-    machineData: machineDataReducer,
-    systemData: systemDataReducer,
-    productData: productDataReducer,
+    machines: machinesReducer,
+    systems: systemsReducer,
+    products: productsReducer,
 })
 
 // ミドルウェアの統合
@@ -42,9 +41,9 @@ const store = storeCreator()
 
 // 全stateの型
 export type RootState = ReturnType<typeof reducers>         // === ReturnType<typeof store.getState>
+
 // 全thunkActionの型
 export type AppThunkAction<MyActionType extends Action = Action, T = void> = ThunkAction<T, RootState, undefined, MyActionType>
 export type AppDispatchType = typeof store.dispatch
 export { history };
 export default store;
-

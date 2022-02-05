@@ -12,4 +12,8 @@ const initialIpAddress: ipAddress = {
     wiredflg: false,
 }
 
-export { ipAddress, initialIpAddress }
+const isIpAddress= (target: any): target is ipAddress=>{
+    return target.ip_id !== undefined
+}
+
+export { ipAddress, initialIpAddress, isIpAddress }

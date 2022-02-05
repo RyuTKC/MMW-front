@@ -1,9 +1,10 @@
 import axios, { AxiosStatic } from "axios";
 import { development } from "./development";
-import { machineData, initialMachineData } from "./dataFormat/machine";
-import { systemData, initialSystemData } from "./dataFormat/system";
-import { ipAddress, initialIpAddress } from "./dataFormat/ipAddress";
-import { productData, initialProductData } from "./dataFormat/product"
+import { machineData, machineSystem, initialMachineData, isMachineData, isMachineSystem } from "./dataFormat/machine";
+import { systemData, initialSystemData, isSystemData } from "./dataFormat/system";
+import { ipAddress, initialIpAddress, isIpAddress } from "./dataFormat/ipAddress";
+import { productData, initialProductData, isProductData } from "./dataFormat/product"
+import { companyData, initialCompanyData, isCompanyData } from "./dataFormat/company";
 
 class AppConfig {
     constructor(param: configParam) {
@@ -66,13 +67,18 @@ interface configParam {
     VERSION: string,
 }
 
+const isArray= <T>(target: any): target is T[]=>{
+    return Array.isArray(target);
+}
+
 export { configParam };
-export { config as appConfig };
+export { config as appConfig, isArray };
 export { MachinesAPI };
 export { SystemsAPI };
 export { ProductsAPI };
 export { RouteList };
-export { machineData, initialMachineData };
-export { ipAddress, initialIpAddress }
-export { systemData, initialSystemData };
-export { productData };
+export { machineData, machineSystem, initialMachineData, isMachineData, isMachineSystem };
+export { ipAddress, initialIpAddress, isIpAddress }
+export { systemData, initialSystemData, isSystemData };
+export { productData, initialProductData, isProductData };
+export { companyData, initialCompanyData, isCompanyData };

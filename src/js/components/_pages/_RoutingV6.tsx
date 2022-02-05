@@ -1,8 +1,8 @@
 import "core-js/stable";
 import React from "react";
-import Machines from "components/_pages/Machines";
-import Systems from "components/_pages/Systems";
-import Top from "components/_pages/Top";
+import Machines from "pages/Machines/Machines";
+import Systems from "pages/Systems/Systems";
+import Top from "pages/Top/Top";
 /****** routing version 6 ******/
 // import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom" /* v6 */
 

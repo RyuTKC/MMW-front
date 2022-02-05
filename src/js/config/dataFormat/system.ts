@@ -4,6 +4,10 @@ interface systemData {
     system_en_name: string,
 }
 
+export const isSystemData = (target: any): target is systemData => {
+    return target.system_id !== undefined
+}
+
 const initialSystemData: systemData = {
     system_id: -1,
     system_name: "-",

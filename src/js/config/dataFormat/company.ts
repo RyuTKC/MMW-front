@@ -1,7 +1,3 @@
-import { initialIpAddress, ipAddress } from "./ipAddress";
-import { initialProductData, productData } from "./product";
-import { initialSystemData, systemData } from "./system";
-
 interface companyData {
     company_id: number
     company_name: string
@@ -11,4 +7,8 @@ const initialCompanyData: companyData = {
     company_name: "-",
 }
 
-export { companyData, initialCompanyData };
+const isCompanyData = (target: any): target is companyData => {
+    return target.company_id !== undefined
+}
+
+export { companyData, initialCompanyData, isCompanyData };
