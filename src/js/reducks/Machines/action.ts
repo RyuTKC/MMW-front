@@ -29,7 +29,7 @@ export const editDataAction= (targetData: machineData[keyof machineData], key: k
 }
 
 
-export const sortAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachinesAction => {
+export const sortMachineAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachinesAction => {
   return {
     type: MachinesActionType.sortMachine,
     sortData: machineDatas,
@@ -40,7 +40,7 @@ export const sortAction = (machineDatas: machineData[], orderBy: keyof machineDa
   }
 }
 
-export const pagingAction = (nextPage: number): MachinesAction => {
+export const pagingMachineAction = (nextPage: number): MachinesAction => {
   return {
     type: MachinesActionType.pagingMachine,
     nextPage: nextPage

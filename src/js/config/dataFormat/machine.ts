@@ -1,4 +1,5 @@
 import { companyData, initialCompanyData } from "./company";
+import { initialRoleData, initialStatusData, roleData, statusData } from "./enum";
 import { initialIpAddress, ipAddress } from "./ipAddress";
 import { initialProductData, productData } from "./product";
 import { initialSystemData, isSystemData, systemData } from "./system";
@@ -16,13 +17,13 @@ interface machineData {
     purchase_date: string
     notes: string
     product: productData
-    status_type: number
-    role_id: number
+    status: statusData
+    role: roleData
     ip_addresses: ipAddress[]
     systems: machineSystem[]
     vender: companyData
-    created_at: string
-    updated_at: string
+    created_at: Date
+    updated_at: Date
 }
 
 type machineSystem = ({
@@ -42,16 +43,16 @@ const initialMachineData: machineData = {
     purchase_date: "-",
     notes: "-",
     product: initialProductData,
-    status_type: -1,
+    status: initialStatusData,
     ip_addresses: [initialIpAddress],
     systems: [{
         ...initialSystemData,
         main_flg: false
     }],
-    role_id: -1,
+    role: initialRoleData,
     vender: initialCompanyData,
-    created_at: "-",
-    updated_at: "-"
+    created_at: new Date(),
+    updated_at: new Date()
 }
 
 

@@ -31,7 +31,7 @@ export const editDataAction= (targetData: productData[keyof productData], key: k
 }
 
 
-export const sortAction = (productDatas: productData[], orderBy: keyof productData, sortDirection: Exclude<SortDirection, boolean>): ProductsAction => {
+export const sortProductAction = (productDatas: productData[], orderBy: keyof productData, sortDirection: Exclude<SortDirection, boolean>): ProductsAction => {
   return {
     type: ProductsActionType.sortProduct,
     sortData: productDatas,
@@ -42,7 +42,7 @@ export const sortAction = (productDatas: productData[], orderBy: keyof productDa
   }
 }
 
-export const pagingAction = (nextPage: number): ProductsAction => {
+export const pagingProductAction = (nextPage: number): ProductsAction => {
   return {
     type: ProductsActionType.pagingProduct,
     nextPage: nextPage

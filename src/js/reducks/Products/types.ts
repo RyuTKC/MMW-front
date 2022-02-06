@@ -69,7 +69,7 @@ type EditProductAction = Action<typeof ProductsActionType.editProduct> & {
 }
 
 // データソート
-type SortAction = Action<typeof ProductsActionType.sortProduct> & {
+type SortProductAction = Action<typeof ProductsActionType.sortProduct> & {
 	sortData: productData[],
 	sortElement: {
 		orderBy: keyof productData,
@@ -78,12 +78,12 @@ type SortAction = Action<typeof ProductsActionType.sortProduct> & {
 }
 
 // ページング関連アクション
-type PagingAction = Action<typeof ProductsActionType.pagingProduct> & {
+type PagingProductAction = Action<typeof ProductsActionType.pagingProduct> & {
 	nextPage: number
 }
 
 // アクションタイプ統合
-type ProductsAction = SetProductAction | SetProductsAction | EditProductAction | SortAction | PagingAction
+type ProductsAction = SetProductAction | SetProductsAction | EditProductAction | SortProductAction | PagingProductAction
 export {
 	type ProductsState,
 	type ProductsAction,

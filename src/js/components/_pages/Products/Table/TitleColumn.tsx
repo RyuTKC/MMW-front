@@ -4,7 +4,7 @@ import MTableSortLabel from "@material-ui/core/TableSortLabel";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reducks/store";
 import { productData } from "appConfig";
-import { sortProductDatas } from "reducks/Products/operations";
+import { sortProductDatas, sortProductDatas2 } from "reducks/Products/operations";
 
 
 type Props = {
@@ -18,7 +18,7 @@ export default ({ sortKey, children }: Props) => {
 
   //イベント
   const clickSort = (targetColumn: keyof productData) => (e: React.MouseEvent) => {
-    dispatch(sortProductDatas(targetColumn, false))
+    dispatch(sortProductDatas2(targetColumn, false))
   }
   return (
     <MTableCell

@@ -57,5 +57,4 @@ export default styled(ModalComponent)`
       padding: 0;
     }
   }
-  }
 `

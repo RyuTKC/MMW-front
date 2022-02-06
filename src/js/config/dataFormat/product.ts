@@ -1,10 +1,11 @@
 import { companyData, initialCompanyData } from "./company";
+import { initialProductTypeData, productTypeData } from "./enum";
 
 interface productData {
     product_id: number,
     product_name: string,
     model_number: string,
-    product_type: number,
+    product_type: productTypeData,
     manufacturer: companyData,
 }
 
@@ -16,7 +17,7 @@ const initialProductData: productData = {
     product_id: -1,
     product_name: "-",
     model_number: "-",
-    product_type: -1,
+    product_type: initialProductTypeData,
     manufacturer: initialCompanyData,
 }
 

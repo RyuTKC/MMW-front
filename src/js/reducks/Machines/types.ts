@@ -70,7 +70,7 @@ type EditMachineAction = Action<typeof MachinesActionType.editMachine> & {
 }
 
 // データソート
-type SortAction = Action<typeof MachinesActionType.sortMachine> & {
+type SortMachineAction = Action<typeof MachinesActionType.sortMachine> & {
 	sortData: machineData[],
 	sortElement: {
 		orderBy: keyof machineData,
@@ -79,12 +79,12 @@ type SortAction = Action<typeof MachinesActionType.sortMachine> & {
 }
 
 // ページング関連アクション
-type PagingAction = Action<typeof MachinesActionType.pagingMachine> & {
+type PagingMachineAction = Action<typeof MachinesActionType.pagingMachine> & {
 	nextPage: number
 }
 
 // アクションタイプ統合
-type MachinesAction = SetMachineAction | SetMachinesAction | EditMachineAction | SortAction | PagingAction
+type MachinesAction = SetMachineAction | SetMachinesAction | EditMachineAction | SortMachineAction | PagingMachineAction
 export {
 	type MachinesState,
 	type MachinesAction,

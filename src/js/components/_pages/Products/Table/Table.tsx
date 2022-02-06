@@ -11,7 +11,7 @@ import MTableContainer from "@material-ui/core/TableContainer";
 import { RootState } from "reducks/store";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
-import { pagingAction } from "reducks/Products/action";
+import { pagingProductAction } from "reducks/Products/action";
 import { getProduct, sortProductDatas, getProducts } from "reducks/Products/operations";
 import { CircularProgress as MCircularProgress } from "@material-ui/core";
 
@@ -28,7 +28,7 @@ const MyTable = ({ className }: Props) => {
   const columnData = { ...useSelector((state: RootState) => state.products.tableData.columnDisplayName, shallowEqual) }
 
   const paging = (e: unknown, newPage: number) => {
-    dispatch(pagingAction(newPage))
+    dispatch(pagingProductAction(newPage))
     window.scrollTo(0, 0)
   }
   
@@ -39,7 +39,6 @@ const MyTable = ({ className }: Props) => {
   // 更新
   useEffect(() => {
     dispatch(getProducts())
-    dispatch(sortProductDatas("product_id", false))
   }, []);
 
   return (
@@ -64,7 +63,7 @@ const MyTable = ({ className }: Props) => {
                 <MTableRow className={"tableRow"} key={i} onClick={onClickRecord(v.product_id)}>
                   <MTableCell>{v.product_id}</MTableCell>
                   <MTableCell>{v.product_name}</MTableCell>
-                  <MTableCell>{v.product_type}</MTableCell>
+                  <MTableCell>{v.product_type.product_type_name}</MTableCell>
                   <MTableCell>{v.manufacturer.company_name}</MTableCell>
                   <MTableCell>{v.model_number}</MTableCell>
                 </MTableRow>

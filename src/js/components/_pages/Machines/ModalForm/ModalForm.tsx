@@ -13,6 +13,7 @@ import styled from "styled-components"
 import CheckAndRadio from "./CheckAndRadio"
 import IPaddressesForm from "./IPaddressesForm"
 import MainTextForm from "./MainTextForm"
+import SubTextForm from "./SubTextForm"
 
 type Props = {
   className?: string
@@ -33,6 +34,7 @@ const ModalComponent = ({ className = "", }: Props) => {
         <MFade in={modalFlg}>
           <div className={modalContent}>
             <MainTextForm />
+            <SubTextForm />
             <IPaddressesForm />
             <CheckAndRadio />
             

@@ -23,17 +23,17 @@ export const initialState: MachinesState = {
       purchase_date: "購入年月",
       notes: "備考",
       product: "製品",
-      status_type: "ステータス",
+      status: "ステータス",
       ip_addresses: "IPアドレス",
       systems: "システム",
-      role_id: "ロール",
+      role: "ロール",
       vender: "ベンダー",
       created_at: "登録日",
       updated_at: "更新日"
     },
     sortElement: {
       orderBy: "machine_id",
-      sortDirection: "desc"
+      sortDirection: "asc"
     },
     pageElement: {
       nowPage: 0,

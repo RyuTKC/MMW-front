@@ -11,8 +11,8 @@ import MTableContainer from "@material-ui/core/TableContainer";
 import { RootState } from "reducks/store";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
-import { pagingAction } from "reducks/Machines/action";
-import { getMachine, sortMachineDatas, getMachines } from "reducks/Machines/operations";
+import { pagingMachineAction } from "reducks/Machines/action";
+import { getMachine, getMachines, sortMachineDatas } from "reducks/Machines/operations";
 import { CircularProgress as MCircularProgress } from "@material-ui/core";
 
 
@@ -23,11 +23,12 @@ type Props = {
 const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
+  
   const sortData = [...useSelector((state: RootState) => state.machines.tableData.sortData, shallowEqual)]
   const pageData = { ...useSelector((state: RootState) => state.machines.tableData.pageElement, shallowEqual) }
   const columnData = { ...useSelector((state: RootState) => state.machines.tableData.columnDisplayName, shallowEqual) }
   const paging = (e: unknown, newPage: number) => {
-    dispatch(pagingAction(newPage))
+    dispatch(pagingMachineAction(newPage))
     window.scrollTo(0, 0)
   }
 
@@ -37,7 +38,6 @@ const MyTable = ({ className }: Props) => {
   // 更新
   useEffect(() => {
     dispatch(getMachines())
-    dispatch(sortMachineDatas("machine_id", false))
   }, []);
 
   return (
@@ -49,6 +49,7 @@ const MyTable = ({ className }: Props) => {
               <MTablePageNation count={sortData.length} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
             </MTableRow>
             <MTableRow>
+              <TitleColumn sortKey={"systems"}>{columnData.systems}</TitleColumn>
               <TitleColumn sortKey={"machine_id"}>{columnData.machine_id}</TitleColumn>
               <TitleColumn sortKey={"machine_name"}>{columnData.machine_name}</TitleColumn>
               <TitleColumn sortKey={"host_name"}>{columnData.host_name}</TitleColumn>
@@ -59,13 +60,14 @@ const MyTable = ({ className }: Props) => {
               <TitleColumn sortKey={"assurance"}>{columnData.assurance}</TitleColumn>
               <TitleColumn sortKey={"vender"}>{columnData.vender}</TitleColumn>
               <TitleColumn sortKey={"notes"}>{columnData.notes}</TitleColumn>
-              <TitleColumn sortKey={"maintenance_date"}>{columnData.maintenance_date}</TitleColumn>
+              <TitleColumn sortKey={"updated_at"}>{columnData.updated_at}</TitleColumn>
             </MTableRow>
           </MTableHead>
           <MTableBody>
             {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
               return (
                 <MTableRow className={"tableRow"} key={i} onClick={onClickRecord(v.machine_id)}>
+                  <MTableCell>{v.systems.find(v=> v.main_flg)?.system_name}</MTableCell>
                   <MTableCell>{v.machine_id}</MTableCell>
                   <MTableCell>{v.machine_name}</MTableCell>
                   <MTableCell>{v.host_name}</MTableCell>
@@ -76,7 +78,7 @@ const MyTable = ({ className }: Props) => {
                   <MTableCell>{v.assurance}</MTableCell>
                   <MTableCell>{v.vender.company_name}</MTableCell>
                   <MTableCell>{v.notes}</MTableCell>
-                  <MTableCell>{v.maintenance_date}</MTableCell>
+                  <MTableCell>{v.updated_at.toString()}</MTableCell>
                 </MTableRow>
               )
             }

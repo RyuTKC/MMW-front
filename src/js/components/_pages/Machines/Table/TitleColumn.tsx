@@ -20,6 +20,7 @@ export default ({ sortKey, children }: Props) => {
   const clickSort = (targetColumn: keyof machineData) => (e: React.MouseEvent) => {
     dispatch(sortMachineDatas(targetColumn, false))
   }
+
   return (
     <MTableCell
       sortDirection={sortElement.orderBy === sortKey ? sortElement.sortDirection : false}
@@ -27,7 +28,7 @@ export default ({ sortKey, children }: Props) => {
       <MTableSortLabel
         active={sortElement.orderBy === sortKey}
         direction={sortElement.orderBy === sortKey ? sortElement.sortDirection : undefined}
-        onClick={clickSort(sortKey as keyof machineData)}
+        onClick={clickSort(sortKey)}
       >
         {children}
       </MTableSortLabel>
