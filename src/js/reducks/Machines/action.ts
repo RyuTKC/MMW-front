@@ -28,7 +28,6 @@ export const editDataAction= (targetData: machineData[keyof machineData], key: k
   }
 }
 
-
 export const sortMachineAction = (machineDatas: machineData[], orderBy: keyof machineData, sortDirection: Exclude<SortDirection, boolean>): MachinesAction => {
   return {
     type: MachinesActionType.sortMachine,

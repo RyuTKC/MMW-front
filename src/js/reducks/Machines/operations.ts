@@ -12,13 +12,20 @@ import {
   isArray,
   ipAddress,
   isProductData,
-  isCompanyData
+  isCompanyData,
+  companyData,
+  statusData,
+  roleData
 } from "appConfig"
 import { setSystemsAction } from "reducks/Systems/action"
 import { SystemsAction } from "reducks/Systems/types"
 import { SortDirection } from "@material-ui/core"
 import { setProductsAction } from "reducks/Products/action"
 import { ProductsAction } from "reducks/Products/types"
+import { setCompaniesAction } from "reducks/Companies/action"
+import { CompaniesAction } from "reducks/Companies/types"
+import { setRolesAction, setStatusesAction } from "reducks/Enums/action"
+import { EnumsAction } from "reducks/Enums/types"
 
 export const getMachines = (): AppThunkAction<MachinesAction> => {
   return async (dispatch, getState) => {
@@ -37,7 +44,7 @@ export const getMachines = (): AppThunkAction<MachinesAction> => {
   }
 }
 
-export const getMachine = (machine_id: number): AppThunkAction<MachinesAction | SystemsAction | ProductsAction> => {
+export const getMachine = (machine_id: number): AppThunkAction<MachinesAction | SystemsAction | ProductsAction | CompaniesAction | EnumsAction> => {
   return async (dispatch, getState) => {
 
     appConfig.axios.get(MachinesAPI.root + `/${machine_id}`)
@@ -45,13 +52,27 @@ export const getMachine = (machine_id: number): AppThunkAction<MachinesAction | 
         const machine = res.data.machine as machineData
         const systems = res.data.systems as systemData[]
         const products = res.data.products as productData[]
+        const companies = res.data.companies as companyData[]
+        const statuses = res.data.statuses as statusData[]
+        const roles = res.data.roles as roleData[]
         dispatch(setMachineAction(machine, true))
         dispatch(setSystemsAction(systems))
         dispatch(setProductsAction(products))
+        dispatch(setCompaniesAction(companies))
+        dispatch(setStatusesAction(statuses))
+        dispatch(setRolesAction(roles))
       })
       .catch(e => {
         console.log(e)
       })
+  }
+}
+
+export const postMachine = (): AppThunkAction<MachinesAction> => {
+  return async (dispatch, getState) => {
+    const postMachine = getState().machines.editElement.data
+
+    appConfig.axios.post(MachinesAPI.root + `${postMachine.machine_id}`)
   }
 }
 
@@ -143,8 +164,12 @@ export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boo
             targetA = typedA.company_name
             targetB = (typedB as typeof typedA).company_name
           }
+          else if (typedA instanceof Date) {
+            targetA = typedA.getDate()
+            targetB = (typedB as typeof typedA).getDate()
+          }
           break;
-          
+
         default:
           return 0
       }

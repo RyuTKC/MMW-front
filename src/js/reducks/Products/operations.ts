@@ -84,8 +84,6 @@ export const sortProductDatas = (targetColumn: keyof productData, updateFlg: boo
       else
         return 0
     })
-    // console.log("ms: ", getState().machines.tableData.sortData)
-    // console.log("ss: ", getState().products.tableData.sortData)
     dispatch(sortProductAction(nextSortDatas, nextSortState.orderBy, nextSortState.sortDirection))
   }
 }
@@ -164,7 +162,6 @@ export const sortProductDatas2 = (targetColumn: keyof productData, updateFlg: bo
           targetB = typedB as typeof typedA
           break;
         case "object":
-          console.log(typedA)
           if (isProductTypeData(typedA)) {
             targetA = typedA.product_type_name
             targetB = (typedB as typeof typedA).product_type_name

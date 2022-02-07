@@ -1,17 +1,11 @@
 import {
-  Fade as MFade,
-  Modal as MModal,
-  Select as MSelect,
   TextField as MTextField,
 } from "@material-ui/core"
-import { initialMachineData, initialSystemData, machineData, systemData } from "appConfig"
 import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { editDataAction} from "reducks/Machines/action"
 import { RootState } from "reducks/store"
 import styled from "styled-components"
-import CheckAndRadio from "./CheckAndRadio"
-import IPaddressesForm from "./IPaddressesForm"
 
 type Props = {
   className?: string

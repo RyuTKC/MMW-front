@@ -40,6 +40,15 @@ const ProductsAPI = {
 
 } as const;
 type ProductsAPI = typeof ProductsAPI[keyof typeof ProductsAPI];
+const CompaniesAPI = {
+  root: "companies",
+  search: "search",
+  show: "show",
+  exchange: "exchange",
+  edit_by_qr: "",
+
+} as const;
+type CompaniesAPI = typeof CompaniesAPI[keyof typeof CompaniesAPI];
 
 const RouteList = {
   top: "/",
@@ -80,9 +89,7 @@ const appConfig = new AppConfig(development);
 
 export { configParam };
 export { appConfig, isArray };
-export { MachinesAPI };
-export { SystemsAPI };
-export { ProductsAPI };
+export { MachinesAPI, SystemsAPI, ProductsAPI, CompaniesAPI };
 export { RouteList };
 export { roleData, initialRoleData, isRoleData };
 export { statusData, initialStatusData, isStatusData };

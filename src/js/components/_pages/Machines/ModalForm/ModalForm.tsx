@@ -1,19 +1,19 @@
 import {
   Fade as MFade,
   Modal as MModal,
-  Select as MSelect,
-  TextField as MTextField,
 } from "@material-ui/core"
-import { initialMachineData, initialSystemData, machineData, systemData } from "appConfig"
+import { initialMachineData } from "appConfig"
 import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
-import { editDataAction, setMachineAction } from "reducks/Machines/action"
+import { setMachineAction } from "reducks/Machines/action"
+import { postMachine } from "reducks/Machines/operations"
 import { RootState } from "reducks/store"
 import styled from "styled-components"
-import CheckAndRadio from "./CheckAndRadio"
+import CheckSystems from "./CheckSystems"
 import IPaddressesForm from "./IPaddressesForm"
+import MachineFeatureForm from "./MachineFeatureForm"
 import MainTextForm from "./MainTextForm"
-import SubTextForm from "./SubTextForm"
+import ProductInfoForm from "./ProductInfoForm"
 
 type Props = {
   className?: string
@@ -24,8 +24,13 @@ const textField = "text-field"
 const ModalComponent = ({ className = "", }: Props) => {
   const dispatch = useDispatch()
   const modalFlg=useSelector((state: RootState) => state.machines.editElement.modalFlg, shallowEqual)
+  
   const onModalClose = () => {
     dispatch(setMachineAction(initialMachineData, false))
+  }
+
+  const onPostMachineData=()=>{
+    dispatch(postMachine())
   }
 
   return (
@@ -34,10 +39,10 @@ const ModalComponent = ({ className = "", }: Props) => {
         <MFade in={modalFlg}>
           <div className={modalContent}>
             <MainTextForm />
-            <SubTextForm />
+            <MachineFeatureForm />
+            <ProductInfoForm />
             <IPaddressesForm />
-            <CheckAndRadio />
-            
+            <CheckSystems />
           </div>
         </MFade>
       </MModal>

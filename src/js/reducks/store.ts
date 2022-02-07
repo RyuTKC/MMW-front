@@ -7,6 +7,8 @@ import thunk, { ThunkAction } from "redux-thunk";
 import { machinesReducer } from "./Machines/reducer";
 import { systemsReducer } from "./Systems/reducer";
 import { productsReducer } from "./Products/reducer";
+import { companiesReducer } from "./Companies/reducer";
+import { enumsReducer } from "./Enums/reducer";
 
 const history = createBrowserHistory()
 
@@ -18,6 +20,8 @@ const reducers = combineReducers({
     machines: machinesReducer,
     systems: systemsReducer,
     products: productsReducer,
+    companies: companiesReducer,
+    enums: enumsReducer
 })
 
 // ミドルウェアの統合

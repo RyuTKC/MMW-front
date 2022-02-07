@@ -69,7 +69,7 @@ const webpackConfig =
         publicPath: "/public",
         // serveIndex: true
       },
-    ]
+    ],
   },
   module: {
     rules: [

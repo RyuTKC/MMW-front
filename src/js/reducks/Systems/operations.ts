@@ -75,8 +75,6 @@ export const sortSystemDatas = (targetColumn: keyof systemData, updateFlg: boole
       else
         return 0
     })
-    // console.log("ms: ", getState().machines.tableData.sortData)
-    // console.log("ss: ", getState().systems.tableData.sortData)
     dispatch(sortAction(nextSortDatas, nextSortState.orderBy, nextSortState.sortDirection))
   }
 }
