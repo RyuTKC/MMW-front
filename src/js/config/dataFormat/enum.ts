@@ -4,7 +4,7 @@ interface statusData {
 }
 const initialStatusData: statusData = {
     status_id: -1,
-    status_name: "-",
+    status_name: "",
 }
 
 const isStatusData = (target: any): target is statusData => {
@@ -17,7 +17,7 @@ interface roleData {
 }
 const initialRoleData: roleData = {
     role_id: -1,
-    role_name: "-",
+    role_name: "",
 }
 
 const isRoleData = (target: any): target is roleData => {
@@ -30,7 +30,7 @@ interface productTypeData {
 }
 const initialProductTypeData: productTypeData = {
     product_type_id: -1,
-    product_type_name: "-",
+    product_type_name: "",
 }
 
 const isProductTypeData = (target: any): target is productTypeData => {

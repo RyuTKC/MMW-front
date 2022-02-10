@@ -14,7 +14,7 @@ interface machineData {
     maintenance_date: string
     assurance: string
     serial_number: string
-    purchase_date: string
+    purchase_date: Date
     notes: string
     product: productData
     status: statusData
@@ -32,16 +32,16 @@ type machineSystem = ({
 
 const initialMachineData: machineData = {
     machine_id: -1,
-    machine_name: "-",
-    host_name: "-",
-    administrator: "-",
-    place: "-",
-    qr_or_barcode: "-",
-    maintenance_date: "-",
-    assurance: "-",
-    serial_number: "-",
-    purchase_date: "-",
-    notes: "-",
+    machine_name: "",
+    host_name: "",
+    administrator: "",
+    place: "",
+    qr_or_barcode: "",
+    maintenance_date: "",
+    assurance: "",
+    serial_number: "",
+    purchase_date: new Date(),
+    notes: "",
     product: initialProductData,
     status: initialStatusData,
     ip_addresses: [initialIpAddress],

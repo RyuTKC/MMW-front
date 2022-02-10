@@ -194,6 +194,10 @@ const webpackConfig =
   stats: {
     children: true,
   },
+  watch: true,
+  watchOptions: {
+    ignored: path.join(__dirname, "node_modules"),
+  }
 };
 
 // -----------------------------------------------------------

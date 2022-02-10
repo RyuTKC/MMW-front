@@ -16,6 +16,7 @@ const MachinesAPI = {
   search: "search",
   show: "show",
   exchange: "exchange",
+  get_edit_elements: "get_edit_elements",
   edit_by_qr: "",
 
 } as const;
@@ -26,6 +27,7 @@ const SystemsAPI = {
   search: "search",
   show: "show",
   exchange: "exchange",
+  get_edit_elements: "get_edit_elements",
   edit_by_qr: "",
 
 } as const;
@@ -36,6 +38,7 @@ const ProductsAPI = {
   search: "search",
   show: "show",
   exchange: "exchange",
+  get_edit_elements: "get_edit_elements",
   edit_by_qr: "",
 
 } as const;
@@ -82,6 +85,7 @@ class AppConfig {
 
   doAPI<T>(apiMehod: T): void {
   }
+
 
 }
 const appConfig = new AppConfig(development);

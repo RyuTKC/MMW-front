@@ -7,7 +7,7 @@ interface ipAddress {
 
 const initialIpAddress: ipAddress = {
     ip_id: -1,
-    ipv4_address: "-",
+    ipv4_address: "",
     machine_id: -1,
     wiredflg: false,
 }

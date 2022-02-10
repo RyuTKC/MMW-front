@@ -15,8 +15,8 @@ const isProductData=(target: any): target is productData=>{
 
 const initialProductData: productData = {
     product_id: -1,
-    product_name: "-",
-    model_number: "-",
+    product_name: "",
+    model_number: "",
     product_type: initialProductTypeData,
     manufacturer: initialCompanyData,
 }

@@ -4,7 +4,7 @@ interface companyData {
 }
 const initialCompanyData: companyData = {
     company_id: -1,
-    company_name: "-",
+    company_name: "",
 }
 
 const isCompanyData = (target: any): target is companyData => {

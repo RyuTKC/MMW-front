@@ -8,7 +8,7 @@ const RouterSelector = (state: RouterState) => state
 export const getPageNumber = createSelector(
   [RouterSelector],
   routerState => {
-    const locationName= routerState.location.pathname
+    const locationName = routerState.location.pathname
 
     switch (locationName) {
       case RouteList.top:
@@ -19,8 +19,10 @@ export const getPageNumber = createSelector(
         return 2;
       case RouteList.products:
         return 3;
-      case RouteList.users:
+      case RouteList.companies:
         return 4;
+      case RouteList.users:
+        return 5;
       default:
         return 0;
     }

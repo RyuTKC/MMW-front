@@ -6,7 +6,7 @@ import { initialMachineData } from "appConfig"
 import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { setMachineAction } from "reducks/Machines/action"
-import { postMachine } from "reducks/Machines/operations"
+import { putMachine } from "reducks/Machines/operations"
 import { RootState } from "reducks/store"
 import styled from "styled-components"
 import CheckSystems from "./CheckSystems"
@@ -14,6 +14,7 @@ import IPaddressesForm from "./IPaddressesForm"
 import MachineFeatureForm from "./MachineFeatureForm"
 import MainTextForm from "./MainTextForm"
 import ProductInfoForm from "./ProductInfoForm"
+import { SubmitButton } from "./SubmitButton"
 
 type Props = {
   className?: string
@@ -30,7 +31,7 @@ const ModalComponent = ({ className = "", }: Props) => {
   }
 
   const onPostMachineData=()=>{
-    dispatch(postMachine())
+    dispatch(putMachine())
   }
 
   return (
@@ -43,6 +44,7 @@ const ModalComponent = ({ className = "", }: Props) => {
             <ProductInfoForm />
             <IPaddressesForm />
             <CheckSystems />
+            <SubmitButton />
           </div>
         </MFade>
       </MModal>

@@ -18,43 +18,22 @@ const rolesSelector = (state: RootState) => state.enums.roles
 export const convertCheckRadioSystems = createSelector(
   [machineSystemsSelector, systemSelector],
   (machineSystems, systems) => {
-    // データが所属しているシステム
-    const dataSystem = [...machineSystems]
+    type checkSystems = {
+      main_flg: boolean
+      selected: boolean
+    } & systemData
 
-    // チェックボックス、ラジオボタン用の型定義
-    type checkRadioType = {
-      // 扱いやすいようにsystem_idをkeyにする
-      [system_id: number]: {
-        main_flg: boolean
-        used: boolean
-      } & systemData
-    }
+    const checkRadioSystems = new Map<number, checkSystems>();
 
-    // チェックボックスラジオボタン用のオブジェクト生成
-    const checkRadioObject: checkRadioType = {}
-
-    // 取得した全システムでボタン用オブジェクトを初期化
-    Object.values(systems).map((v, i) => {
-      checkRadioObject[v.system_id] = {
-        ...v,
-
-        main_flg: false,
-        used: false,
-      }
+    [...systems].map(v => {
+      checkRadioSystems.set(v.system_id, { ...v, selected: false, main_flg: false })
     })
 
-    // 所属しているシステムの状態をボタン用オブジェクトに反映
-    dataSystem.map((v, i) => {
-      checkRadioObject[v.system_id] = {
-        ...checkRadioObject[v.system_id],
-
-        main_flg: v.main_flg,
-        used: true
-      }
+    machineSystems.filter(v => v.system_id > 0).map(v => {
+      checkRadioSystems.set(v.system_id, { ...v, selected: true, main_flg: v.main_flg })
     })
-
-    // ボタン用のオブジェクトを配列に直して返却
-    return Object.values(checkRadioObject)
+    
+    return checkRadioSystems
   }
 )
 
@@ -81,9 +60,9 @@ export const convertSelectProduct = createSelector(
   }
 )
 
-export const convertSelectVender= createSelector(
+export const convertSelectVender = createSelector(
   [machineVenderSelector, companySelector],
-  (machineVender, companies)=>{
+  (machineVender, companies) => {
     type selectCompany = {
       selected: boolean
     } & companyData
@@ -103,9 +82,9 @@ export const convertSelectVender= createSelector(
   }
 )
 
-export const convertSelectStatus= createSelector(
+export const convertSelectStatus = createSelector(
   [machineStatusSelector, statusesSelector],
-  (machineStatus, companies)=>{
+  (machineStatus, companies) => {
     type selectStatus = {
       selected: boolean
     } & statusData
@@ -125,9 +104,9 @@ export const convertSelectStatus= createSelector(
   }
 )
 
-export const convertSelectRole= createSelector(
+export const convertSelectRole = createSelector(
   [machineRoleSelector, rolesSelector],
-  (machineRole, companies)=>{
+  (machineRole, companies) => {
     type selectRole = {
       selected: boolean
     } & roleData

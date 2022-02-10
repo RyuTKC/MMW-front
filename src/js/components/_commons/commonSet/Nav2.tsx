@@ -30,6 +30,7 @@ export default () => {
         <Tab label="機材管理" onClick={() => changeTabs(RouteList.machines)}></Tab>
         <Tab label="システム管理" onClick={() => changeTabs(RouteList.systems)}></Tab>
         <Tab label="製品管理" onClick={() => changeTabs(RouteList.products)}></Tab>
+        <Tab label="企業管理" onClick={() => changeTabs(RouteList.companies)}></Tab>
         <Tab label="ユーザー管理" onClick={() => changeTabs(RouteList.users)}></Tab>
       </Tabs>
     </Paper>

@@ -21,9 +21,9 @@ ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Nav2 />
             <Header />
             {/* <Nav /> */}
-            <Nav2 />
             <Routing />
             <Footer />
           </MuiPickersUtilsProvider>

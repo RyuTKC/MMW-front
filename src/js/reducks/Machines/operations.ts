@@ -15,7 +15,8 @@ import {
   isCompanyData,
   companyData,
   statusData,
-  roleData
+  roleData,
+  initialMachineData
 } from "appConfig"
 import { setSystemsAction } from "reducks/Systems/action"
 import { SystemsAction } from "reducks/Systems/types"
@@ -68,11 +69,56 @@ export const getMachine = (machine_id: number): AppThunkAction<MachinesAction | 
   }
 }
 
+export const getMachineEditElements = (): AppThunkAction<MachinesAction | SystemsAction | ProductsAction | CompaniesAction | EnumsAction> => {
+  return async (dispatch, getState) => {
+
+    appConfig.axios.get(`${MachinesAPI.root}/${MachinesAPI.get_edit_elements}`)
+      .then(res => {
+        const systems = res.data.systems as systemData[]
+        const products = res.data.products as productData[]
+        const companies = res.data.companies as companyData[]
+        const statuses = res.data.statuses as statusData[]
+        const roles = res.data.roles as roleData[]
+        dispatch(setMachineAction(initialMachineData, true))
+        dispatch(setSystemsAction(systems))
+        dispatch(setProductsAction(products))
+        dispatch(setCompaniesAction(companies))
+        dispatch(setStatusesAction(statuses))
+        dispatch(setRolesAction(roles))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const putMachine = (): AppThunkAction<MachinesAction> => {
+  return async (dispatch, getState) => {
+    const putMachine = getState().machines.editElement.data
+
+    appConfig.axios.put(MachinesAPI.root + `/${putMachine.machine_id}`, putMachine)
+      .then(res => {
+        dispatch(setMachineAction(initialMachineData, false))
+        dispatch(getMachines())
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
 export const postMachine = (): AppThunkAction<MachinesAction> => {
   return async (dispatch, getState) => {
-    const postMachine = getState().machines.editElement.data
+    const putMachine = getState().machines.editElement.data
 
-    appConfig.axios.post(MachinesAPI.root + `${postMachine.machine_id}`)
+    appConfig.axios.post(MachinesAPI.root, putMachine)
+      .then(res => {
+        dispatch(setMachineAction(initialMachineData, false))
+        dispatch(getMachines())
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 }
 
@@ -136,8 +182,8 @@ export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boo
     }
 
     const nextSortDatas = datas.sort((a, b) => {
-      const typedA = a[targetColumn] === ("" || undefined || null) ? "-" : a[targetColumn]
-      const typedB = b[targetColumn] === ("" || undefined || null) ? "-" : b[targetColumn]
+      const typedA = a[targetColumn] === (undefined || null) ? "" : a[targetColumn]
+      const typedB = b[targetColumn] === (undefined || null) ? "" : b[targetColumn]
 
       let targetA: string | number = 0;
       let targetB: string | number = 0
@@ -157,12 +203,12 @@ export const sortMachineDatas = (targetColumn: keyof machineData, updateFlg: boo
             targetB = systemB !== undefined ? systemB : ""
           }
           else if (isProductData(typedA)) {
-            targetA = typedA.product_name
-            targetB = (typedB as typeof typedA).product_name
+            targetA = typedA?.product_name === (undefined || null)? "": typedA.product_name
+            targetB = (typedB as typeof typedA)?.product_name
           }
           else if (isCompanyData(typedA)) {
-            targetA = typedA.company_name
-            targetB = (typedB as typeof typedA).company_name
+            targetA = typedA?.company_name
+            targetB = (typedB as typeof typedA)?.company_name
           }
           else if (typedA instanceof Date) {
             targetA = typedA.getDate()

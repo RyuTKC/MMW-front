@@ -1,7 +1,7 @@
 import { sortAction, setSystemsAction, setSystemAction } from "./action"
 import { SystemsAction } from "./types"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, systemData, SystemsAPI } from "appConfig"
+import { appConfig, initialSystemData, systemData, SystemsAPI } from "appConfig"
 
 export const getSystems = (): AppThunkAction<SystemsAction> => {
   return async (dispatch, getState) => {
@@ -33,6 +33,38 @@ export const getSystem = (system_id: number): AppThunkAction<SystemsAction> => {
       })
   }
 }
+
+export const putSystem = (): AppThunkAction<SystemsAction> => {
+  return async (dispatch, getState) => {
+    const putSystem = getState().systems.editElement.data
+
+    appConfig.axios.put(SystemsAPI.root + `/${putSystem.system_id}`, putSystem)
+      .then(res => {
+        dispatch(setSystemAction(initialSystemData, false))
+        dispatch(getSystems())
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const postSystem = (): AppThunkAction<SystemsAction> => {
+  return async (dispatch, getState) => {
+    const putSystem = getState().systems.editElement.data
+
+    appConfig.axios.post(SystemsAPI.root, putSystem)
+      .then(res => {
+        dispatch(setSystemAction(initialSystemData, false))
+        dispatch(getSystems())
+        console.log(res)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
 
 export const sortSystemDatas = (targetColumn: keyof systemData, updateFlg: boolean = false)
   : AppThunkAction<SystemsAction> => {

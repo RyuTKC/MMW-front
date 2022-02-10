@@ -1,8 +1,12 @@
 import { sortProductAction, setProductsAction, setProductAction } from "./action"
 import { ProductsAction } from "./types"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, isCompanyData, isProductTypeData, productData, ProductsAPI } from "appConfig"
+import { appConfig, companyData, initialProductData, isCompanyData, isProductTypeData, productData, ProductsAPI, productTypeData } from "appConfig"
 import { SortDirection } from "@material-ui/core"
+import { setProductTypesAction } from "reducks/Enums/action"
+import { EnumsAction } from "reducks/Enums/types"
+import { setCompaniesAction } from "reducks/Companies/action"
+import { CompaniesAction } from "reducks/Companies/types"
 
 export const getProducts = (): AppThunkAction<ProductsAction> => {
   return async (dispatch, getState) => {
@@ -21,13 +25,65 @@ export const getProducts = (): AppThunkAction<ProductsAction> => {
   }
 }
 
-export const getProduct = (product_id: number): AppThunkAction<ProductsAction> => {
+export const getProduct = (product_id: number): AppThunkAction<ProductsAction | CompaniesAction | EnumsAction> => {
   return async (dispatch, getState) => {
 
-    appConfig.axios.get(ProductsAPI.root + `/${product_id}`)
+    appConfig.axios.get(`${ProductsAPI.root}/${product_id}`)
       .then(res => {
         const productData = res.data.product as productData
+        const companies = res.data.companies as companyData[]
+        const productTypes = res.data.product_type as productTypeData[]
         dispatch(setProductAction(productData, true))
+        dispatch(setCompaniesAction(companies))
+        dispatch(setProductTypesAction(productTypes))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const getProductEditElements = (): AppThunkAction<ProductsAction | CompaniesAction | EnumsAction> => {
+  return async (dispatch, getState) => {
+
+    appConfig.axios.get(`${ProductsAPI.root}/${ProductsAPI.get_edit_elements}`)
+      .then(res => {
+        const companies = res.data.companies as companyData[]
+        const productTypes = res.data.product_type as productTypeData[]
+        dispatch(setProductAction(initialProductData, true))
+        dispatch(setCompaniesAction(companies))
+        dispatch(setProductTypesAction(productTypes))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const putProduct = (): AppThunkAction<ProductsAction> => {
+  return async (dispatch, getState) => {
+    const putProduct = getState().products.editElement.data
+
+    appConfig.axios.put(ProductsAPI.root + `/${putProduct.product_id}`, putProduct)
+      .then(res => {
+        dispatch(setProductAction(initialProductData, false))
+        dispatch(getProducts())
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const postProduct = (): AppThunkAction<ProductsAction> => {
+  return async (dispatch, getState) => {
+    const putProduct = getState().products.editElement.data
+
+    appConfig.axios.post(ProductsAPI.root, putProduct)
+      .then(res => {
+        dispatch(setProductAction(initialProductData, false))
+        dispatch(getProducts())
+        console.log(res)
       })
       .catch(e => {
         console.log(e)
@@ -149,8 +205,8 @@ export const sortProductDatas2 = (targetColumn: keyof productData, updateFlg: bo
     }
 
     const nextSortDatas = datas.sort((a, b) => {
-      const typedA = a[targetColumn] === ("" || undefined || null) ? "-" : a[targetColumn]
-      const typedB = b[targetColumn] === ("" || undefined || null) ? "-" : b[targetColumn]
+      const typedA = a[targetColumn] === ("" || undefined || null) ? "" : a[targetColumn]
+      const typedB = b[targetColumn] === ("" || undefined || null) ? "" : b[targetColumn]
 
       let targetA: string | number = 0;
       let targetB: string | number = 0

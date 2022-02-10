@@ -1,7 +1,7 @@
 import { sortAction, setCompaniesAction, setCompanyAction } from "./action"
 import { CompaniesAction } from "./types"
 import { AppThunkAction } from "reducks/store"
-import { appConfig, companyData, CompaniesAPI } from "appConfig"
+import { appConfig, companyData, CompaniesAPI, initialCompanyData } from "appConfig"
 
 export const getCompanies = (): AppThunkAction<CompaniesAction> => {
   return async (dispatch, getState) => {
@@ -27,6 +27,37 @@ export const getCompany = (company_id: number): AppThunkAction<CompaniesAction> 
       .then(res => {
         const companyData = res.data.company as companyData
         dispatch(setCompanyAction(companyData, true))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const putCompany = (): AppThunkAction<CompaniesAction> => {
+  return async (dispatch, getState) => {
+    const putCompany = getState().companies.editElement.data
+
+    appConfig.axios.put(CompaniesAPI.root + `/${putCompany.company_id}`, putCompany)
+      .then(res => {
+        dispatch(setCompanyAction(initialCompanyData, false))
+        dispatch(getCompanies())
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const postCompany = (): AppThunkAction<CompaniesAction> => {
+  return async (dispatch, getState) => {
+    const putCompany = getState().companies.editElement.data
+
+    appConfig.axios.post(CompaniesAPI.root, putCompany)
+      .then(res => {
+        dispatch(setCompanyAction(initialCompanyData, false))
+        dispatch(getCompanies())
+        console.log(res)
       })
       .catch(e => {
         console.log(e)

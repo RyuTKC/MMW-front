@@ -1,33 +1,54 @@
 import { RootState } from "reducks/store";
 import { createSelector } from "reselect";
 import linq from "linq"
-import { initialProductData, productData } from "appConfig";
+import { companyData, initialProductData, productData, productTypeData } from "appConfig";
 import memoize from "lodash.memoize";
 
-const editDataProductSelector = (state: RootState) => state.products.datas
-// const productSelector = (state: RootState) => state.productData
+const productManufacturerSelector = (state: RootState) => state.products.editElement.data.manufacturer
+const companySelector = (state: RootState) => state.companies.datas
+const productProductTypeSelector = (state: RootState) => state.products.editElement.data.product_type
+const productTypeSelector = (state: RootState) => state.enums.product_types
 
-// radioButton用データ加工
-export const convertCheckRadioProducts = createSelector(
-  [editDataProductSelector],
-  (editDataProducts) => {
+export const convertSelectManufacturer= createSelector(
+  [productManufacturerSelector, companySelector],
+  (productManufacturer, manufacturers)=>{
+    type selectCompany = {
+      selected: boolean
+    } & companyData
 
-    // チェックボックス、ラジオボタン用の型定義
-    type checkRadioType = {
-      // 扱いやすいようにproduct_idをkeyにする
-      [product_id: number]: {
-        main_flg: boolean
-        used: boolean
-      } & productData
-    }
+    // マップ型形成
+    const selectedCompany = new Map<number, selectCompany>();
 
-    // データが所属しているシステム
-    const dataProduct= editDataProducts
+    // idをkeyにdataオブジェクトを格納
+    [...manufacturers].map(v => {
+      selectedCompany.set(v.company_id, { ...v, selected: false })
+    })
 
-    // チェックボックスラジオボタン用のオブジェクト生成
-    const checkRadioObject: checkRadioType = {}
+    // 登録されているプロダクトを選択状態に変更
+    selectedCompany.set(productManufacturer.company_id, { ...productManufacturer, selected: true })
 
-    // ボタン用のオブジェクトを配列に直して返却
-    return Object.values(checkRadioObject)
+    return selectedCompany
+  }
+)
+
+export const convertSelectProductType= createSelector(
+  [productProductTypeSelector, productTypeSelector],
+  (productProductType, productTypes)=>{
+    type selectProductType = {
+      selected: boolean
+    } & productTypeData
+
+    // マップ型形成
+    const selectedCompany = new Map<number, selectProductType>();
+
+    // idをkeyにdataオブジェクトを格納
+    [...productTypes].map(v => {
+      selectedCompany.set(v.product_type_id, { ...v, selected: false })
+    })
+
+    // 登録されているプロダクトを選択状態に変更
+    selectedCompany.set(productProductType.product_type_id, { ...productProductType, selected: true })
+
+    return selectedCompany
   }
 )

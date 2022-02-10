@@ -10,8 +10,8 @@ export const isSystemData = (target: any): target is systemData => {
 
 const initialSystemData: systemData = {
     system_id: -1,
-    system_name: "-",
-    system_en_name: "-",
+    system_name: "",
+    system_en_name: "",
 }
 
 export { systemData, initialSystemData };

@@ -6,7 +6,7 @@ import {
 import {
   DatePicker,
 } from '@material-ui/pickers';
-import { initialRoleData, initialStatusData } from "appConfig";
+import { initialRoleData, initialStatusData, roleData, statusData } from "appConfig";
 import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { editDataAction, setMachineAction } from "reducks/Machines/action"
@@ -37,23 +37,31 @@ const MachineFeatureForm = ({ className = "", }: Props) => {
     name?: string | undefined;
     value: unknown;
   }>) => {
-    const nextStatus = selectStatus.get(e.target.value as number)
+    const nextStatus = { ...selectStatus.get(e.target.value as number) }
+    delete nextStatus.selected
 
-    dispatch(editDataAction(nextStatus !== undefined ? nextStatus : initialStatusData, "status"))
+    dispatch(editDataAction(nextStatus !== undefined
+      ? nextStatus as statusData
+      : initialStatusData, "status"))
   }
 
   const roleChange = (e: React.ChangeEvent<{
     name?: string | undefined;
     value: unknown;
   }>) => {
-    const nextRole = selectRole.get(e.target.value as number)
+    const nextRole = { ...selectRole.get(e.target.value as number) }
+    delete nextRole.selected
 
-    dispatch(editDataAction(nextRole !== undefined ? nextRole : initialRoleData, "role"))
+    dispatch(editDataAction(nextRole !== undefined
+      ? nextRole as roleData
+      : initialRoleData, "role"))
   }
-
+  
   return (
     <div className={formContent}>
-      <MSelect label="状態" value={selectStatus.get(machineStatus.status_id)?.status_id} onChange={statusChange}>
+      <MSelect label="状態" value={machineStatus.status_id < 0
+        ? Array.from(selectStatus.keys())[0]
+        : selectStatus.get(machineStatus.status_id)?.status_id} onChange={statusChange}>
         {
           Array.from(selectStatus).map(([key, v], i) => {
             return (
@@ -62,7 +70,10 @@ const MachineFeatureForm = ({ className = "", }: Props) => {
           })
         }
       </MSelect>
-      <MSelect label="機材ロール" value={selectRole.get(machineRole.role_id)?.role_id} onChange={roleChange}>
+      <MSelect label="機材ロール" value={machineRole.role_id < 0
+        ? Array.from(selectRole.keys())[0]
+        : selectRole.get(machineRole.role_id)?.role_id
+      } onChange={roleChange}>
         {
           Array.from(selectRole).map(([key, v], i) => {
             return (

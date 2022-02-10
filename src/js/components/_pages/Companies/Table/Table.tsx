@@ -11,12 +11,12 @@ import MTableContainer from "@material-ui/core/TableContainer";
 import { RootState } from "reducks/store";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import TitleColumn from "./TitleColumn";
-import { pagingAction, setSystemAction } from "reducks/Systems/action";
-import { getSystem, sortSystemDatas, getSystems } from "reducks/Systems/operations";
+import { pagingAction, setCompanyAction } from "reducks/Companies/action";
+import { getCompany, sortCompanyDatas, getCompanies } from "reducks/Companies/operations";
 import { CircularProgress as MCircularProgress } from "@material-ui/core";
 import FormRecord from "./FormRecord";
 import NormalRecord from "./NormalRecord";
-import { initialSystemData } from "appConfig";
+import { initialCompanyData } from "appConfig";
 
 
 type Props = {
@@ -26,34 +26,34 @@ type Props = {
 const MyTable = ({ className }: Props) => {
   // redux hooks
   const dispatch = useDispatch()
-  const sortData = [...useSelector((state: RootState) => state.systems.tableData.sortData, shallowEqual)]
-  const pageData = { ...useSelector((state: RootState) => state.systems.tableData.pageElement, shallowEqual) }
-  const columnData = { ...useSelector((state: RootState) => state.systems.tableData.columnDisplayName, shallowEqual) }
-  const editFlg = useSelector((state: RootState) => state.systems.editElement.editFlg)
-  const editDataId = useSelector((state: RootState) => state.systems.editElement.data.system_id)
+  const sortData = [...useSelector((state: RootState) => state.companies.tableData.sortData, shallowEqual)]
+  const pageData = { ...useSelector((state: RootState) => state.companies.tableData.pageElement, shallowEqual) }
+  const columnData = { ...useSelector((state: RootState) => state.companies.tableData.columnDisplayName, shallowEqual) }
+  const editFlg = useSelector((state: RootState) => state.companies.editElement.editFlg)
+  const editDataId = useSelector((state: RootState) => state.companies.editElement.data.company_id)
 
   const paging = (e: unknown, newPage: number) => {
     dispatch(pagingAction(newPage))
     window.scrollTo(0, 0)
   }
 
-  const onClickRecord = (system_id: number) => (e: React.MouseEvent<unknown>) => {
-    dispatch(getSystem(system_id))
+  const onClickRecord = (company_id: number) => (e: React.MouseEvent<unknown>) => {
+    dispatch(getCompany(company_id))
   }
 
-  const onSystemNew = () => {
-    dispatch(setSystemAction(initialSystemData, true))
+  const onCompanyNew = () => {
+    dispatch(setCompanyAction(initialCompanyData, true))
   }
 
   // 更新
   useEffect(() => {
-    dispatch(getSystems())
-    dispatch(sortSystemDatas("system_id", false))
+    dispatch(getCompanies())
+    dispatch(sortCompanyDatas("company_id", false))
   }, []);
 
   return (
     <>
-      <button onClick={onSystemNew}>新規作成</button>
+      <button onClick={onCompanyNew}>新規作成</button>
       <MTableContainer>
         <MTable className={className}>
           <MTableHead>
@@ -61,9 +61,8 @@ const MyTable = ({ className }: Props) => {
               <MTablePageNation count={sortData.length} onPageChange={paging} page={pageData.nowPage} rowsPerPage={pageData.recordPerPage} />
             </MTableRow>
             <MTableRow>
-              <TitleColumn sortKey={"system_id"}>{columnData.system_id}</TitleColumn>
-              <TitleColumn sortKey={"system_name"}>{columnData.system_name}</TitleColumn>
-              <TitleColumn sortKey={"system_en_name"}>{columnData.system_en_name}</TitleColumn>
+              <TitleColumn sortKey={"company_id"}>{columnData.company_id}</TitleColumn>
+              <TitleColumn sortKey={"company_name"}>{columnData.company_name}</TitleColumn>
             </MTableRow>
           </MTableHead>
           <MTableBody>
@@ -72,12 +71,12 @@ const MyTable = ({ className }: Props) => {
               : <></>
             }
             {sortData.slice((pageData.nowPage) * pageData.recordPerPage, (pageData.nowPage + 1) * pageData.recordPerPage).map((v, i) => {
-              if (editFlg && editDataId === v.system_id)
+              if (editFlg && editDataId === v.company_id)
                 return (
                   <FormRecord key={i} />)
               else
                 return (
-                  <NormalRecord key={i} system={v} />
+                  <NormalRecord key={i} company={v} />
                 )
             }
             )}

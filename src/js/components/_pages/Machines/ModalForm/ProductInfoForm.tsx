@@ -6,7 +6,7 @@ import {
 import {
   DatePicker,
 } from '@material-ui/pickers';
-import { initialProductData } from "appConfig";
+import { companyData, initialProductData, productData } from "appConfig";
 import React, { useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { editDataAction, setMachineAction } from "reducks/Machines/action"
@@ -47,18 +47,24 @@ const ProductInfoForm = ({ className = "", }: Props) => {
     name?: string | undefined;
     value: unknown;
   }>) => {
-    const nextProduct = selectProduct.get(e.target.value as number)
+    const nextProduct = { ...selectProduct.get(e.target.value as number) }
+    delete nextProduct?.selected
 
-    dispatch(editDataAction(nextProduct !== undefined ? nextProduct : initialProductData, "product"))
+    dispatch(editDataAction(nextProduct !== undefined
+      ? nextProduct as productData
+      : initialProductData, "product"))
   }
 
   const venderChange = (e: React.ChangeEvent<{
     name?: string | undefined;
     value: unknown;
   }>) => {
-    const nextVender = selectVender.get(e.target.value as number)
+    const nextVender = { ...selectVender.get(e.target.value as number) }
+    delete nextVender.selected
 
-    dispatch(editDataAction(nextVender !== undefined ? nextVender : initialProductData, "vender"))
+    dispatch(editDataAction(nextVender !== undefined
+      ? nextVender as companyData
+      : initialProductData, "vender"))
   }
 
   const purchaseDateChange = (date: Date) => {
@@ -67,7 +73,9 @@ const ProductInfoForm = ({ className = "", }: Props) => {
 
   return (
     <div className={formContent}>
-      <MSelect label="モデル" value={selectProduct.get(machineProduct.product_id)?.product_id} onChange={productChange}>
+      <MSelect label="モデル" value={machineProduct.product_id < 0
+        ? Array.from(selectProduct.keys())[0]
+        : selectProduct.get(machineProduct.product_id)?.product_id} onChange={productChange}>
         {
           Array.from(selectProduct).map(([key, v], i) => {
             return (
@@ -78,7 +86,9 @@ const ProductInfoForm = ({ className = "", }: Props) => {
       </MSelect>
       <MTextField label="保険内容" defaultValue={assurance} variant="outlined" onBlur={assuranceChange} className={textField} />
       <MTextField label="シリアル" defaultValue={serialNumber} variant="outlined" onBlur={serialChange} className={textField} multiline />
-      <MSelect label="購入ベンダー" value={selectVender.get(machineVender.company_id)?.company_id} onChange={venderChange}>
+      <MSelect label="購入ベンダー" value={machineVender.company_id < 0
+        ? Array.from(selectVender.keys())[0]
+        : selectVender.get(machineVender.company_id)?.company_id} onChange={venderChange}>
         {
           Array.from(selectVender).map(([key, v], i) => {
             return (

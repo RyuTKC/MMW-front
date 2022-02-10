@@ -39,7 +39,7 @@ const MyTable = ({ className }: Props) => {
   useEffect(() => {
     dispatch(getMachines())
   }, []);
-
+  
   return (
     <>
       <MTableContainer>
@@ -74,9 +74,9 @@ const MyTable = ({ className }: Props) => {
                   <MTableCell>{v.administrator}</MTableCell>
                   <MTableCell>{v.place}</MTableCell>
                   <MTableCell>{v.serial_number}</MTableCell>
-                  <MTableCell>{v.product.product_name}</MTableCell>
+                  <MTableCell>{v.product?.product_name}</MTableCell>
                   <MTableCell>{v.assurance}</MTableCell>
-                  <MTableCell>{v.vender.company_name}</MTableCell>
+                  <MTableCell>{v.vender?.company_name}</MTableCell>
                   <MTableCell>{v.notes}</MTableCell>
                   <MTableCell>{v.updated_at.toString()}</MTableCell>
                 </MTableRow>

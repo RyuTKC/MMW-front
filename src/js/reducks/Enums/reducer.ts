@@ -1,10 +1,11 @@
 import { EnumsState, EnumsAction, EnumsActionType } from "./types"
 import { Reducer } from "redux";
-import { initialRoleData, initialStatusData } from "appConfig";
+import { initialProductTypeData, initialRoleData, initialStatusData } from "appConfig";
 
 export const initialState: EnumsState = {
   statuses: [initialStatusData],
-  roles: [initialRoleData]
+  roles: [initialRoleData],
+  product_types: [initialProductTypeData]
 }
 
 export const enumsReducer: Reducer<EnumsState, EnumsAction> = (state = initialState, action): EnumsState => {
@@ -23,8 +24,13 @@ export const enumsReducer: Reducer<EnumsState, EnumsAction> = (state = initialSt
 
         roles: action.roles
       }
-      default:
-        const _: never = action
-        return state
+      case EnumsActionType.setProductTypes:
+        return {
+          ...state,
+          product_types: action.product_types
+        }
+    default:
+      const _: never = action
+      return state
   }
 }
