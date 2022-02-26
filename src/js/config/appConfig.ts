@@ -1,5 +1,5 @@
 import axios, { AxiosStatic } from "axios";
-import { development } from "./development";
+import { test } from "./test";
 import {
   roleData, initialRoleData, isRoleData,
   statusData, initialStatusData, isStatusData,
@@ -88,7 +88,7 @@ class AppConfig {
 
 
 }
-const appConfig = new AppConfig(development);
+const appConfig = new AppConfig(test);
 
 
 export { configParam };
